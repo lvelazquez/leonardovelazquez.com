@@ -3,7 +3,6 @@ var gulp = require('gulp');
 
 // Include Our Plugins
 var jshint = require('gulp-jshint');
-//var sass = require('gulp-sass');
 var concat = require('gulp-concat');
 var uglify = require('gulp-uglify');
 var rename = require('gulp-rename');
@@ -15,14 +14,10 @@ gulp.task('lint', function () {
         .pipe(jshint.reporter('default'));
 });
 
-// Compile Our Sass
-/*gulp.task('sass', function() {
- return gulp.src('scss/*.scss')
- .pipe(sass())
- .pipe(gulp.dest('css'));
- });*/
-
 var aMain = [
+    "dev/data/data.js",
+    "dev/helpers.js",
+    "dev/models/project.js",
     "dev/models/project.js",
     "dev/models/contact.js",
     "dev/views/projectViews.js",
@@ -40,18 +35,16 @@ gulp.task('scripts', function () {
 });
 
 var aLib = [
-    "dev/lib/jquery.min.js",
-    "dev/lib/jquery.lazyload.min.js",
-    "dev/lib/jquery.scrollstop.min.js",
-    "dev/lib/modernizr.custom.65236.js",
-    "dev/lib/easing/EasePack.min.js",
-    "dev/lib/TweenMax.min.js",
-    "dev/lib/handlebars-v1.3.0.js",
-    "dev/lib/bootstrap.min.js",
-    "dev/lib/underscore-min.js",
-    "dev/lib/backbone-min.js",
-    "dev/lib/bowser.min.js",
-    "dev/lib/plugins.js"
+    "node_modules/underscore/underscore-min.js",
+    "node_modules/backbone/backbone-min.js",
+    "node_modules/jquery/dist/jquery.min.js",
+    "node_modules/jquery-lazyload/jquery.lazyload.min.js",
+    "node_modules/jquery-scrollstop/jquery.scrollstop.min.js",
+   // "dev/lib/modernizr.custom.65236.js",
+    "node_modules/gsap/src/minified/EasePack.min.js",
+    "node_modules/gsap/src/minified/TweenMax.min.js",
+    "node_modules/bootstrap/dist/js/bootstrap.min.js",
+    "node_modules/bowser/bowser.min.js"
     ];
 
 // Concatenate & Minify lib JS
@@ -70,4 +63,4 @@ gulp.task('watch', function () {
 });
 
 // Default Task
-gulp.task('default', [ 'scripts', 'watch']); // 'sass','lint', 'lib',
+gulp.task('default', ['scripts', 'watch']); // 'sass','lint', 'lib',

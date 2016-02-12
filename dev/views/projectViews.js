@@ -7,6 +7,10 @@
  * slideshow mobile
  *
  */
+/*var Backbone = require('backbone');
+var $ = require('jquery');
+var _ = require('underscore');*/
+
 // The View for a Person
 var ProjectView = Backbone.View.extend({
     tagName: "div",
