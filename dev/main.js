@@ -1,7 +1,7 @@
 // TODO remove bigvideo.js and just use css
 // TODO modularize with browserify
 var myProjects = new ProjectList(projects);
-
+var isMobile = window.matchMedia("only screen and (max-width: 760px)");
 var MainRouter = Backbone.Router.extend({
     routes: {
         "work/:id": "showProject", // #search/kiwis
@@ -10,7 +10,7 @@ var MainRouter = Backbone.Router.extend({
         "contact": "jumpToPage"
     },
     hideProject: function () {
-        if (Modernizr.touch) {
+        if (isMobile.matches) {
             this.project.$el.addClass('invisible');
         }
     },
@@ -69,7 +69,7 @@ var MainRouter = Backbone.Router.extend({
     },
     showProject: function (id) {
         this.jumpToPage('work');
-        if (Modernizr.touch) {
+        if (isMobile.matches) {
             this.project.$el.removeClass('invisible');
         }
         this.project.showProject(id);
@@ -86,7 +86,7 @@ $(document).ready(function () {
 
     var $siteBg = $("#siteBg");
     var $video = $('#myPlayer', $siteBg);
-    //  if(Modernizr.touch) {
+
     $('img.lazy').lazyload({
         effect: "fadeIn"
     });
@@ -102,7 +102,7 @@ $(document).ready(function () {
 
     };
 
-    if (Modernizr.touch || (bowser.msie && bowser.version <= 8)) {
+    if (isMobile.matches|| (bowser.msie && bowser.version <= 8)) {
         $video.remove();
         $('#backup', $siteBg).removeClass('invisible');
         $('.background-poster', $siteBg).show();
@@ -138,7 +138,7 @@ $(document).ready(function () {
                     $navBar.css('top', '-50px');
                 }
             });
-            if (!(Modernizr.touch || (bowser.msie && bowser.version <= 8))) {
+            if (!(isMobile.matches || (bowser.msie && bowser.version <= 8))) {
                 TweenLite.to($logoHeader, 3, {
                     alpha: 0,
                     ease: Circ.easeOut
@@ -153,7 +153,7 @@ $(document).ready(function () {
                 ease: Circ.easeOut
             });
 
-            if (!(Modernizr.touch || (bowser.msie && bowser.version <= 8))) {
+            if (!(isMobile.matches || (bowser.msie && bowser.version <= 8))) {
                 TweenLite.to($logoHeader, 1, {
                     alpha: 1,
                     ease: Circ.easeOut
