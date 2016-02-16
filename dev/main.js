@@ -1,10 +1,17 @@
-// TODO remove bigvideo.js and just use css
 // TODO modularize with browserify
+// TODO add recent projects, planned parenthood, map, un women
+// TODO optimize intro loading, try intro animation
+// TODO fix intro for Safari, site is blocked
+// TODO debug and optimize router, auto scroll hack
+// TODO test for IE and mobile
+// TODO support swiping for mobile
+// TODO test deploy with heroku
+
 var myProjects = new ProjectList(projects);
 var isMobile = window.matchMedia("only screen and (max-width: 760px)");
 var MainRouter = Backbone.Router.extend({
     routes: {
-        "work/:id": "showProject", // #search/kiwis
+        "work/:id": "showProject",
         "work": "jumpToPage",
         "about": "jumpToPage",
         "contact": "jumpToPage"
