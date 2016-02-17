@@ -1,0 +1,86 @@
+.brand-heading {
+  margin: 0;
+}
+
+.navbar {
+  display: none;
+  margin-bottom: 0;
+  border-bottom: 1px solid rgba(255,255,255,.3);
+  text-transform: uppercase;
+  font-family: Montserrat, "Helvetica Neue", Helvetica, Arial, sans-serif;
+  background-color: #fff;
+}
+
+.navbar-brand {
+  font-weight: 700;
+  padding: 4px 15px;
+}
+
+.navbar-brand:focus {
+  outline: 0;
+}
+
+.table tbody tr:hover td, .table tbody tr:hover th {
+  background-color: transparent;
+}
+
+a, a:hover, a:focus {
+  color: inherit;
+}
+
+
+.intro {
+  display: table;
+  width: 100%;
+  height: auto;
+  padding: 100px 0;
+  text-align: center;
+  color: #fff;
+}
+
+.intro-body {
+  display: table-cell;
+  vertical-align: middle;
+}
+
+.intro-text {
+  font-size: 18px;
+}
+
+@media (min-width: 767px) {
+  .intro {
+    height: 100%;
+    -webkit-transition: height 1s ease-out;
+    padding: 0;
+  }
+
+  .brand-heading {
+    font-size: 40px;
+  }
+
+  .intro-text {
+    font-size: 25px;
+  }
+}
+
+.intro-body a {
+  color: #fff;
+  font-size: 40px;
+}
+
+.intro-body a:hover {
+  background: none;
+  text-decoration: overline;
+}
+
+.intro {
+  .header {
+    width: 622px;
+    height: 75px;
+    margin: 0 auto;
+    ul {
+      padding-top: 10px;
+      width: 540px;
+    }
+  }
+}

@@ -1,0 +1,93 @@
+html,body {
+  width: 100%;
+  height: 100%;
+  color: #FFF;
+}
+body {
+  font-family: 'Open Sans', Lora, "Helvetica Neue", Helvetica, Arial, sans-serif;
+  webkit-tap-highlight-color: rgba(255,255,255,.2);
+}
+
+nav {
+  color: #000;
+}
+
+
+h1, h2, h3, h4, h5, h6 {
+  margin: 0 0 35px;
+  text-transform: uppercase;
+  font-family: Montserrat, "Helvetica Neue", Helvetica, Arial, sans-serif;
+  font-weight: 700;
+  letter-spacing: 1px;
+}
+
+h1 {
+  position: relative;
+  font-weight: 800;
+  font-size: 40px;
+  text-indent: 39px;
+  position: relative;
+}
+h2 {
+  text-align: center;
+}
+
+h3 {
+  font-size: 110%;
+  margin: 0;
+  padding: 0;
+}
+
+h1:before {
+  content: " ";
+  background: transparent url("../images/lvlogo-w.png") no-repeat;
+  background-size: 70px;
+  position: absolute;
+  top: 7px;
+  left: 0px;
+  width: 100%;
+  height: 180%;
+}
+
+p {
+  margin: 0 0 25px;
+  font-size: 18px;
+  line-height: 1.5;
+}
+
+@media (min-width: 767px) {
+  p {
+    margin: 0 0 35px;
+    font-size: 20px;
+    line-height: 1.6;
+  }
+}
+
+a {
+  -webkit-transition: all .2s ease-in-out;
+  -moz-transition: all .2s ease-in-out;
+  transition: all .2s ease-in-out;
+}
+
+
+img::-moz-selection {
+  background: 0 0;
+}
+
+section {
+  clear: both;
+}
+
+form {
+  display: table;
+  margin: auto;
+}
+
+textarea {
+  resize: none;
+  height: 150px;
+}
+
+a:hover, a:focus, i:hover {
+  background-color: transparent !important;
+}
