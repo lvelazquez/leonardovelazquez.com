@@ -1,5 +1,59 @@
 var projects = [
     {
+        id: "unwomen",
+        thumb: "th_uw.png",
+        thumbWidth: "200",
+        thumbHeight: "300",
+        title: "UN Women HeforShe.org",
+        description: "Styled reusable SASS modules for a campaign for promoting gender equality in the workforce by United Nation's Women",
+        type: 'html/css/js',
+        url: "http://www.heforshe.org",
+        images: [{
+            image_url: "unw.png"
+        }, {
+            image_url: "unw2.png"
+        }, {
+            image_url: "unw3.png"
+        }]
+    }, {
+        id: "wgl",
+        thumb: "wgl1.png",
+        thumbWidth: "200",
+        thumbHeight: "200",
+        title: "WGL Custom Google map app",
+        description: "Custom interface for Washington Gas to filter, display and edit data markers using Google Maps API",
+        type: 'html/css/js',
+        url: "",
+        images: [{
+            image_url: "wgl1.png"
+        }, {
+            image_url: "wgl2.png"
+        }, {
+            image_url: "wgl3.png"
+        }]
+    },
+    {
+        id: "pp",
+        thumb: "pp1.png",
+        thumbWidth: "200",
+        thumbHeight: "200",
+        title: "Planned Parenthood Global mobile site prototype",
+        description: "Developer for client side template based prototype for Planned Parenthood's global division, part of the PP's didactic mission of reaching out to communities in Ecuador and Nigeria",
+        type: 'html/css/js',
+        url: "",
+        images: [{
+            image_url: "pp1.png"
+        }, {
+            image_url: "pp2.png"
+        }, {
+            image_url: "pp3.png"
+        }, {
+            image_url: "pp4.png"
+        }, {
+            image_url: "pp5.png"
+        }]
+    },
+    {
         id: "droid",
         thumb: "droid1.jpg",
         thumbWidth: "200",
@@ -17,7 +71,8 @@ var projects = [
         }, {
             image_url: "droid4.jpg"
         }]
-    }, {
+    },
+     {
         id: "believe",
         thumb: "believe1.jpg",
         thumbWidth: "200",

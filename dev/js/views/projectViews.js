@@ -25,7 +25,7 @@ var ProjectView = Backbone.View.extend({
         this.init = false;
         this.defaultProject = "finder";
 
-        if(!Modernizr.touch){
+        if(!isMobile.matches){
             this.showProject();
         }
 

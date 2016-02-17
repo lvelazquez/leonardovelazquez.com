@@ -1,5 +1,59 @@
 var projects = [
     {
+        id: "unwomen",
+        thumb: "th_uw.png",
+        thumbWidth: "200",
+        thumbHeight: "300",
+        title: "UN Women HeforShe.org",
+        description: "Styled reusable SASS modules for a campaign for promoting gender equality in the workforce by United Nation's Women",
+        type: 'html/css/js',
+        url: "http://www.heforshe.org",
+        images: [{
+            image_url: "unw.png"
+        }, {
+            image_url: "unw2.png"
+        }, {
+            image_url: "unw3.png"
+        }]
+    }, {
+        id: "wgl",
+        thumb: "wgl1.png",
+        thumbWidth: "200",
+        thumbHeight: "200",
+        title: "WGL Custom Google map app",
+        description: "Custom interface for Washington Gas to filter, display and edit data markers using Google Maps API",
+        type: 'html/css/js',
+        url: "",
+        images: [{
+            image_url: "wgl1.png"
+        }, {
+            image_url: "wgl2.png"
+        }, {
+            image_url: "wgl3.png"
+        }]
+    },
+    {
+        id: "pp",
+        thumb: "pp1.png",
+        thumbWidth: "200",
+        thumbHeight: "200",
+        title: "Planned Parenthood Global mobile site prototype",
+        description: "Developer for client side template based prototype for Planned Parenthood's global division, part of the PP's didactic mission of reaching out to communities in Ecuador and Nigeria",
+        type: 'html/css/js',
+        url: "",
+        images: [{
+            image_url: "pp1.png"
+        }, {
+            image_url: "pp2.png"
+        }, {
+            image_url: "pp3.png"
+        }, {
+            image_url: "pp4.png"
+        }, {
+            image_url: "pp5.png"
+        }]
+    },
+    {
         id: "droid",
         thumb: "droid1.jpg",
         thumbWidth: "200",
@@ -17,7 +71,8 @@ var projects = [
         }, {
             image_url: "droid4.jpg"
         }]
-    }, {
+    },
+     {
         id: "believe",
         thumb: "believe1.jpg",
         thumbWidth: "200",
@@ -156,9 +211,8 @@ var projects = [
         }]
     }];
 // var Handlebars = require('handlebars');
-
 Handlebars.registerHelper('ifZero', function (a, opts) {
-    if (a == 0)// Or === depending on your needs
+    if (a == 0)
         return opts.fn(this);
     else
         return opts.inverse(this);
@@ -243,7 +297,7 @@ var ProjectView = Backbone.View.extend({
         this.init = false;
         this.defaultProject = "finder";
 
-        if(!Modernizr.touch){
+        if(!isMobile.matches){
             this.showProject();
         }
 
@@ -476,19 +530,84 @@ var ContactView = Backbone.View.extend({
         this.$('.contact-info').removeClass('has-error');
     }
 });
-// TODO remove bigvideo.js and just use css
-// TODO modularize with browserify
-var myProjects = new ProjectList(projects);
+//Google Map Skin - Get more at http://snazzymaps.com/
+var myOptions = {
+    zoom: 15, //38.8897° N, 77.0111°
+    center: new google.maps.LatLng(38.8897, -77.0111),
+    mapTypeId: google.maps.MapTypeId.ROADMAP,
+    disableDefaultUI: true,
+    styles: [{
+        "featureType": "all",
+        "elementType": "geometry",
+        "stylers": [{"color": "#A5C7DE"}]
+    }, {
+        "featureType": "all",
+        "elementType": "labels.text.fill",
+        "stylers": [{"gamma": 0.01}, {"lightness": 20}]
+    }, {
+        "featureType": "all",
+        "elementType": "labels.text.stroke",
+        "stylers": [{"saturation": -31}, {"lightness": -33}, {"weight": 2}, {"gamma": 0.8}]
+    }, {
+        "featureType": "all",
+        "elementType": "labels.icon",
+        "stylers": [{"visibility": "off"}]
+    }, {
+        "featureType": "administrative.country",
+        "elementType": "geometry.fill",
+        "stylers": [{"visibility": "on"}, {"hue": "#A5C7DE"}]
+    }, {
+        "featureType": "administrative.province",
+        "elementType": "geometry.fill",
+        "stylers": [{"visibility": "on"}]
+    }, {
+        "featureType": "landscape",
+        "elementType": "geometry",
+        "stylers": [{"lightness": 30}, {"saturation": 30}]
+    }, {"featureType": "poi", "elementType": "geometry", "stylers": [{"saturation": 20}]}, {
+        "featureType": "poi.park",
+        "elementType": "geometry",
+        "stylers": [{"lightness": 20}, {"saturation": -20}]
+    }, {
+        "featureType": "road",
+        "elementType": "geometry",
+        "stylers": [{"lightness": 10}, {"saturation": -30}]
+    }, {
+        "featureType": "road",
+        "elementType": "geometry.stroke",
+        "stylers": [{"saturation": 25}, {"lightness": 25}]
+    }, {"featureType": "water", "elementType": "all", "stylers": [{"lightness": -20}]}]
 
+};
+
+//"#A5C7DE"
+var map = new google.maps.Map(document.getElementById('map'), myOptions);
+// TODO modularize with browserify
+// TODO add recent projects, planned parenthood, map, un women
+// TODO optimize intro loading, try intro animation
+// TODO fix intro for Safari, site is blocked
+// TODO debug and optimize router, auto scroll hack
+
+// TODO Optimize
+// Use sprite for thumbs? won't work with
+// support swiping for mobile
+
+// TODO consolidate css in a sass file
+// TODO make slideshow degrade gracefully without javascript
+// TODO test deploy with heroku
+// TODO test for IE and mobile
+
+var myProjects = new ProjectList(projects);
+var isMobile = window.matchMedia("only screen and (max-width: 760px)");
 var MainRouter = Backbone.Router.extend({
     routes: {
-        "work/:id": "showProject", // #search/kiwis
+        "work/:id": "showProject",
         "work": "jumpToPage",
         "about": "jumpToPage",
         "contact": "jumpToPage"
     },
     hideProject: function () {
-        if (Modernizr.touch) {
+        if (isMobile.matches) {
             this.project.$el.addClass('invisible');
         }
     },
@@ -547,7 +666,7 @@ var MainRouter = Backbone.Router.extend({
     },
     showProject: function (id) {
         this.jumpToPage('work');
-        if (Modernizr.touch) {
+        if (isMobile.matches) {
             this.project.$el.removeClass('invisible');
         }
         this.project.showProject(id);
@@ -564,7 +683,7 @@ $(document).ready(function () {
 
     var $siteBg = $("#siteBg");
     var $video = $('#myPlayer', $siteBg);
-    //  if(Modernizr.touch) {
+
     $('img.lazy').lazyload({
         effect: "fadeIn"
     });
@@ -572,15 +691,13 @@ $(document).ready(function () {
 
     var showSite = function () {
 
-
         TweenLite.to($('.background-poster', $siteBg), 5, {
             alpha: 1,
             ease: Strong.easeOut
         });
-
     };
 
-    if (Modernizr.touch || (bowser.msie && bowser.version <= 8)) {
+    if (isMobile.matches|| (bowser.msie && bowser.version <= 8)) {
         $video.remove();
         $('#backup', $siteBg).removeClass('invisible');
         $('.background-poster', $siteBg).show();
@@ -616,7 +733,7 @@ $(document).ready(function () {
                     $navBar.css('top', '-50px');
                 }
             });
-            if (!(Modernizr.touch || (bowser.msie && bowser.version <= 8))) {
+            if (!(isMobile.matches || (bowser.msie && bowser.version <= 8))) {
                 TweenLite.to($logoHeader, 3, {
                     alpha: 0,
                     ease: Circ.easeOut
@@ -631,7 +748,7 @@ $(document).ready(function () {
                 ease: Circ.easeOut
             });
 
-            if (!(Modernizr.touch || (bowser.msie && bowser.version <= 8))) {
+            if (!(isMobile.matches || (bowser.msie && bowser.version <= 8))) {
                 TweenLite.to($logoHeader, 1, {
                     alpha: 1,
                     ease: Circ.easeOut

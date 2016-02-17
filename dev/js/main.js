@@ -3,9 +3,15 @@
 // TODO optimize intro loading, try intro animation
 // TODO fix intro for Safari, site is blocked
 // TODO debug and optimize router, auto scroll hack
-// TODO test for IE and mobile
-// TODO support swiping for mobile
+
+// TODO Optimize
+// Use sprite for thumbs? won't work with
+// support swiping for mobile
+
+// TODO consolidate css in a sass file
+// TODO make slideshow degrade gracefully without javascript
 // TODO test deploy with heroku
+// TODO test for IE and mobile
 
 var myProjects = new ProjectList(projects);
 var isMobile = window.matchMedia("only screen and (max-width: 760px)");
@@ -101,12 +107,10 @@ $(document).ready(function () {
 
     var showSite = function () {
 
-
         TweenLite.to($('.background-poster', $siteBg), 5, {
             alpha: 1,
             ease: Strong.easeOut
         });
-
     };
 
     if (isMobile.matches|| (bowser.msie && bowser.version <= 8)) {

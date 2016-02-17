@@ -6,6 +6,14 @@ var jshint = require('gulp-jshint');
 var concat = require('gulp-concat');
 var uglify = require('gulp-uglify');
 var rename = require('gulp-rename');
+var sass = require('gulp-sass');
+
+gulp.task('styles', function() {
+   return gulp.src('dev/sass/main.scss')
+       .pipe(sass())
+       .pipe(concat('main.css'))
+       .pipe(gulp.dest('public/css'));
+});
 
 // Lint Task
 gulp.task('lint', function () {
@@ -15,14 +23,15 @@ gulp.task('lint', function () {
 });
 
 var aMain = [
+    // TODO remove data from build make into json
     "dev/data/data.js",
-    "dev/helpers.js",
-    "dev/models/project.js",
-    "dev/models/project.js",
-    "dev/models/contact.js",
-    "dev/views/projectViews.js",
-    "dev/views/contactView.js",
-    "dev/main.js"];
+    "dev/js/utils/helpers.js",
+    "dev/js/models/project.js",
+    "dev/js/models/contact.js",
+    "dev/js/views/projectViews.js",
+    "dev/js/views/contactView.js",
+    "dev/js/utils/googlemap.js",
+    "dev/js/main.js"];
 
 // Concatenate & Minify main JS
 gulp.task('scripts', function () {
@@ -36,11 +45,12 @@ gulp.task('scripts', function () {
 
 var aLib = [
     "node_modules/underscore/underscore-min.js",
-    "node_modules/backbone/backbone-min.js",
     "node_modules/jquery/dist/jquery.min.js",
-    "node_modules/jquery-lazyload/jquery.lazyload.min.js",
+    "node_modules/handlebars/dist/handlebars.js",
+    "node_modules/backbone/backbone-min.js",
+    "node_modules/jquery-lazyload/jquery.lazyload.js",
     "node_modules/jquery-scrollstop/jquery.scrollstop.min.js",
-   // "dev/lib/modernizr.custom.65236.js",
+    // "dev/lib/modernizr.custom.65236.js",
     "node_modules/gsap/src/minified/EasePack.min.js",
     "node_modules/gsap/src/minified/TweenMax.min.js",
     "node_modules/bootstrap/dist/js/bootstrap.min.js",
@@ -51,16 +61,15 @@ var aLib = [
 gulp.task('lib', function () {
     return gulp.src(aLib)
         .pipe(concat('lib.js'))
+        .pipe(uglify())
         .pipe(gulp.dest('public/js'))
 });
 
 // Watch Files For Changes
 gulp.task('watch', function () {
-    gulp.watch('dev/*.js', ['lint', 'scripts']);
-    gulp.watch('dev/models/*.js', ['lint', 'scripts']);
-    gulp.watch('dev/views/*.js', ['lint', 'scripts']);
-    // gulp.watch('scss/*.scss', ['sass']);
+    gulp.watch('dev/**/*.js', ['lint', 'scripts']);
+    gulp.watch('dev/sass/*.scss', ['sass']);
 });
 
 // Default Task
-gulp.task('default', ['scripts', 'watch']); // 'sass','lint', 'lib',
+gulp.task('default', ['styles', 'scripts', 'watch']); // 'sass','lint', 'lib',
