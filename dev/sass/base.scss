@@ -10,8 +10,8 @@ body {
 
 nav {
   color: #000;
+  height: 50px;
 }
-
 
 h1, h2, h3, h4, h5, h6 {
   margin: 0 0 35px;
@@ -69,6 +69,10 @@ a {
   transition: all .2s ease-in-out;
 }
 
+a, a:hover, a:focus {
+  color: inherit;
+}
+
 
 img::-moz-selection {
   background: 0 0;
@@ -86,8 +90,4 @@ form {
 textarea {
   resize: none;
   height: 150px;
-}
-
-a:hover, a:focus, i:hover {
-  background-color: transparent !important;
 }
