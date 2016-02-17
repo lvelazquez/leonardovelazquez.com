@@ -1,0 +1,71 @@
+.intro {
+  display: table;
+  width: 100%;
+  height: auto;
+  padding: 100px 0;
+  text-align: center;
+  color: #fff;
+
+  .btn-lv {
+    width: 70px;
+    height: 70px;
+    margin-top: 15px;
+    padding: 7px 16px;
+    font-size: 40px;
+    color: #fff;
+    background: 0 0;
+    -webkit-transition: background .3s ease-in-out;
+    -moz-transition: background .3s ease-in-out;
+    transition: background .3s ease-in-out;
+  }
+
+  .intro-nav a {
+    text-decoration: none;
+  }
+
+  .intro-body {
+    display: table-cell;
+    vertical-align: middle;
+    a {
+      color: #fff;
+      font-size: 40px;
+      &:hover {
+        background: none;
+        text-decoration: overline;
+      }
+    }
+
+  }
+
+  .intro-text {
+    font-size: 18px;
+  }
+
+  .header {
+    width: 622px;
+    height: 75px;
+    margin: 0 auto;
+    ul {
+      padding-top: 10px;
+      width: 540px;
+    }
+  }
+}
+
+@media (min-width: 767px) {
+  .intro {
+    height: 100%;
+    -webkit-transition: height 1s ease-out;
+    padding: 0;
+  }
+
+  .brand-heading {
+    font-size: 40px;
+  }
+
+  .intro-text {
+    font-size: 25px;
+  }
+}
+
+

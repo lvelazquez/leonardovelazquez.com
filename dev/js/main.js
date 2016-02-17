@@ -109,7 +109,10 @@ $(document).ready(function () {
 
         TweenLite.to($('.background-poster', $siteBg), 5, {
             alpha: 1,
-            ease: Strong.easeOut
+            ease: Strong.easeOut,
+            onStart: function() {
+                $video[0].play();
+            }
         });
     };
 

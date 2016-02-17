@@ -3,12 +3,34 @@
 }
 
 .navbar {
+  font-family: Montserrat, "Helvetica Neue", Helvetica, Arial, sans-serif;
   display: none;
   margin-bottom: 0;
   border-bottom: 1px solid rgba(255,255,255,.3);
   text-transform: uppercase;
-  font-family: Montserrat, "Helvetica Neue", Helvetica, Arial, sans-serif;
   background-color: #fff;
+  ul {
+    margin-right: 10px;
+  }
+}
+
+.navbar-custom {
+  border-width: 0 0 0px !important;
+}
+
+.navbar-custom .nav li:hover, .navbar-custom .nav a:hover {
+  color: white;
+  background-color: rgba(0,0,0,1);
+}
+.navbar-custom .nav li.active {
+  color: #FFF;
+  background-color: #000;
+  /*border-bottom: 5px #000000 solid !important;*/
+}
+
+.navbar-custom .navbar-brand {
+  position: relative;
+  left: 5px;
 }
 
 .navbar-brand {
@@ -24,63 +46,31 @@
   background-color: transparent;
 }
 
-a, a:hover, a:focus {
-  color: inherit;
-}
-
-
-.intro {
-  display: table;
-  width: 100%;
-  height: auto;
-  padding: 100px 0;
-  text-align: center;
-  color: #fff;
-}
-
-.intro-body {
-  display: table-cell;
+a .download-icon {
+  background: transparent url('../images/downloadicon.png') no-repeat 0 -20px;
+  width: 20px;
+  height: 18px;
+  background-size: cover;
+  display: inline-block;
   vertical-align: middle;
 }
 
-.intro-text {
-  font-size: 18px;
+a:hover .download-icon {
+  background:transparent url('../images/downloadicon.png') no-repeat 0 0;
+  background-size: cover;
 }
 
-@media (min-width: 767px) {
-  .intro {
-    height: 100%;
-    -webkit-transition: height 1s ease-out;
-    padding: 0;
-  }
 
-  .brand-heading {
-    font-size: 40px;
-  }
 
-  .intro-text {
-    font-size: 25px;
-  }
-}
-
-.intro-body a {
-  color: #fff;
-  font-size: 40px;
-}
-
-.intro-body a:hover {
-  background: none;
-  text-decoration: overline;
-}
-
-.intro {
-  .header {
-    width: 622px;
-    height: 75px;
-    margin: 0 auto;
-    ul {
-      padding-top: 10px;
-      width: 540px;
-    }
-  }
+video.fullscreen {
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  min-width: 100%;
+  min-height: 100%;
+  width: auto;
+  height: auto;
+  z-index: -100;
+  transform: translate(-50%, -50%);
+  background-color: white;
 }

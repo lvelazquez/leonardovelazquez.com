@@ -210,13 +210,15 @@ var projects = [
             image_url: "newmoon5.jpg"
         }]
     }];
+
 // var Handlebars = require('handlebars');
-Handlebars.registerHelper('ifZero', function (a, opts) {
-    if (a == 0)
-        return opts.fn(this);
-    else
-        return opts.inverse(this);
-});
+    Handlebars.registerHelper('ifZero', function (a, opts) {
+        if (a == 0)
+            return opts.fn(this);
+        else
+            return opts.inverse(this);
+    });
+
 var Project = Backbone.Model.extend({
     defaults: {
         id: "def-project",
@@ -598,7 +600,7 @@ var map = new google.maps.Map(document.getElementById('map'), myOptions);
 // TODO test for IE and mobile
 
 var myProjects = new ProjectList(projects);
-var isMobile = window.matchMedia("only screen and (max-width: 760px)");
+var isMobile = {matches:false} ;// window.matchMedia("only screen and (max-width: 760px)");
 var MainRouter = Backbone.Router.extend({
     routes: {
         "work/:id": "showProject",
@@ -693,7 +695,10 @@ $(document).ready(function () {
 
         TweenLite.to($('.background-poster', $siteBg), 5, {
             alpha: 1,
-            ease: Strong.easeOut
+            ease: Strong.easeOut,
+            onStart: function() {
+                $video[0].play();
+            }
         });
     };
 

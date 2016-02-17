@@ -68,7 +68,7 @@ gulp.task('lib', function () {
 // Watch Files For Changes
 gulp.task('watch', function () {
     gulp.watch('dev/**/*.js', ['lint', 'scripts']);
-    gulp.watch('dev/sass/*.scss', ['sass']);
+    gulp.watch('dev/sass/*.scss', ['styles']);
 });
 
 // Default Task
