@@ -6,18 +6,6 @@
   text-align: center;
   color: #fff;
 
-  .btn-lv {
-    width: 70px;
-    height: 70px;
-    margin-top: 15px;
-    padding: 7px 16px;
-    font-size: 40px;
-    color: #fff;
-    background: 0 0;
-    -webkit-transition: background .3s ease-in-out;
-    -moz-transition: background .3s ease-in-out;
-    transition: background .3s ease-in-out;
-  }
 
   .intro-nav a {
     text-decoration: none;
@@ -29,10 +17,6 @@
     a {
       color: #fff;
       font-size: 40px;
-      &:hover {
-        background: none;
-        text-decoration: overline;
-      }
     }
 
   }
@@ -50,6 +34,42 @@
       width: 540px;
     }
   }
+
+  .page-scroll {
+    clear: both;
+    > i.animated {
+      top: 8px;
+      -webkit-transition-property: -webkit-transform;
+      -webkit-transition-duration: 1s;
+      -moz-transition-property: -moz-transform;
+      -moz-transition-duration: 1s;
+    }
+
+    &:hover > .animated {
+      -webkit-animation-name: pulse;
+      -moz-animation-name: pulse;
+      -webkit-animation-duration: 1.5s;
+      -moz-animation-duration: 1.5s;
+      -webkit-animation-iteration-count: infinite;
+      -moz-animation-iteration-count: infinite;
+      -webkit-animation-timing-function: linear;
+      -moz-animation-timing-function: linear;
+    }
+  }
+
+  .btn-lv {
+    width: 70px;
+    height: 70px;
+    margin-top: 15px;
+    padding: 7px 16px;
+    font-size: 40px;
+    color: #fff;
+    background: 0 0;
+    -webkit-transition: background .3s ease-in-out;
+    -moz-transition: background .3s ease-in-out;
+    transition: background .3s ease-in-out;
+  }
+
 }
 
 @media (min-width: 767px) {
@@ -67,5 +87,24 @@
     font-size: 25px;
   }
 }
+.background-poster {
+  opacity:0;
+}
 
+.fullscreen {
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  min-width: 100%;
+  min-height: 100%;
+  width: auto;
+  height: auto;
+  z-index: -100;
+  transform: translate(-50%, -50%);
+}
 
+#siteBg {
+  z-index: -1000;
+  overflow: hidden;
+
+}

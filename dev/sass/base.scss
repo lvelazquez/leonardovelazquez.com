@@ -91,3 +91,12 @@ textarea {
   resize: none;
   height: 150px;
 }
+
+
+dt, dd {
+  position: relative;
+  word-wrap: break-word;
+  font-size: 140%;
+  display: inline;
+  line-height: 1.7;
+}

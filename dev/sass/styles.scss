@@ -1,50 +1,47 @@
-/* grayscale */
-
-.light {
-  font-weight: 400;
-}
-
-div.page-scroll {
-  clear: both;
-}
-.page-scroll i.animated {
-  top: 8px;
-  -webkit-transition-property: -webkit-transform;
-  -webkit-transition-duration: 1s;
-  -moz-transition-property: -moz-transform;
-  -moz-transition-duration: 1s;
-}
-
-.page-scroll a:hover i.animated {
-
-  -webkit-animation-name: pulse;
-  -moz-animation-name: pulse;
-  -webkit-animation-duration: 1.5s;
-  -moz-animation-duration: 1.5s;
-  -webkit-animation-iteration-count: infinite;
-  -moz-animation-iteration-count: infinite;
-  -webkit-animation-timing-function: linear;
-  -moz-animation-timing-function: linear;
-}
-
 .content-section {
   padding-top: 100px;
-}
-
-.download-section {
-  width: 100%;
-  padding: 50px 0;
-  color: #fff;
-  -webkit-background-size: cover;
-  -moz-background-size: cover;
-  background-size: cover;
-  -o-background-size: cover;
 }
 
 #map {
   width: 100%;
   height: 300px;
   margin-top:50px;
+}
+
+.btn {
+  text-transform: uppercase;
+  font-family: Montserrat, "Helvetica Neue", Helvetica, Arial, sans-serif;
+  font-weight: 400;
+  -webkit-transition: all .3s ease-in-out;
+  -moz-transition: all .3s ease-in-out;
+  transition: all .3s ease-in-out;
+}
+
+.btn:hover, .btn:focus {
+  outline: 0;
+  color: white;
+}
+
+#submit.btn {
+  color:
+}
+
+.btn-huge {
+  padding: 25px;
+  font-size: 26px;
+}
+
+.banner-social-buttons .btn {
+  margin-bottom: 10px;
+}
+
+.banner-social-buttons {
+  margin-top: 0;
+}
+
+.banner-social-buttons a:hover {
+  color: #000;
+  background-color: #000;
 }
 
 @media (min-width: 767px) {
@@ -59,54 +56,6 @@ div.page-scroll {
   #map {
     height: 250px;
   }
-}
-
-.btn {
-  text-transform: uppercase;
-  font-family: Montserrat, "Helvetica Neue", Helvetica, Arial, sans-serif;
-  font-weight: 400;
-  -webkit-transition: all .3s ease-in-out;
-  -moz-transition: all .3s ease-in-out;
-  transition: all .3s ease-in-out;
-}
-
-.btn-default {
-  background-color: transparent;
-}
-
-.btn-default:hover, .btn-default:focus {
-  outline: 0;
-  color: #000;
-}
-
-.btn-huge {
-  padding: 25px;
-  font-size: 26px;
-}
-
-.banner-social-buttons .btn {
-  margin-bottom: 10px;
-}
-.banner-social-buttons {
-  margin-top: 0;
-}
-
-.banner-social-buttons a {
-
-}
-
-.banner-social-buttons a:hover {
-  color: #000;
-  background-color: #000;
-}
-
-@media (max-width: 1199px) {
-  ul.banner-social-buttons {
-    margin-top: 15px;
-  }
-}
-
-@media (max-width: 767px) {
   ul.banner-social-buttons > li {
     display: block;
     margin-bottom: 20px;
@@ -118,8 +67,10 @@ div.page-scroll {
   }
 }
 
-.wrapper {
-  padding: 0;
+@media (max-width: 1199px) {
+  ul.banner-social-buttons {
+    margin-top: 15px;
+  }
 }
 
 
@@ -127,34 +78,6 @@ h2.brand-heading {
   text-indent: 46px;
 }
 
-
-ul.nav a:hover {
-  color: white;
-  background-color: rgba(255,255,255,.25) !important;
-}
-
-.navbar-collapse .navbar-brand {
-  padding: 0;
-  margin:0;
-  height: auto;
-}
-.navbar-main-collapse {
-  position: relative;
-  background-color: #FFF;
-}
-
-.thumbnails img {
-  width: 100%;
-}
-
-div.thumbnails > div {
-  padding: 0;
-}
-
-
-.about, footer {
-  padding: 5%;
-}
 
 .contact-form input, textarea {
   width: 250px;
@@ -167,6 +90,18 @@ div.thumbnails > div {
   left: 24px;
 }
 
+
+.wrapper {
+  padding: 0;
+}
+
+.centered {
+  float: none;
+  margin: auto;
+}
+
+
+
 #about p {
   text-indent: 30px;
 }
@@ -176,49 +111,9 @@ div.thumbnails > div {
 }
 
 
-/* custom */
-/* ==========================================================================
- Author's custom styles
- ========================================================================== */
-
-.wrapper {
-  padding: 0;
-}
-
-
-.centered {
-  float: none;
-  margin: auto;
-}
-
-.thumbnails img {
-  width: 100%;
-}
-
-div.gallery > div {
-  padding: 0;
-}
-
-.about, footer {
+#about, footer {
   padding: 5%;
 }
-
-
-.background-poster {
-  position: fixed;
-  min-width: 100%;
-  min-height: 100%;
-  width: auto;
-  height: auto;
-  bottom: 0px;
-  right: 0px;
-  opacity:0;
-}
-#siteBg {
-  z-index: -1000;
-  overflow: hidden;
-}
-
 
 .leo {
   background: transparent url('../images/leo2.jpg');
@@ -235,22 +130,14 @@ div.gallery > div {
   -webkit-transition: height 1.5s ease-out;
 }
 
-dt, dd {
-  word-wrap: break-word;
-  font-size: 140%;
-  position: relative;
-  display: inline;
-  line-height: 1.7;
-}
-
-
-section#contact {
+#contact {
   background-color: rgba(255,255,255,.95);
   color: #000;
 }
 
 .btn-default {
   color: #333;
+  background-color: transparent;
 }
 
 .site-logo {
@@ -273,7 +160,6 @@ section#contact {
 }
 
 @media (max-width: 767px) {
-
   .background-poster {
     opacity:1;
   }
@@ -371,6 +257,15 @@ section#contact {
     display: none;
   }
 
+
+  .project {
+    -webkit-transition: height .7s ease-in-out;
+    -moz-transition: height .7s ease-in-out;
+    -o-transition: height .7s ease-in-out;
+    transition: height .7s ease-in-out;
+    color:white;
+  }
+
   .project #close-btn {
     font-size: 240%;
     position: absolute;
@@ -410,25 +305,3 @@ section#contact {
   }
 }
 
-.top-logo {
-  min-width: 35px;
-  position: relative;
-  float: left;
-  height: auto;
-  top: 0px;
-  left: 0px;
-}
-
-.top-nav-container {
-  background-color: #FFF;
-  height: 0;
-}
-
-.project {
-  -webkit-transition: height .7s ease-in-out;
-  -moz-transition: height .7s ease-in-out;
-  -o-transition: height .7s ease-in-out;
-  transition: height .7s ease-in-out;
-  color:white;
-
-}

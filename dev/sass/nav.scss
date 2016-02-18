@@ -6,12 +6,18 @@
   font-family: Montserrat, "Helvetica Neue", Helvetica, Arial, sans-serif;
   display: none;
   margin-bottom: 0;
-  border-bottom: 1px solid rgba(255,255,255,.3);
+  border-bottom: 1px solid rgba(255, 255, 255, .3);
   text-transform: uppercase;
   background-color: #fff;
   ul {
     margin-right: 10px;
   }
+
+  .top-nav-container {
+    background-color: #FFF;
+    height: 0;
+  }
+
 }
 
 .navbar-custom {
@@ -20,8 +26,9 @@
 
 .navbar-custom .nav li:hover, .navbar-custom .nav a:hover {
   color: white;
-  background-color: rgba(0,0,0,1);
+  background-color: rgba(0, 0, 0, 1);
 }
+
 .navbar-custom .nav li.active {
   color: #FFF;
   background-color: #000;
@@ -36,10 +43,19 @@
 .navbar-brand {
   font-weight: 700;
   padding: 4px 15px;
-}
 
-.navbar-brand:focus {
-  outline: 0;
+  .top-logo {
+    min-width: 35px;
+    position: relative;
+    float: left;
+    height: auto;
+    top: 0px;
+    left: 0px;
+  }
+
+  &:focus {
+    outline: 0;
+  }
 }
 
 .table tbody tr:hover td, .table tbody tr:hover th {
@@ -56,21 +72,21 @@ a .download-icon {
 }
 
 a:hover .download-icon {
-  background:transparent url('../images/downloadicon.png') no-repeat 0 0;
+  background: transparent url('../images/downloadicon.png') no-repeat 0 0;
   background-size: cover;
 }
 
+ul.nav a:hover {
+  color: white;
+  background-color: rgba(255,255,255,.25) !important;
+}
 
-
-video.fullscreen {
-  position: fixed;
-  top: 50%;
-  left: 50%;
-  min-width: 100%;
-  min-height: 100%;
-  width: auto;
+.navbar-collapse .navbar-brand {
+  padding: 0;
+  margin:0;
   height: auto;
-  z-index: -100;
-  transform: translate(-50%, -50%);
-  background-color: white;
+}
+.navbar-main-collapse {
+  position: relative;
+  background-color: #FFF;
 }
