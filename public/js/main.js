@@ -600,7 +600,7 @@ var map = new google.maps.Map(document.getElementById('map'), myOptions);
 // TODO test for IE and mobile
 
 var myProjects = new ProjectList(projects);
-var isMobile = {matches:false} ;// window.matchMedia("only screen and (max-width: 760px)");
+var isMobile = window.matchMedia("only screen and (max-width: 760px)");
 var MainRouter = Backbone.Router.extend({
     routes: {
         "work/:id": "showProject",
@@ -692,8 +692,7 @@ $(document).ready(function () {
 
 
     var showSite = function () {
-
-        TweenLite.to($('.background-poster', $siteBg), 5, {
+        TweenLite.to($('.background-poster',$siteBg), 5, {
             alpha: 1,
             ease: Strong.easeOut,
             onStart: function() {
@@ -704,17 +703,12 @@ $(document).ready(function () {
 
     if (isMobile.matches|| (bowser.msie && bowser.version <= 8)) {
         $video.remove();
-        $('#backup', $siteBg).removeClass('invisible');
         $('.background-poster', $siteBg).show();
     } else {
         $video.on('canplay', showSite);
-        // fallback
-        setTimeout(function () {
-            showSite();
-        }, 1000);
 
         if ($video[0].readyState > 3) {
-            showSite();
+            // showSite();
         }
     }
 
