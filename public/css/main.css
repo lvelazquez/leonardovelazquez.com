@@ -473,12 +473,6 @@ ul.nav a:hover {
     padding-top: 25px; }
   .download-section {
     padding: 100px 0; }
-  #map {
-    height: 250px; }
-  ul.banner-social-buttons > li {
-    display: block;
-    margin-bottom: 20px;
-    padding: 0; }
   ul.banner-social-buttons > li:last-child {
     margin-bottom: 0; } }
 
@@ -487,6 +481,12 @@ ul.nav a:hover {
     margin-top: 15px; } }
 
 @media (max-width: 767px) {
+  #map {
+    height: 250px; }
+  .banner-social-buttons > li {
+    display: block;
+    margin-bottom: 20px;
+    padding: 0; }
   .background-poster {
     opacity: 1; }
   #mobileBackup {
