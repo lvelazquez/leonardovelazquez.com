@@ -28,7 +28,9 @@
 }
 
 #submit.btn {
-
+  &:hover {
+    background-color: black;
+  }
 }
 
 .btn-huge {
@@ -55,8 +57,11 @@
 }
 
 #about {
+  > img {
+    margin-bottom: 20px;
+  }
   padding: 5%;
-  p { text-indent: 30px; }
+  > p { text-indent: 30px; }
   .lazy {
     background-color: #FFF !important;
   }
@@ -91,15 +96,6 @@
     padding: 100px 0;
   }
 
-  #map {
-    height: 250px;
-  }
-  ul.banner-social-buttons > li {
-    display: block;
-    margin-bottom: 20px;
-    padding: 0;
-  }
-
   ul.banner-social-buttons > li:last-child {
     margin-bottom: 0;
   }
@@ -110,6 +106,17 @@
   }
 }
 @media (max-width: 767px) {
+
+  #map {
+    height: 250px;
+  }
+
+  .banner-social-buttons > li {
+    display: block;
+    margin-bottom: 20px;
+    padding: 0;
+  }
+
   .background-poster {
     opacity:1;
   }

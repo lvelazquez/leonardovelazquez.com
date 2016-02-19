@@ -117,7 +117,7 @@ $(document).ready(function () {
         $('.background-poster', $siteBg).show();
     } else {
         $video.on('canplay', showSite);
-        showSite();
+
         if ($video[0].readyState > 3) {
              showSite();
         }
