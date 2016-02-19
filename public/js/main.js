@@ -532,58 +532,6 @@ var ContactView = Backbone.View.extend({
         this.$('.contact-info').removeClass('has-error');
     }
 });
-//Google Map Skin - Get more at http://snazzymaps.com/
-var myOptions = {
-    zoom: 15, //38.8897° N, 77.0111°
-    center: new google.maps.LatLng(38.8897, -77.0111),
-    mapTypeId: google.maps.MapTypeId.ROADMAP,
-    disableDefaultUI: true,
-    styles: [{
-        "featureType": "all",
-        "elementType": "geometry",
-        "stylers": [{"color": "#A5C7DE"}]
-    }, {
-        "featureType": "all",
-        "elementType": "labels.text.fill",
-        "stylers": [{"gamma": 0.01}, {"lightness": 20}]
-    }, {
-        "featureType": "all",
-        "elementType": "labels.text.stroke",
-        "stylers": [{"saturation": -31}, {"lightness": -33}, {"weight": 2}, {"gamma": 0.8}]
-    }, {
-        "featureType": "all",
-        "elementType": "labels.icon",
-        "stylers": [{"visibility": "off"}]
-    }, {
-        "featureType": "administrative.country",
-        "elementType": "geometry.fill",
-        "stylers": [{"visibility": "on"}, {"hue": "#A5C7DE"}]
-    }, {
-        "featureType": "administrative.province",
-        "elementType": "geometry.fill",
-        "stylers": [{"visibility": "on"}]
-    }, {
-        "featureType": "landscape",
-        "elementType": "geometry",
-        "stylers": [{"lightness": 30}, {"saturation": 30}]
-    }, {"featureType": "poi", "elementType": "geometry", "stylers": [{"saturation": 20}]}, {
-        "featureType": "poi.park",
-        "elementType": "geometry",
-        "stylers": [{"lightness": 20}, {"saturation": -20}]
-    }, {
-        "featureType": "road",
-        "elementType": "geometry",
-        "stylers": [{"lightness": 10}, {"saturation": -30}]
-    }, {
-        "featureType": "road",
-        "elementType": "geometry.stroke",
-        "stylers": [{"saturation": 25}, {"lightness": 25}]
-    }, {"featureType": "water", "elementType": "all", "stylers": [{"lightness": -20}]}]
-
-};
-
-//"#A5C7DE"
-var map = new google.maps.Map(document.getElementById('map'), myOptions);
 // TODO modularize with browserify
 // TODO add recent projects, planned parenthood, map, un women
 // TODO optimize intro loading, try intro animation
@@ -694,10 +642,7 @@ $(document).ready(function () {
     var showSite = function () {
         TweenLite.to($('.background-poster',$siteBg), 5, {
             alpha: 1,
-            ease: Strong.easeOut,
-            onStart: function() {
-                $video[0].play();
-            }
+            ease: Strong.easeOut
         });
     };
 
@@ -706,9 +651,9 @@ $(document).ready(function () {
         $('.background-poster', $siteBg).show();
     } else {
         $video.on('canplay', showSite);
-
+        showSite();
         if ($video[0].readyState > 3) {
-            // showSite();
+             showSite();
         }
     }
 
@@ -760,4 +705,58 @@ $(document).ready(function () {
 
     Backbone.history.start();
 
+
 });
+
+//Google Map Skin - Get more at http://snazzymaps.com/
+var myOptions = {
+    zoom: 15, //38.8897° N, 77.0111°
+    center: new google.maps.LatLng(38.8897, -77.0111),
+    mapTypeId: google.maps.MapTypeId.ROADMAP,
+    disableDefaultUI: true,
+    styles: [{
+        "featureType": "all",
+        "elementType": "geometry",
+        "stylers": [{"color": "#A5C7DE"}]
+    }, {
+        "featureType": "all",
+        "elementType": "labels.text.fill",
+        "stylers": [{"gamma": 0.01}, {"lightness": 20}]
+    }, {
+        "featureType": "all",
+        "elementType": "labels.text.stroke",
+        "stylers": [{"saturation": -31}, {"lightness": -33}, {"weight": 2}, {"gamma": 0.8}]
+    }, {
+        "featureType": "all",
+        "elementType": "labels.icon",
+        "stylers": [{"visibility": "off"}]
+    }, {
+        "featureType": "administrative.country",
+        "elementType": "geometry.fill",
+        "stylers": [{"visibility": "on"}, {"hue": "#A5C7DE"}]
+    }, {
+        "featureType": "administrative.province",
+        "elementType": "geometry.fill",
+        "stylers": [{"visibility": "on"}]
+    }, {
+        "featureType": "landscape",
+        "elementType": "geometry",
+        "stylers": [{"lightness": 30}, {"saturation": 30}]
+    }, {"featureType": "poi", "elementType": "geometry", "stylers": [{"saturation": 20}]}, {
+        "featureType": "poi.park",
+        "elementType": "geometry",
+        "stylers": [{"lightness": 20}, {"saturation": -20}]
+    }, {
+        "featureType": "road",
+        "elementType": "geometry",
+        "stylers": [{"lightness": 10}, {"saturation": -30}]
+    }, {
+        "featureType": "road",
+        "elementType": "geometry.stroke",
+        "stylers": [{"saturation": 25}, {"lightness": 25}]
+    }, {"featureType": "water", "elementType": "all", "stylers": [{"lightness": -20}]}]
+
+};
+
+//"#A5C7DE"
+var map = new google.maps.Map(document.getElementById('map'), myOptions);

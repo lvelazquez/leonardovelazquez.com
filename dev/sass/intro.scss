@@ -29,6 +29,12 @@
     width: 622px;
     height: 75px;
     margin: 0 auto;
+
+    .subheader {
+      position: relative;
+      left: 24px;
+    }
+
     ul {
       padding-top: 10px;
       width: 540px;
@@ -57,6 +63,15 @@
     }
   }
 
+  .site-logo {
+    display: none;
+    background: transparent url("../images/lvlogo-w.png") no-repeat;
+    background-size: cover;
+    position: relative;
+    width: 50px;
+    height: 52px;
+  }
+
   .btn-lv {
     width: 70px;
     height: 70px;
@@ -71,6 +86,13 @@
   }
 
 }
+.header {
+  .logo-copy {
+    float: left;
+    margin-left: 5px;
+  }
+}
+
 
 @media (min-width: 767px) {
   .intro {
@@ -87,24 +109,30 @@
     font-size: 25px;
   }
 }
-.background-poster {
-  opacity:0;
-}
-
-.fullscreen {
-  position: fixed;
-  top: 50%;
-  left: 50%;
-  min-width: 100%;
-  min-height: 100%;
-  width: auto;
-  height: auto;
-  z-index: -100;
-  transform: translate(-50%, -50%);
-}
 
 #siteBg {
   z-index: -1000;
   overflow: hidden;
+  width: 100%;
+  height: 100%;
+  opacity: 1;
+  display: block;
+  position: fixed;
 
+
+  .fullscreen {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    min-width: 100%;
+    min-height: 100%;
+    width: auto;
+    height: auto;
+    z-index: -100;
+    transform: translate(-50%, -50%);
+  }
+
+  .background-poster {
+    opacity:0;
+  }
 }

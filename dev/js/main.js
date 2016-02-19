@@ -108,10 +108,7 @@ $(document).ready(function () {
     var showSite = function () {
         TweenLite.to($('.background-poster',$siteBg), 5, {
             alpha: 1,
-            ease: Strong.easeOut,
-            onStart: function() {
-                $video[0].play();
-            }
+            ease: Strong.easeOut
         });
     };
 
@@ -120,9 +117,9 @@ $(document).ready(function () {
         $('.background-poster', $siteBg).show();
     } else {
         $video.on('canplay', showSite);
-
+        showSite();
         if ($video[0].readyState > 3) {
-            // showSite();
+             showSite();
         }
     }
 
@@ -173,5 +170,6 @@ $(document).ready(function () {
     });
 
     Backbone.history.start();
+
 
 });

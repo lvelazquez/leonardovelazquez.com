@@ -116,6 +116,18 @@ dt, dd {
     -moz-transform: scale(1);
     transform: scale(1); } }
 
+.centered {
+  float: none;
+  margin: auto; }
+
+.wrapper {
+  padding: 0; }
+
+.wht-frame {
+  border: solid white 10px;
+  border-radius: 2px;
+  -webkit-transition: height 1.5s ease-out; }
+
 .brand-heading {
   margin: 0; }
 
@@ -210,6 +222,9 @@ ul.nav a:hover {
     width: 622px;
     height: 75px;
     margin: 0 auto; }
+    .intro .header .subheader {
+      position: relative;
+      left: 24px; }
     .intro .header ul {
       padding-top: 10px;
       width: 540px; }
@@ -230,6 +245,13 @@ ul.nav a:hover {
       -moz-animation-iteration-count: infinite;
       -webkit-animation-timing-function: linear;
       -moz-animation-timing-function: linear; }
+  .intro .site-logo {
+    display: none;
+    background: transparent url("../images/lvlogo-w.png") no-repeat;
+    background-size: cover;
+    position: relative;
+    width: 50px;
+    height: 52px; }
   .intro .btn-lv {
     width: 70px;
     height: 70px;
@@ -242,6 +264,10 @@ ul.nav a:hover {
     -moz-transition: background .3s ease-in-out;
     transition: background .3s ease-in-out; }
 
+.header .logo-copy {
+  float: left;
+  margin-left: 5px; }
+
 @media (min-width: 767px) {
   .intro {
     height: 100%;
@@ -252,23 +278,26 @@ ul.nav a:hover {
   .intro-text {
     font-size: 25px; } }
 
-.background-poster {
-  opacity: 0; }
-
-.fullscreen {
-  position: fixed;
-  top: 50%;
-  left: 50%;
-  min-width: 100%;
-  min-height: 100%;
-  width: auto;
-  height: auto;
-  z-index: -100;
-  transform: translate(-50%, -50%); }
-
 #siteBg {
   z-index: -1000;
-  overflow: hidden; }
+  overflow: hidden;
+  width: 100%;
+  height: 100%;
+  opacity: 1;
+  display: block;
+  position: fixed; }
+  #siteBg .fullscreen {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    min-width: 100%;
+    min-height: 100%;
+    width: auto;
+    height: auto;
+    z-index: -100;
+    transform: translate(-50%, -50%); }
+  #siteBg .background-poster {
+    opacity: 0; }
 
 /* ==========================================================================
  GALLERY
@@ -400,28 +429,44 @@ ul.nav a:hover {
   -moz-transition: all .3s ease-in-out;
   transition: all .3s ease-in-out; }
 
-.btn-default {
-  background-color: transparent; }
-
-.btn-default:hover, .btn-default:focus {
+.btn:hover, .btn:focus {
   outline: 0;
-  color: #000; }
-  .btn-default:hover .fa, .btn-default:hover .network-name, .btn-default:focus .fa, .btn-default:focus .network-name {
-    color: white; }
+  color: white !important; }
+
+.btn-default {
+  color: #333;
+  background-color: transparent; }
 
 .btn-huge {
   padding: 25px;
   font-size: 26px; }
 
-.banner-social-buttons .btn {
-  margin-bottom: 10px; }
-
 .banner-social-buttons {
   margin-top: 0; }
+  .banner-social-buttons .btn {
+    margin-bottom: 10px; }
+  .banner-social-buttons a:hover {
+    color: #000;
+    background-color: #000; }
 
-.banner-social-buttons a:hover {
-  color: #000;
-  background-color: #000; }
+.contact-form input, textarea {
+  width: 250px;
+  display: block;
+  margin-bottom: 10px; }
+
+#about {
+  padding: 5%; }
+  #about p {
+    text-indent: 30px; }
+  #about .lazy {
+    background-color: #FFF !important; }
+
+#contact {
+  background-color: rgba(255, 255, 255, 0.95);
+  color: #000; }
+
+#mobileBackup {
+  display: none; }
 
 @media (min-width: 767px) {
   .content-section {
@@ -440,69 +485,6 @@ ul.nav a:hover {
 @media (max-width: 1199px) {
   ul.banner-social-buttons {
     margin-top: 15px; } }
-
-h2.brand-heading {
-  text-indent: 46px; }
-
-.contact-form input, textarea {
-  width: 250px;
-  display: block;
-  margin-bottom: 10px; }
-
-.subheader {
-  position: relative;
-  left: 24px; }
-
-.wrapper {
-  padding: 0; }
-
-.centered {
-  float: none;
-  margin: auto; }
-
-#about p {
-  text-indent: 30px; }
-
-#about .lazy {
-  background-color: #FFF !important; }
-
-#about, footer {
-  padding: 5%; }
-
-.leo {
-  background: transparent url("../images/leo2.jpg");
-  background-size: cover;
-  background-position: top center;
-  width: 100%;
-  min-height: 900px;
-  position: relative; }
-
-.wht-frame {
-  border: solid white 10px;
-  border-radius: 2px;
-  -webkit-transition: height 1.5s ease-out; }
-
-section#contact {
-  background-color: rgba(255, 255, 255, 0.95);
-  color: #000; }
-
-.btn-default {
-  color: #333; }
-
-.site-logo {
-  display: none;
-  background: transparent url("../images/lvlogo-w.png") no-repeat;
-  background-size: cover;
-  position: relative;
-  width: 50px;
-  height: 52px; }
-
-.logo-copy {
-  float: left;
-  margin-left: 5px; }
-
-#mobileBackup {
-  display: none; }
 
 @media (max-width: 767px) {
   .background-poster {

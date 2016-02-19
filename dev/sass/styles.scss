@@ -19,11 +19,16 @@
 
 .btn:hover, .btn:focus {
   outline: 0;
-  color: white;
+  color: white !important;
+}
+
+.btn-default {
+  color: #333;
+  background-color: transparent;
 }
 
 #submit.btn {
-  color:
+
 }
 
 .btn-huge {
@@ -31,18 +36,51 @@
   font-size: 26px;
 }
 
-.banner-social-buttons .btn {
-  margin-bottom: 10px;
-}
 
 .banner-social-buttons {
   margin-top: 0;
+  .btn {
+    margin-bottom: 10px;
+  }
+  a:hover {
+    color: #000;
+    background-color: #000;
+  }
 }
 
-.banner-social-buttons a:hover {
-  color: #000;
-  background-color: #000;
+.contact-form input, textarea {
+  width: 250px;
+  display: block;
+  margin-bottom: 10px;
 }
+
+#about {
+  padding: 5%;
+  p { text-indent: 30px; }
+  .lazy {
+    background-color: #FFF !important;
+  }
+  //
+  //.leo {
+  //  background: transparent url('../images/leo2.jpg');
+  //  background-size: cover;
+  //  background-position: top center;
+  //  width: 100%;
+  //  min-height: 900px;
+  //  position: relative;
+  //}
+}
+
+#contact {
+  background-color: rgba(255,255,255,.95);
+  color: #000;
+}
+
+
+#mobileBackup {
+  display:none;
+}
+
 
 @media (min-width: 767px) {
   .content-section {
@@ -66,99 +104,11 @@
     margin-bottom: 0;
   }
 }
-
 @media (max-width: 1199px) {
   ul.banner-social-buttons {
     margin-top: 15px;
   }
 }
-
-
-h2.brand-heading {
-  text-indent: 46px;
-}
-
-
-.contact-form input, textarea {
-  width: 250px;
-  display: block;
-  margin-bottom: 10px;
-}
-
-.subheader {
-  position: relative;
-  left: 24px;
-}
-
-
-.wrapper {
-  padding: 0;
-}
-
-.centered {
-  float: none;
-  margin: auto;
-}
-
-
-
-#about p {
-  text-indent: 30px;
-}
-
-#about .lazy {
-  background-color: #FFF !important;
-}
-
-
-#about, footer {
-  padding: 5%;
-}
-
-.leo {
-  background: transparent url('../images/leo2.jpg');
-  background-size: cover;
-  background-position: top center;
-  width: 100%;
-  min-height: 900px;
-  position: relative;
-}
-
-.wht-frame {
-  border: solid white 10px;
-  border-radius: 2px;
-  -webkit-transition: height 1.5s ease-out;
-}
-
-#contact {
-  background-color: rgba(255,255,255,.95);
-  color: #000;
-}
-
-.btn-default {
-  color: #333;
-  background-color: transparent;
-}
-
-.site-logo {
-  display: none;
-  background: transparent url("../images/lvlogo-w.png") no-repeat;
-  background-size: cover;
-  position: relative;
-  width: 50px;
-  height: 52px;
-}
-
-
-.logo-copy {
-  float: left;
-  margin-left: 5px;
-}
-
-#mobileBackup {
-  display:none;
-}
-
 @media (max-width: 767px) {
   .background-poster {
     opacity:1;
@@ -199,10 +149,6 @@ h2.brand-heading {
   h1:before {
     display: none;
     font-size: 30px;
-  }
-
-  h2.brand-heading {
-
   }
 
   h1, h2.brand-heading {
@@ -288,7 +234,7 @@ h2.brand-heading {
 
   .thumbs:hover .caption span {
     font-size:300%;
-    border-bottom:solid rgba(52, 86, 137, 0.75) 10px;
+    border-bottom: solid rgba(52, 86, 137, 0.75) 10px;
   }
 }
 @media (max-width: 370px) {

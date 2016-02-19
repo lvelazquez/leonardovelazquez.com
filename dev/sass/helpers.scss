@@ -48,3 +48,18 @@ transform: scale(1);
     transform: scale(1);
   }
 }
+
+.centered {
+  float: none;
+  margin: auto;
+}
+
+.wrapper {
+  padding: 0;
+}
+
+.wht-frame {
+  border: solid white 10px;
+  border-radius: 2px;
+  -webkit-transition: height 1.5s ease-out;
+}

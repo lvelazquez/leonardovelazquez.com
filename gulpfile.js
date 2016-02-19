@@ -30,8 +30,8 @@ var aMain = [
     "dev/js/models/contact.js",
     "dev/js/views/projectViews.js",
     "dev/js/views/contactView.js",
-    "dev/js/utils/googlemap.js",
-    "dev/js/main.js"];
+    "dev/js/main.js",
+    "dev/js/utils/googlemap.js"];
 
 // Concatenate & Minify main JS
 gulp.task('scripts', function () {
@@ -50,7 +50,8 @@ var aLib = [
     "node_modules/backbone/backbone-min.js",
     "node_modules/jquery-lazyload/jquery.lazyload.js",
     "node_modules/jquery-scrollstop/jquery.scrollstop.min.js",
-    // "dev/lib/modernizr.custom.65236.js",
+    //65236
+    "dev/js/lib/modernizr.custom.js",
     "node_modules/gsap/src/minified/EasePack.min.js",
     "node_modules/gsap/src/minified/TweenMax.min.js",
     "node_modules/bootstrap/dist/js/bootstrap.min.js",
