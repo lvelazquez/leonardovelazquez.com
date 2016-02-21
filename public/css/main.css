@@ -33,16 +33,6 @@ h3 {
   margin: 0;
   padding: 0; }
 
-h1:before {
-  content: " ";
-  background: transparent url("../images/lvlogo-w.png") no-repeat;
-  background-size: 70px;
-  position: absolute;
-  top: 7px;
-  left: 0px;
-  width: 100%;
-  height: 180%; }
-
 p {
   margin: 0 0 25px;
   font-size: 18px;
@@ -219,6 +209,7 @@ ul.nav a:hover {
   .intro .intro-text {
     font-size: 18px; }
   .intro .header {
+    position: relative;
     width: 622px;
     height: 75px;
     margin: 0 auto; }
@@ -245,13 +236,6 @@ ul.nav a:hover {
       -moz-animation-iteration-count: infinite;
       -webkit-animation-timing-function: linear;
       -moz-animation-timing-function: linear; }
-  .intro .site-logo {
-    display: none;
-    background: transparent url("../images/lvlogo-w.png") no-repeat;
-    background-size: cover;
-    position: relative;
-    width: 50px;
-    height: 52px; }
   .intro .btn-lv {
     width: 70px;
     height: 70px;
@@ -273,8 +257,21 @@ ul.nav a:hover {
     height: 100%;
     -webkit-transition: height 1s ease-out;
     padding: 0; }
+  .site-logo {
+    position: absolute;
+    width: 69px;
+    height: 72px;
+    left: 0px;
+    top: 7px; }
+  .site-logo > polygon {
+    fill: #86a4ce; }
   .brand-heading {
-    font-size: 40px; }
+    font-size: 40px;
+    float: right; }
+  .brand-heading > span, .site-logo > polygon {
+    -webkit-transition: all .4s ease-out; }
+  .brand-heading > span {
+    color: #86a4ce; }
   .intro-text {
     font-size: 25px; } }
 

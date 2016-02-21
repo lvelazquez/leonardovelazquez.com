@@ -640,6 +640,9 @@ $(document).ready(function () {
 
 
     var showSite = function () {
+        $('polygon','.site-logo').css({fill:'white'});
+        $('span','.brand-heading').css({color:'white'});
+
         TweenLite.to($('.background-poster',$siteBg), 5, {
             alpha: 1,
             ease: Strong.easeOut
