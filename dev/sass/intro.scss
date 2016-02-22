@@ -1,3 +1,5 @@
+$maincolor: #86a4ce;
+
 .intro {
   display: table;
   width: 100%;
@@ -5,7 +7,6 @@
   padding: 100px 0;
   text-align: center;
   color: #fff;
-
 
   .intro-nav a {
     text-decoration: none;
@@ -64,8 +65,6 @@
     }
   }
 
-
-
   .btn-lv {
     width: 70px;
     height: 70px;
@@ -87,7 +86,6 @@
   }
 }
 
-
 @media (min-width: 767px) {
   .intro {
     height: 100%;
@@ -102,11 +100,11 @@
     position: absolute;
     width: 69px;
     height: 72px;
-    left: 0px;
+    left: 0;
     top: 7px;
   }
   .site-logo > polygon {
-    fill:#86a4ce;
+    fill:$maincolor;
   }
 
   .brand-heading {
@@ -117,10 +115,9 @@
     -webkit-transition: all .4s ease-out;
   }
   .brand-heading > span {
-    color: #86a4ce;
+    color: $maincolor;
   }
 
-  //
   //.brand-heading:before {
   //  content: " ";
   //  background: transparent url("../images/lvlogo.svg") no-repeat;

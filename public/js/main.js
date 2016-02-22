@@ -633,31 +633,47 @@ $(document).ready(function () {
 
     var $siteBg = $("#siteBg");
     var $video = $('#myPlayer', $siteBg);
+    var svgLogo = $('polygon', '.site-logo');
+    var titleHeader = $('span', '.brand-heading');
 
     $('img.lazy').lazyload({
         effect: "fadeIn"
     });
+    var cmyk = ['#00ffff', '#ffff00', '#ff00ff', '#000000'];
+    var colors = ['#86a4ce', '#5e6870', '#3c444b'];
+    var currentColor = 0;
+    var self = this;
+    var loadLoop = function () {
+        self.loader = setInterval(function () {
+            currentColor++;
+            if (currentColor > colors.length) {
+                currentColor = 0;
+            }
+            svgLogo.css({fill: colors[currentColor]});
+            titleHeader.css({color: colors[currentColor]});
+        }, 300);
+    };
 
 
     var showSite = function () {
-        $('polygon','.site-logo').css({fill:'white'});
-        $('span','.brand-heading').css({color:'white'});
+        clearInterval(self.loader);
 
-        TweenLite.to($('.background-poster',$siteBg), 5, {
+        svgLogo.css({fill: 'white'});
+        titleHeader.css({color: 'white'});
+
+        TweenLite.to($('.background-poster', $siteBg), 5, {
             alpha: 1,
             ease: Strong.easeOut
         });
     };
 
-    if (isMobile.matches|| (bowser.msie && bowser.version <= 8)) {
-        $video.remove();
-        $('.background-poster', $siteBg).show();
-    } else {
-        $video.on('canplay', showSite);
 
-        if ($video[0].readyState > 3) {
-             showSite();
-        }
+    loadLoop();
+
+    $video.on('canplay', showSite);
+
+    if ($video[0].readyState > 3) {
+        showSite();
     }
 
 
@@ -675,7 +691,7 @@ $(document).ready(function () {
             TweenLite.to($navBar, 1.5, {
                 top: "0px",
                 ease: Circ.easeOut,
-                onStart: function(){
+                onStart: function () {
                     $navBar.css('display', 'block');
                     $navBar.css('top', '-50px');
                 }
@@ -690,7 +706,7 @@ $(document).ready(function () {
             }
         } else {
 
-            TweenLite.to($navBar,.25, {
+            TweenLite.to($navBar, .25, {
                 top: "-50px",
                 ease: Circ.easeOut
             });
