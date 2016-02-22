@@ -647,7 +647,7 @@ $(document).ready(function () {
     var showSite = function () {
         clearInterval(self.loader);
 
-        $('.content-section').css({visibility:'visible'});
+        $('.content-section').removeClass('invisible');
         $('img.lazy').lazyload({
             effect: "fadeIn",
             failure_limit : 10
