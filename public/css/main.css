@@ -411,7 +411,7 @@ ul.nav a:hover {
   text-decoration: none; }
 
 .content-section {
-  padding-top: 100px; }
+  padding-top: 150px; }
 
 #map {
   width: 100%;
@@ -493,8 +493,6 @@ ul.nav a:hover {
     float: left; }
   .navbar .container {
     background-color: #FFFFFF; }
-  .site-logo {
-    display: block; }
   section.intro ul {
     display: none; }
   h3 {
@@ -510,10 +508,14 @@ ul.nav a:hover {
     width: 100%;
     margin: 0;
     text-align: center; }
+    .intro .header .subheader {
+      left: 0; }
+  .intro .site-logo {
+    display: block;
+    position: relative;
+    margin: 0 auto; }
   .leo {
     min-height: 500px; }
-  .subheader {
-    left: 0; }
   section#about h2 {
     display: block; }
   .navbar-nav {

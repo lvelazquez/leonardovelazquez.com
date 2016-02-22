@@ -1,5 +1,5 @@
 .content-section {
-  padding-top: 100px;
+  padding-top: 150px;
 }
 
 #map {
@@ -123,10 +123,6 @@
     background-color: #FFFFFF;
   }
 
-  .site-logo {
-    display: block;
-  }
-
   section.intro ul {
     display: none;
   }
@@ -148,19 +144,29 @@
     text-indent: 0;
   }
 
-  .intro .header {
-    width: 100%;
-    margin: 0;
-    text-align: center;
+  .intro {
+    .header {
+      width: 100%;
+      margin: 0;
+      text-align: center;
+
+      .subheader {
+        left: 0;
+      }
+    }
+
+    .site-logo {
+      display: block;
+      position: relative;
+      margin: 0 auto;
+    }
   }
 
   .leo {
     min-height: 500px;
   }
 
-  .subheader {
-    left: 0;
-  }
+
 
   section#about h2 {
     display: block;
