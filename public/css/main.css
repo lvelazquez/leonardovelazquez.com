@@ -257,21 +257,21 @@ ul.nav a:hover {
     height: 100%;
     -webkit-transition: height 1s ease-out;
     padding: 0; }
+    .intro .brand-heading {
+      font-size: 40px;
+      float: right; }
+    .intro .brand-heading > span, .intro .site-logo > polygon {
+      -webkit-transition: color .4s ease-out, fill .4s ease-out; }
+    .intro .brand-heading > span {
+      color: #86a4ce; }
+    .intro .site-logo > polygon {
+      fill: #86a4ce; }
   .site-logo {
     position: absolute;
     width: 69px;
     height: 72px;
     left: 0;
     top: 7px; }
-  .site-logo > polygon {
-    fill: #86a4ce; }
-  .brand-heading {
-    font-size: 40px;
-    float: right; }
-  .brand-heading > span, .site-logo > polygon {
-    -webkit-transition: all .4s ease-out; }
-  .brand-heading > span {
-    color: #86a4ce; }
   .intro-text {
     font-size: 25px; } }
 
@@ -411,9 +411,7 @@ ul.nav a:hover {
   text-decoration: none; }
 
 .content-section {
-  visibility: hidden; }
-
-.content-section {
+  visibility: hidden;
   padding-top: 150px; }
 
 #map {
@@ -568,7 +566,11 @@ video::-webkit-media-controls-start-playback-button {
     font-size: 235%; }
   .thumbs:hover .caption span {
     font-size: 300%;
-    border-bottom: solid rgba(52, 86, 137, 0.75) 10px; } }
+    border-bottom: solid rgba(52, 86, 137, 0.75) 10px; }
+  .brand-heading > span {
+    color: #86a4ce; }
+  .site-logo > polygon {
+    fill: #86a4ce; } }
 
 @media (max-width: 370px) {
   .logo-copy {

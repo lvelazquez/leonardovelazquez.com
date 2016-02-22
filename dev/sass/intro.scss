@@ -91,32 +91,32 @@ $maincolor: #86a4ce;
     height: 100%;
     -webkit-transition: height 1s ease-out;
     padding: 0;
+
+    .brand-heading {
+      font-size: 40px;
+      float:right;
+    }
+    .brand-heading > span,.site-logo > polygon {
+      -webkit-transition: color .4s ease-out, fill .4s ease-out;
+    }
+    .brand-heading > span {
+      color: $maincolor;
+    }
+    .site-logo > polygon {
+      fill:$maincolor;
+    }
+
   }
 
   .site-logo {
-    //display: none;
-    //background: transparent url("../images/lvlogo.svg") no-repeat;
-    //background-size: cover;
     position: absolute;
     width: 69px;
     height: 72px;
     left: 0;
     top: 7px;
   }
-  .site-logo > polygon {
-    fill:$maincolor;
-  }
 
-  .brand-heading {
-    font-size: 40px;
-    float:right;
-  }
-  .brand-heading > span,.site-logo > polygon {
-    -webkit-transition: all .4s ease-out;
-  }
-  .brand-heading > span {
-    color: $maincolor;
-  }
+
 
   //.brand-heading:before {
   //  content: " ";

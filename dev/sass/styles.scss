@@ -1,7 +1,3 @@
-.content-section {
-  padding-top: 150px;
-}
-
 #map {
   width: 100%;
   height: 300px;
@@ -232,6 +228,13 @@ video::-webkit-media-controls-start-playback-button {
   .thumbs:hover .caption span {
     font-size:300%;
     border-bottom: solid rgba(52, 86, 137, 0.75) 10px;
+  }
+
+  .brand-heading > span {
+    color: $maincolor;
+  }
+  .site-logo > polygon {
+    fill:$maincolor;
   }
 }
 @media (max-width: 370px) {
