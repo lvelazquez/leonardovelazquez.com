@@ -57,23 +57,18 @@
 }
 
 #about {
-  > img {
-    margin-bottom: 20px;
-  }
+
   padding: 5%;
+
   > p { text-indent: 30px; }
   .lazy {
     background-color: #FFF !important;
   }
-  //
-  //.leo {
-  //  background: transparent url('../images/leo2.jpg');
-  //  background-size: cover;
-  //  background-position: top center;
-  //  width: 100%;
-  //  min-height: 900px;
-  //  position: relative;
-  //}
+
+  .leo {
+    margin-bottom: 20px;
+  }
+
 }
 
 #contact {
@@ -142,6 +137,9 @@
 
   h1, h2.brand-heading {
     text-indent: 0;
+    > span {
+      display: block;
+    }
   }
 
   .intro {
@@ -151,22 +149,18 @@
       text-align: center;
 
       .subheader {
+        display: block;
         left: 0;
       }
     }
 
     .site-logo {
+      width: 50px;
       display: block;
       position: relative;
-      margin: 0 auto;
+      margin: 0 auto 10px;
     }
   }
-
-  .leo {
-    min-height: 500px;
-  }
-
-
 
   section#about h2 {
     display: block;
@@ -201,7 +195,6 @@
   #project-container {
     display: none;
   }
-
 
   .project {
     -webkit-transition: height .7s ease-in-out;
@@ -247,6 +240,7 @@
 @media (max-width: 285px) {
   .brand-heading {
     font-size:200%;
+
   }
 }
 
