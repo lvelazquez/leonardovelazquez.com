@@ -86,55 +86,7 @@ $maincolor: #86a4ce;
   }
 }
 
-@media (min-width: 767px) {
-  .intro {
-    height: 100%;
-    -webkit-transition: height 1s ease-out;
-    padding: 0;
-
-    .brand-heading {
-      font-size: 40px;
-      float:right;
-    }
-    .brand-heading > span,.site-logo > polygon {
-      -webkit-transition: color .4s ease-out, fill .4s ease-out;
-    }
-    .brand-heading > span {
-      color: $maincolor;
-    }
-    .site-logo > polygon {
-      fill:$maincolor;
-    }
-
-  }
-
-  .site-logo {
-    position: absolute;
-    width: 69px;
-    height: 72px;
-    left: 0;
-    top: 7px;
-  }
-
-
-
-  //.brand-heading:before {
-  //  content: " ";
-  //  background: transparent url("../images/lvlogo.svg") no-repeat;
-  //  background-size: 70px;
-  //  position: absolute;
-  //  top: 7px;
-  //  left: 0px;
-  //  width: 100%;
-  //  height: 180%;
-  //}
-
-  .intro-text {
-    font-size: 25px;
-  }
-}
-
-#siteBg {
+#site-background {
   z-index: -1000;
   overflow: hidden;
   width: 100%;
@@ -158,5 +110,39 @@ $maincolor: #86a4ce;
 
   .background-poster {
     opacity:0;
+  }
+}
+
+@media (min-width: 767px) {
+  .intro {
+    height: 100%;
+    -webkit-transition: height 1s ease-out;
+    padding: 0;
+
+    .brand-heading {
+      font-size: 40px;
+      float:right;
+    }
+    .brand-heading > span,.site-logo > polygon {
+      -webkit-transition: color .4s ease-out, fill .4s ease-out;
+    }
+    .brand-heading > span {
+      color: $maincolor;
+    }
+    .site-logo > polygon {
+      fill:$maincolor;
+    }
+
+    .site-logo {
+      position: absolute;
+      width: 69px;
+      height: 72px;
+      left: 0;
+      top: 7px;
+    }
+
+    .intro-text {
+      font-size: 25px;
+    }
   }
 }

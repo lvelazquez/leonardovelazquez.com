@@ -16,7 +16,6 @@
 var myProjects = new ProjectList(projects);
 var isMobile = window.matchMedia("only screen and (max-width: 760px)");
 
-
 $(document).ready(function () {
 
     var wr = new MainRouter();
@@ -25,9 +24,9 @@ $(document).ready(function () {
     var self = this;
     // VIDEO START
 
-    var $siteBg = $("#siteBg");
+    var $siteBg = $("#site-background");
 
-    var $video = $('#myPlayer', $siteBg);
+    var $video = $('#site-player', $siteBg);
 
     // INTRO LOADING ANIMATION
     var svgLogo = $('polygon', '.site-logo');
@@ -93,7 +92,7 @@ $(document).ready(function () {
                     alpha: 0,
                     ease: Circ.easeOut
                 });
-                if ($navBar.offset().top > 200) $("#myPlayer")[0].pause();
+                if ($navBar.offset().top > 200) $video[0].pause();
 
             }
         } else {
@@ -108,7 +107,8 @@ $(document).ready(function () {
                     alpha: 1,
                     ease: Circ.easeOut
                 });
-                $("#myPlayer")[0].play();
+
+                $video[0].play();
             }
         }
 

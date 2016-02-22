@@ -532,6 +532,79 @@ var ContactView = Backbone.View.extend({
         this.$('.contact-info').removeClass('has-error');
     }
 });
+var MainRouter = Backbone.Router.extend({
+    routes: {
+        "work/:id": "showProject",
+        "work": "jumpToPage",
+        "about": "jumpToPage",
+        "contact": "jumpToPage"
+    },
+    hideProject: function () {
+        if (isMobile.matches) {
+            this.project.$el.addClass('invisible');
+        }
+    },
+    initialize: function () {
+        var _self = this;
+
+        this.thumbs = new ThumbView({
+            collection: myProjects
+        });
+
+        this.project = new ProjectView({
+            collection: myProjects
+        });
+
+        $(window).resize(function () {
+            _self.project.resize();
+        });
+
+        $('body').on('activate.bs.scrollspy', function (e) {
+            var currentPage = $('a', e.target).attr('href');
+            _self._scrolling = true;
+
+            if (currentPage != "#/") {
+                if (!_.isUndefined(_self.project) && !_.isUndefined(_self.project.currentProjectId) && currentPage == "#/work") {
+                    currentPage = currentPage + '/' + _self.project.currentProjectId;
+                }
+                _self.navigate(currentPage, {replace: true});
+            } else {
+                _self.navigate('#/', {replace: true});
+            }
+        });
+
+        $('.nav-item').bind('click', function (event) {
+            event.preventDefault();
+            var id = $(this).data('target');
+            _self._scrolling = false;
+            _self.navigate(id, {replace: true});
+        });
+
+    },
+    jumpToPage: function (id) {
+        var _self = this;
+
+        if (id == this.project.currentProjectId) return;
+        _self.hideProject();
+
+        if (_self._scrolling) return;
+
+        var jumpTo = $("#" + id).offset().top;
+
+        TweenLite.to($('html, body'), 1, {
+            scrollTop: jumpTo,
+            ease: Expo.easeInOut
+        });
+
+    },
+    showProject: function (id) {
+        this.jumpToPage('work');
+        if (isMobile.matches) {
+            this.project.$el.removeClass('invisible');
+        }
+        this.project.showProject(id);
+    }
+});
 // TODO modularize with browserify
 // TODO add recent projects, planned parenthood, map, un women
 // TODO optimize intro loading, try intro animation
@@ -550,7 +623,6 @@ var ContactView = Backbone.View.extend({
 var myProjects = new ProjectList(projects);
 var isMobile = window.matchMedia("only screen and (max-width: 760px)");
 
-
 $(document).ready(function () {
 
     var wr = new MainRouter();
@@ -559,9 +631,9 @@ $(document).ready(function () {
     var self = this;
     // VIDEO START
 
-    var $siteBg = $("#siteBg");
+    var $siteBg = $("#site-background");
 
-    var $video = $('#myPlayer', $siteBg);
+    var $video = $('#site-player', $siteBg);
 
     // INTRO LOADING ANIMATION
     var svgLogo = $('polygon', '.site-logo');
@@ -627,7 +699,7 @@ $(document).ready(function () {
                     alpha: 0,
                     ease: Circ.easeOut
                 });
-                if ($navBar.offset().top > 200) $("#myPlayer")[0].pause();
+                if ($navBar.offset().top > 200) $video[0].pause();
 
             }
         } else {
@@ -642,7 +714,8 @@ $(document).ready(function () {
                     alpha: 1,
                     ease: Circ.easeOut
                 });
-                $("#myPlayer")[0].play();
+
+                $video[0].play();
             }
         }
 

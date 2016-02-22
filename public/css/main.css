@@ -252,6 +252,27 @@ ul.nav a:hover {
   float: left;
   margin-left: 5px; }
 
+#site-background {
+  z-index: -1000;
+  overflow: hidden;
+  width: 100%;
+  height: 100%;
+  opacity: 1;
+  display: block;
+  position: fixed; }
+  #site-background .fullscreen {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    min-width: 100%;
+    min-height: 100%;
+    width: auto;
+    height: auto;
+    z-index: -100;
+    transform: translate(-50%, -50%); }
+  #site-background .background-poster {
+    opacity: 0; }
+
 @media (min-width: 767px) {
   .intro {
     height: 100%;
@@ -266,35 +287,14 @@ ul.nav a:hover {
       color: #86a4ce; }
     .intro .site-logo > polygon {
       fill: #86a4ce; }
-  .site-logo {
-    position: absolute;
-    width: 69px;
-    height: 72px;
-    left: 0;
-    top: 7px; }
-  .intro-text {
-    font-size: 25px; } }
-
-#siteBg {
-  z-index: -1000;
-  overflow: hidden;
-  width: 100%;
-  height: 100%;
-  opacity: 1;
-  display: block;
-  position: fixed; }
-  #siteBg .fullscreen {
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    min-width: 100%;
-    min-height: 100%;
-    width: auto;
-    height: auto;
-    z-index: -100;
-    transform: translate(-50%, -50%); }
-  #siteBg .background-poster {
-    opacity: 0; }
+    .intro .site-logo {
+      position: absolute;
+      width: 69px;
+      height: 72px;
+      left: 0;
+      top: 7px; }
+    .intro .intro-text {
+      font-size: 25px; } }
 
 /* ==========================================================================
  GALLERY
