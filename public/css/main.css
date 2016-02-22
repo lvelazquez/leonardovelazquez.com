@@ -411,6 +411,9 @@ ul.nav a:hover {
   text-decoration: none; }
 
 .content-section {
+  visibility: hidden; }
+
+.content-section {
   padding-top: 150px; }
 
 #map {
@@ -466,6 +469,10 @@ ul.nav a:hover {
 #contact {
   background-color: rgba(255, 255, 255, 0.95);
   color: #000; }
+
+video::-webkit-media-controls-start-playback-button {
+  display: none !important;
+  -webkit-appearance: none; }
 
 @media (min-width: 767px) {
   .content-section {

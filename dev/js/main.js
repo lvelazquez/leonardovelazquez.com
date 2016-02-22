@@ -105,7 +105,7 @@ $(document).ready(function () {
     $('img.lazy').lazyload({
         effect: "fadeIn"
     });
-    var cmyk = ['#00ffff', '#ffff00', '#ff00ff', '#000000'];
+
     var colors = ['#86a4ce', '#5e6870', '#3c444b'];
     var currentColor = 0;
     var self = this;
@@ -120,10 +120,9 @@ $(document).ready(function () {
         }, 300);
     };
 
-
     var showSite = function () {
         clearInterval(self.loader);
-
+        $('.content-section').css({visibility:'visible'});
         svgLogo.css({fill: 'white'});
         titleHeader.css({color: 'white'});
 
@@ -132,7 +131,6 @@ $(document).ready(function () {
             ease: Strong.easeOut
         });
     };
-
 
     loadLoop();
 
