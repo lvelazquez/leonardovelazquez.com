@@ -1,17 +1,8 @@
 // TODO modularize with browserify
-// TODO add recent projects, planned parenthood, map, un women
-// TODO optimize intro loading, try intro animation
-// TODO fix intro for Safari, site is blocked
-// TODO debug and optimize router, auto scroll hack
-
-// TODO Optimize
-// Use sprite for thumbs? won't work with
-// support swiping for mobile
-
-// TODO consolidate css in a sass file
+// TODO debug and optimize router & auto scroll
+// TODO support swiping for mobile
 // TODO make slideshow degrade gracefully without javascript
 // TODO test deploy with heroku
-// TODO test for IE and mobile
 
 var myProjects = new ProjectList(projects);
 var isMobile = window.matchMedia("only screen and (max-width: 760px)");
@@ -33,7 +24,7 @@ $(document).ready(function () {
     var titleHeader = $('span', '.brand-heading');
     var colors = ['#86a4ce', '#5e6870', '#3c444b'];
     var currentColor = 0;
-    var loadLoop = function () {
+    var loadingLoop = function () {
         self.loader = setInterval(function () {
             currentColor++;
             if (currentColor > colors.length) {
@@ -44,11 +35,17 @@ $(document).ready(function () {
         }, 400);
     };
 
-    loadLoop();
+    loadingLoop();
 
     var showSite = function () {
         clearInterval(self.loader);
+
         $('.content-section').css({visibility:'visible'});
+        $('img.lazy').lazyload({
+            effect: "fadeIn",
+            failure_limit : 10
+        });
+
         svgLogo.css({fill: 'white'});
         titleHeader.css({color: 'white'});
 
@@ -63,10 +60,6 @@ $(document).ready(function () {
     if ($video[0].readyState > 3) {
         showSite();
     }
-
-    $('img.lazy').lazyload({
-        effect: "fadeIn"
-    });
 
     // VIDEO END
 
