@@ -30,6 +30,7 @@ var aMain = [
     "dev/js/models/contact.js",
     "dev/js/views/projectViews.js",
     "dev/js/views/contactView.js",
+    "dev/js/pixel.js",
     "dev/js/router.js",
     "dev/js/main.js",
     "dev/js/utils/googlemap.js"];

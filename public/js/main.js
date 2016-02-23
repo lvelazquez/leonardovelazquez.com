@@ -532,6 +532,24 @@ var ContactView = Backbone.View.extend({
         this.$('.contact-info').removeClass('has-error');
     }
 });
+var PixelFX = function () {
+    this.video = document.getElementById('site-player');
+    this.canvas = document.getElementById('canvas-background');
+    this.ctx = this.canvas.getContext('2d');
+    this.ctx.mozImageSmoothingEnabled = false;
+    this.ctx.webkitImageSmoothingEnabled = false;
+    this.ctx.msImageSmoothingEnabled = false;
+    this.ctx.imageSmoothingEnabled = false;
+};
+
+PixelFX.prototype.pixelate = function (v) {
+    var size = v * 0.01, self= this;
+   // self.canvas.width = window.innerWidth;
+   // self.canvas.height = window.innerHeight;
+    var w = self.canvas.width * size, h = self.canvas.height * size;
+    self.ctx.drawImage(self.video, 0, 0, w, h);
+    self.ctx.drawImage(self.canvas, 0, 0, w, h, 0, 0, self.canvas.width, self.canvas.height);
+};
 var MainRouter = Backbone.Router.extend({
     routes: {
         "work/:id": "showProject",
@@ -610,6 +628,7 @@ var MainRouter = Backbone.Router.extend({
 // TODO support swiping for mobile
 // TODO make slideshow degrade gracefully without javascript
 // TODO test deploy with heroku
+// TODO pixelation effect
 
 var myProjects = new ProjectList(projects);
 var isMobile = window.matchMedia("only screen and (max-width: 760px)");
@@ -620,10 +639,10 @@ $(document).ready(function () {
     var contact = new Contact();
     var contactForm = new ContactView({model: contact});
     var self = this;
+    var pixelEffect = new PixelFX();
     // VIDEO START
 
     var $siteBg = $("#site-background");
-
     var $video = $('#site-player', $siteBg);
 
     // INTRO LOADING ANIMATION
@@ -646,7 +665,7 @@ $(document).ready(function () {
 
     var showSite = function () {
         clearInterval(self.loader);
-
+        // pixelEffect.init();
         $('.content-section').removeClass('invisible');
         $('img.lazy').lazyload({
             effect: "fadeIn",
@@ -668,12 +687,20 @@ $(document).ready(function () {
         showSite();
     }
 
+
+
     // VIDEO END
 
     var $navBar = $(".navbar");
     var $logoHeader = $(".logo-header");
-
+    var scrollMax = $('#contact').offset().top;
+    var scrollMin = 1000;
     //jQuery to collapse the navbar on scroll
+    var pScroll = 0;
+
+    var convertRange = function(Input, InputLow, InputHigh, OutputLow, OutputHigh) {
+        return (((Input - InputLow) / (InputHigh - InputLow)) * (OutputHigh - OutputLow) + OutputLow);
+    }
 
     $(window).scroll(function () {
 
@@ -688,11 +715,26 @@ $(document).ready(function () {
                 }
             });
             if (!(isMobile.matches || (bowser.msie && bowser.version <= 8))) {
+
+
                 TweenLite.to($logoHeader, 3, {
                     alpha: 0,
                     ease: Circ.easeOut
                 });
-                if ($navBar.offset().top > 200) $video[0].pause();
+                if ($navBar.offset().top > 200) {
+                    $video[0].pause();
+                    $video.addClass('invisible');
+                    // make a num that goes from x to y go from scrollMin to scrollMax
+                    // on x = scrollMin and on y it has to be scrollMax
+                    // Input, InputLow, InputHigh, OutputHigh, OutputLow
+                    if(pScroll>=0) {
+                        pScroll =(convertRange($navBar.offset().top, 50, scrollMax, 30, 10));
+                        pixelEffect.pixelate(pScroll);
+                    } else {
+                        pixelEffect.pixelate(0);
+                    }
+
+                }
 
             }
         } else {
@@ -707,7 +749,7 @@ $(document).ready(function () {
                     alpha: 1,
                     ease: Circ.easeOut
                 });
-
+                $video.removeClass('invisible');
                 $video[0].play();
             }
         }
