@@ -49,9 +49,9 @@ var aLib = [
     "node_modules/jquery/dist/jquery.min.js",
     "node_modules/handlebars/dist/handlebars.js",
     "node_modules/backbone/backbone-min.js",
+    "node_modules/bowser/bowser.min.js",
     "node_modules/jquery-lazyload/jquery.lazyload.js",
     "node_modules/jquery-scrollstop/jquery.scrollstop.min.js",
-    //65236
     "dev/js/lib/modernizr.custom.js",
     "node_modules/gsap/src/minified/EasePack.min.js",
     "node_modules/gsap/src/minified/TweenMax.min.js",

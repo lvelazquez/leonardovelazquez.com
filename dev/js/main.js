@@ -20,25 +20,10 @@ $(document).ready(function () {
     var $video = $('#site-player', $siteBg);
 
     // INTRO LOADING ANIMATION
-    var svgLogo = $('polygon', '.site-logo');
-    var titleHeader = $('span', '.brand-heading');
-    var colors = ['#86a4ce', '#5e6870', '#3c444b'];
-    var currentColor = 0;
-    var loadingLoop = function () {
-        self.loader = setInterval(function () {
-            currentColor++;
-            if (currentColor > colors.length) {
-                currentColor = 0;
-            }
-            svgLogo.css({fill: colors[currentColor]});
-            titleHeader.css({color: colors[currentColor]});
-        }, 400);
-    };
-
-    loadingLoop();
 
     var showSite = function () {
-        clearInterval(self.loader);
+        console.log('showsite!')
+
 
         $('.content-section').removeClass('invisible');
         $('img.lazy').lazyload({
@@ -46,14 +31,19 @@ $(document).ready(function () {
             failure_limit : 10
         });
 
-        svgLogo.css({fill: 'white'});
-        titleHeader.css({color: 'white'});
-
         TweenLite.to($('.background-poster', $siteBg), 5, {
             alpha: 1,
-            ease: Strong.easeOut
+            ease: Strong.easeOut,
+            onStart: function() {
+                document.getElementById('svgLogo').className.baseVal = '';
+                $('span', '.brand-heading').removeClass('titleLoader');
+            }
         });
     };
+
+    if (bowser.ios || (bowser.msie && bowser.version <= 8)) {
+        showSite();
+    }
 
     $video.on('canplay', showSite);
 
@@ -62,7 +52,6 @@ $(document).ready(function () {
     }
 
     // VIDEO END
-
     var $navBar = $(".navbar");
     var $logoHeader = $(".logo-header");
 

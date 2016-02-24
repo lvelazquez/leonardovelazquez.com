@@ -106,6 +106,76 @@ dt, dd {
     -moz-transform: scale(1);
     transform: scale(1); } }
 
+@-webkit-keyframes fillLoop {
+  0% {
+    fill: #86a4ce; }
+  50% {
+    fill: #5e6870; }
+  100% {
+    fill: #86a4ce; } }
+
+@-moz-keyframes fillLoop {
+  0% {
+    fill: #86a4ce; }
+  50% {
+    fill: #5e6870; }
+  100% {
+    fill: #86a4ce; } }
+
+@-o-keyframes fillLoop {
+  0% {
+    fill: #86a4ce; }
+  50% {
+    fill: #5e6870; }
+  100% {
+    fill: #86a4ce; } }
+
+@keyframes fillLoop {
+  0% {
+    fill: #86a4ce; }
+  50% {
+    fill: #5e6870; }
+  100% {
+    fill: #86a4ce; } }
+
+@-webkit-keyframes colorLoop {
+  0% {
+    color: #86a4ce; }
+  50% {
+    color: #5e6870; }
+  100% {
+    color: #86a4ce; } }
+
+@-moz-keyframes colorLoop {
+  0% {
+    color: #86a4ce; }
+  50% {
+    color: #5e6870; }
+  100% {
+    color: #86a4ce; } }
+
+@-o-keyframes colorLoop {
+  0% {
+    color: #86a4ce; }
+  50% {
+    color: #5e6870; }
+  100% {
+    color: #86a4ce; } }
+
+@keyframes colorLoop {
+  0% {
+    color: #86a4ce; }
+  50% {
+    color: #5e6870; }
+  100% {
+    color: #86a4ce; } }
+
+.header .logoLoader {
+  -webkit-animation: fillLoop 5s infinite; }
+
+.header .titleLoader {
+  -webkit-animation: colorLoop 5s infinite; }
+
 .centered {
   float: none;
   margin: auto; }
@@ -284,9 +354,9 @@ ul.nav a:hover {
     .intro .brand-heading > span, .intro .site-logo > polygon {
       -webkit-transition: color .4s ease-out, fill .4s ease-out; }
     .intro .brand-heading > span {
-      color: #86a4ce; }
+      color: #fff; }
     .intro .site-logo > polygon {
-      fill: #86a4ce; }
+      fill: #fff; }
     .intro .site-logo {
       position: absolute;
       width: 69px;
@@ -567,9 +637,9 @@ video::-webkit-media-controls-start-playback-button {
     font-size: 300%;
     border-bottom: solid rgba(52, 86, 137, 0.75) 10px; }
   .brand-heading > span {
-    color: #86a4ce; }
+    color: #FFF; }
   .site-logo > polygon {
-    fill: #86a4ce; } }
+    fill: #FFF; } }
 
 @media (max-width: 370px) {
   .logo-copy {
