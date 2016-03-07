@@ -1,7 +1,7 @@
 #map {
   width: 100%;
   height: 300px;
-  margin-top:50px;
+  margin-top: 50px;
 }
 
 .btn {
@@ -34,7 +34,6 @@
   font-size: 26px;
 }
 
-
 .banner-social-buttons {
   margin-top: 0;
   .btn {
@@ -56,7 +55,9 @@
 
   padding: 5%;
 
-  > p { text-indent: 30px; }
+  > p {
+    text-indent: 30px;
+  }
   .lazy {
     background-color: #FFF !important;
   }
@@ -68,7 +69,7 @@
 }
 
 #contact {
-  background-color: rgba(255,255,255,.95);
+  background-color: rgba(255, 255, 255, .95);
   color: #000;
 }
 
@@ -90,11 +91,13 @@ video::-webkit-media-controls-start-playback-button {
     margin-bottom: 0;
   }
 }
+
 @media (max-width: 1199px) {
   ul.banner-social-buttons {
     margin-top: 15px;
   }
 }
+
 @media (max-width: 767px) {
 
   #map {
@@ -108,11 +111,11 @@ video::-webkit-media-controls-start-playback-button {
   }
 
   .background-poster {
-    opacity:1;
+    opacity: 1;
   }
   .navbar-brand {
     position: relative;
-    float:left;
+    float: left;
   }
 
   .navbar .container {
@@ -133,7 +136,7 @@ video::-webkit-media-controls-start-playback-button {
 
   h1:before {
     display: none;
-    font-size: 30px;
+    font-size: 25px;
   }
 
   h1, h2.brand-heading {
@@ -156,7 +159,7 @@ video::-webkit-media-controls-start-playback-button {
     }
 
     .site-logo {
-      width: 50px;
+      width: 40px;
       display: block;
       position: relative;
       margin: 0 auto 10px;
@@ -173,24 +176,24 @@ video::-webkit-media-controls-start-playback-button {
 
   .navbar-collapse {
     width: 100%;
-    height:auto;
+    height: auto;
   }
   .active-thumb .project-sml-container {
     display: block;
   }
   nav {
-    height:auto;
+    height: auto;
   }
 
   .mobile-slideshow {
     position: fixed;
     top: 15%;
-    z-index:10;
-    width:100%;
+    z-index: 10;
+    width: 100%;
   }
 
   .mobile-slideshow h2 {
-    display:table-cell;
+    display: table-cell;
   }
 
   #project-container {
@@ -202,7 +205,7 @@ video::-webkit-media-controls-start-playback-button {
     -moz-transition: height .7s ease-in-out;
     -o-transition: height .7s ease-in-out;
     transition: height .7s ease-in-out;
-    color:white;
+    color: white;
   }
 
   .project #close-btn {
@@ -216,7 +219,7 @@ video::-webkit-media-controls-start-playback-button {
     position: fixed;
     width: 100%;
     height: 100%;
-    background-color: rgba(0,0,0,.65);
+    background-color: rgba(0, 0, 0, .65);
     left: 0;
     top: 0;
     z-index: -1;
@@ -226,28 +229,33 @@ video::-webkit-media-controls-start-playback-button {
   }
 
   .thumbs:hover .caption span {
-    font-size:300%;
+    font-size: 300%;
     border-bottom: solid rgba(52, 86, 137, 0.75) 10px;
   }
-
+  h1.brand-heading {
+    margin-bottom: 10px;
+  }
   .brand-heading > span {
     color: #FFF;
+
   }
   .site-logo > polygon {
-    fill:#FFF;
+    fill: #FFF;
   }
 }
+
 @media (max-width: 370px) {
   .logo-copy {
     display: none;
   }
   .thumbs .caption {
-    display:none;
+    display: none;
   }
 }
+
 @media (max-width: 285px) {
   .brand-heading {
-    font-size:200%;
+    font-size: 200%;
 
   }
 }
