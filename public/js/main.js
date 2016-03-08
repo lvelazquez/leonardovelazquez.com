@@ -619,34 +619,71 @@ $(document).ready(function () {
     var wr = new MainRouter();
     var contact = new Contact();
     var contactForm = new ContactView({model: contact});
-    var self = this;
-    // VIDEO START
-
     var $siteBg = $("#site-background");
-
     var $video = $('#site-player', $siteBg);
 
-    // INTRO LOADING ANIMATION
+    TweenLite.to(
+        $('.logo-header'),
+        2,
+        {
+            delay: 1,
+            alpha: 1,
+            ease: Strong.easeOut
+        });
 
     var showSite = function () {
-        console.log('showsite!')
-
 
         $('.content-section').removeClass('invisible');
         $('img.lazy').lazyload({
             effect: "fadeIn",
-            failure_limit : 10
+            failure_limit: 10
         });
 
-        TweenLite.to($('.background-poster', $siteBg), 5, {
+        TweenLite.to(
+            $('span', '.brand-heading'),
+            1,
+
+            {
+                delay: 3,
+                css: {color: '#FFF'},
+                ease: Strong.easeOut,
+                onStart: function (e) {
+                    var heading = $(this.target);
+                    var headingColor = window.getComputedStyle(heading[0])['color'];
+                    heading.css({
+                        '-webkit-animation': 'none',
+                        color: headingColor
+                    });
+                    heading.removeClass('titleLoader');
+                }
+            });
+        TweenLite.to(
+            $('#svgLogo'),
+            1,
+            {
+                delay: 3,
+                css: {
+                    fill: '#FFF'
+                },
+                ease: Strong.easeOut,
+                onStart: function () {
+                    var heading = $(this.target);
+                    var headingColor = window.getComputedStyle(heading[0])['fill'];
+                    heading.css({
+                        '-webkit-animation': 'none',
+                        fill: headingColor
+                    });
+                    heading[0].className.baseVal = '';
+                }
+            });
+
+        TweenLite.to($('.background-poster', $siteBg), 2, {
             alpha: 1,
-            ease: Strong.easeOut,
-            onStart: function() {
-                document.getElementById('svgLogo').className.baseVal = '';
-                $('span', '.brand-heading').removeClass('titleLoader');
-            }
+            ease: Circ.easeOut,
+            delay: 4
         });
     };
+
 
     if (bowser.ios || (bowser.msie && bowser.version <= 8)) {
         showSite();

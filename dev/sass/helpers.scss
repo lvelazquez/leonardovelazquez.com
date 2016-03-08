@@ -161,11 +161,17 @@
 
 .header {
   .logoLoader {
-    -webkit-animation: fillLoop 5s infinite;
+    -webkit-animation: fillLoop 4s infinite;
+    -moz-animation: fillLoop 4s infinite;
+    -o-animation: fillLoop 4s infinite;
+    animation: fillLoop 4s infinite;
   }
 
   .titleLoader {
-    -webkit-animation: colorLoop 5s infinite;
+    -webkit-animation: colorLoop 4s infinite;
+    -moz-animation: colorLoop 4s infinite;
+    -o-animation: colorLoop 4s infinite;
+    animation: colorLoop 4s infinite;
   }
 }
 
@@ -183,4 +189,7 @@
   border: solid white 10px;
   border-radius: 2px;
   -webkit-transition: height 1.5s ease-out;
+  -moz-animation: height 1.5s ease-out;
+  -o-animation: height 1.5s ease-out;
+  animation: height 1.5s ease-out;
 }

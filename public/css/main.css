@@ -171,10 +171,16 @@ dt, dd {
     color: #86a4ce; } }
 
 .header .logoLoader {
-  -webkit-animation: fillLoop 5s infinite; }
+  -webkit-animation: fillLoop 4s infinite;
+  -moz-animation: fillLoop 4s infinite;
+  -o-animation: fillLoop 4s infinite;
+  animation: fillLoop 4s infinite; }
 
 .header .titleLoader {
-  -webkit-animation: colorLoop 5s infinite; }
+  -webkit-animation: colorLoop 4s infinite;
+  -moz-animation: colorLoop 4s infinite;
+  -o-animation: colorLoop 4s infinite;
+  animation: colorLoop 4s infinite; }
 
 .centered {
   float: none;
@@ -186,7 +192,10 @@ dt, dd {
 .wht-frame {
   border: solid white 10px;
   border-radius: 2px;
-  -webkit-transition: height 1.5s ease-out; }
+  -webkit-transition: height 1.5s ease-out;
+  -moz-animation: height 1.5s ease-out;
+  -o-animation: height 1.5s ease-out;
+  animation: height 1.5s ease-out; }
 
 .brand-heading {
   margin: 0; }
@@ -268,6 +277,8 @@ ul.nav a:hover {
   padding: 100px 0;
   text-align: center;
   color: #fff; }
+  .intro .logo-header {
+    opacity: 0; }
   .intro .intro-nav a {
     text-decoration: none; }
   .intro .intro-body {
@@ -575,7 +586,7 @@ video::-webkit-media-controls-start-playback-button {
     color: black; }
   h1:before {
     display: none;
-    font-size: 30px; }
+    font-size: 25px; }
   h1, h2.brand-heading {
     text-indent: 0; }
     h1 > span, h2.brand-heading > span {
@@ -588,7 +599,7 @@ video::-webkit-media-controls-start-playback-button {
       display: block;
       left: 0; }
   .intro .site-logo {
-    width: 50px;
+    width: 40px;
     display: block;
     position: relative;
     margin: 0 auto 10px; }
@@ -636,6 +647,8 @@ video::-webkit-media-controls-start-playback-button {
   .thumbs:hover .caption span {
     font-size: 300%;
     border-bottom: solid rgba(52, 86, 137, 0.75) 10px; }
+  h1.brand-heading {
+    margin-bottom: 10px; }
   .brand-heading > span {
     color: #FFF; }
   .site-logo > polygon {
