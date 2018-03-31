@@ -1,39 +1,32 @@
 {
   "name": "leonardovelazquez.com",
-  "version": "0.0.0",
-  "description": "",
-  "main": "index.js",
+  "version": "0.1.0",
+  "private": true,
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
-  },
-  "repository": {
-    "type": "git",
-    "url": "https://leovelazquez@bitbucket.org/leovelazquez/leonardovelazquez.com.git"
-  },
-  "author": "Leonardo Velázquez",
-  "license": "ISC",
-  "devDependencies": {
-    "bowser": "^1.0.0",
-    "gulp": "^3.8.11",
-    "gulp-browserify": "^0.5.1",
-    "gulp-compile-handlebars": "^0.6.1",
-    "gulp-concat": "^2.5.2",
-    "gulp-declare": "^0.3.0",
-    "gulp-handlebars": "^4.0.0",
-    "gulp-jshint": "^1.9.2",
-    "gulp-rename": "^1.2.0",
-    "gulp-uglify": "^1.1.0",
-    "gulp-wrap": "^0.11.0",
-    "hbsfy": "^2.5.0",
-    "modernizr": "^3.3.1"
+    "serve": "vue-cli-service serve --open",
+    "build": "vue-cli-service build"
   },
   "dependencies": {
-    "backbone": "^1.2.3",
-    "bootstrap": "^3.3.6",
-    "bowser": "^1.0.0",
-    "gsap": "^1.18.2",
-    "jquery-lazyload": "^1.9.7",
-    "jquery-scrollstop": "^1.2.0",
-    "underscore": "^1.8.3"
-  }
+    "vue": "^2.5.13"
+  },
+  "devDependencies": {
+    "@vue/cli-plugin-babel": "^3.0.0-beta.6",
+    "@vue/cli-service": "^3.0.0-beta.6",
+    "vue-template-compiler": "^2.5.13"
+  },
+  "babel": {
+    "presets": [
+      "@vue/app"
+    ]
+  },
+  "postcss": {
+    "plugins": {
+      "autoprefixer": {}
+    }
+  },
+  "browserslist": [
+    "> 1%",
+    "last 2 versions",
+    "not ie <= 8"
+  ]
 }
