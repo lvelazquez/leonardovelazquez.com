@@ -1,4 +1,4 @@
-var projects = [
+const projects = [
     {
         id: "unwomen",
         thumb: "th_uw.png",
@@ -210,3 +210,5 @@ var projects = [
             image_url: "newmoon5.jpg"
         }]
     }];
+
+export default projectData;
