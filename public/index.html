@@ -1,17 +1,348 @@
-<!DOCTYPE html>
-<html>
-  <head>
+<html lang="en">
+
+<head>
     <meta charset="utf-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width,initial-scale=1.0">
-    <link rel="shortcut icon" href="<%= webpackConfig.output.publicPath %>favicon.ico">
-    <title>leonardovelazquez.com</title>
-  </head>
-  <body>
-    <noscript>
-      <strong>We're sorry but leonardovelazquez.com doesn't work properly without JavaScript enabled. Please enable it to continue.</strong>
-    </noscript>
-    <div id="app"></div>
-    <!-- built files will be auto injected -->
-  </body>
+    <meta name="title" content="Leonardo Vel&aacute;zquez :: Software Engineer">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Sr. Software Engineer available for work in Seattle">
+    <meta name="author" content="Leonardo Vel&aacute;zquez">
+    <meta name="keywords"
+          content="Vue,React,AngularJS,Seattle,Design,Development,Backbone,HTML,D3.js,CSS,XML,JavaScript,jQuery, HTML5,Front End,Web Developer">
+    <link rel="icon"
+          type="image/png"
+          href="images/icon.png">
+
+    <title>Leonardo Vel&aacute;zquez :: Software Engineer</title>
+
+    <!-- Fonts -->
+    <link href="http://netdna.bootstrapcdn.com/font-awesome/4.0.3/css/font-awesome.min.css" rel="stylesheet"
+          type="text/css">
+    <link href='http://fonts.googleapis.com/css?family=Lora:400,700,400italic,700italic' rel='stylesheet'
+          type='text/css'>
+    <link href='http://fonts.googleapis.com/css?family=Montserrat:400,500,700' rel='stylesheet' type='text/css'>
+
+    <!-- Custom Theme CSS -->
+    <link href="css/main.css" rel="stylesheet">
+</head>
+
+<body id="page-top" data-spy="scroll" data-target=".navbar-custom" data-offset="50">
+<div id="site-background">
+    <video id="site-player" poster="media/lakehi.png" class="background-poster fullscreen" autoplay preload loop>
+        <source src="./media/lakehi.mp4" type='video/mp4'/>
+        <source src="media/lakehi.webm" type='video/webm'/>
+        <source src="media/lakehi.ogv" type='video/ogg'/>
+        <!--<img id="backup" class="lazy" data-original="media/lakehi.png"/>-->
+    </video>
+</div>
+
+<nav class="navbar navbar-custom navbar-fixed-top" role="navigation">
+    <div class="row top-nav-container">
+        <div class="header">
+            <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-main-collapse">
+                <i class="fa fa-bars"></i>
+            </button>
+            <a class="navbar-brand nav-item" href="#/" data-target="#page-top">
+                <img class="top-logo" width="40px" height="40px" src="images/lvlogo.svg"/>
+                <div class="logo-copy">
+                    <h3>Leonardo Vel&aacute;zquez </h3>
+                    <h3>Front end Developer</h3>
+                </div>
+            </a>
+
+            <div class="collapse navbar-collapse navbar-right navbar-main-collapse">
+                <ul class="nav navbar-nav">
+                    <li class="hidden">
+                        <a href="#/" class="nav-item" data-target="#page-top"></a>
+                    </li>
+                    <li>
+                        <a href="#/work" class="nav-item" data-target="#work">Work</a>
+                    </li>
+                    <li>
+                        <a href="#/about" class="nav-item" data-target="#about">About me</a>
+                    </li>
+                    <li>
+                        <a href="#/contact" class="nav-item" data-target="#contact">Contact</a>
+                    </li>
+                    <li>
+                        <a href="../src/assets/files/LeonardoVelazquezResume.pdf" download="LeonardoVelazquezResume">
+                            <i class="download-icon"></i>
+                            Resume
+                        </a>
+
+                    </li>
+                </ul>
+            </div>
+            <!-- /.navbar-collapse -->
+        </div>
+    </div>
+    <!-- /.container -->
+</nav>
+
+<section class="intro">
+    <div class="intro-body">
+        <div class="container">
+            <div class="row">
+                <div class="header logo-header">
+                    <svg class="site-logo"  version="1.1" xmlns="http://www.w3.org/2000/svg" x="0px" y="0px" width="68.715px" height="71.741px" viewBox="0 0 68.715 71.741" enable-background="new 0 0 68.715 71.741" xml:space="preserve">
+                        <polygon id="svgLogo" class="logoLoader" points="68.354,0.556 32.797,55.055 67.115,55.055 67.115,71.741
+	0,71.741 0.175,0.556 0.175,0 16.862,0 16.862,44.421 45.832,0.556 46.197,0 68.715,0 "/>
+                    </svg>
+                    <!--<img class="site-logo" width="75px" height="75px" src="images/lvlogo.svg" />-->
+                    <h1 class="brand-heading">
+                        <span class="titleLoader">Leonardo Vel&aacute;zquez</span>
+                        <span class="subheader titleLoader">Front end Developer</span></h1>
+
+                    <ul class="nav navbar-nav centered">
+                        <!-- Hidden li included to remove active class from about link when scrolled up past about section -->
+                        <li class="hidden">
+                            <a href="#/" data-target="#page-top" class="nav-item"></a>
+                        </li>
+                        <li class="intro-nav">
+                            <a href="#/work" class="nav-item" data-target="#work">Work</a>
+                        </li>
+                        <li class="intro-nav">
+                            <a href="#/about" class="nav-item" data-target="#about">About me</a>
+                        </li>
+                        <li class="intro-nav">
+                            <a href="#/contact" class="nav-item" data-target="#contact">Contact</a>
+                        </li>
+                    </ul>
+                    <div class="page-scroll">
+                        <a href="#/work" class="btn-lv nav-item" data-target="#work">
+                            <i class="glyphicon glyphicon-chevron-down animated"></i>
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<section id="work" class="container content-section text-center col-sm-12 invisible">
+
+    <div class="row">
+
+        <div id="thumb-container" class="col-sm-6">
+            <h2>Work</h2>
+
+            <div class="thumbs-col col-sm-4"></div>
+            <div class="thumbs-col col-sm-4"></div>
+            <div class="thumbs-col col-sm-4"></div>
+        </div>
+        <div id="project-container" class="col-sm-6 mobile-slideshow"></div>
+
+    </div>
+</section>
+<section id="about" class="container content-section text-left col-sm-12 invisible">
+    <div class="row">
+        <div class="col-sm-12">
+            <h2>About me</h2>
+
+            <div class="col-sm-6 col-sm-offset-3">
+                <img class="leo lazy wht-frame" width="100%" height="auto" data-original="images/leo2.jpg"/>
+
+                <p>
+                    I'm a freelance Senior Front End developer currently based in Seattle, Washington. With ample experience
+                    in every facet of the web design and development process, I strive to meet the needs of every new
+                    project while using the latest technology trends and standards,
+                    always taking pride in creating work that both functions efficiently and looks beautiful inside and
+                    out.
+                </p>
+
+                <p>
+                    <!-- My philosophy is to think and articulate the needs of the project first, then code with scalability and re-usability in mind.-->
+                    Lately, I'm very excited to develop applications using Meteor, as well as to furthering my growth of Web Application Architecture, patterns and best practices.
+                </p>
+
+                <p>
+                    When I’m not fixing bugs for Internet Explorer, I like to listen to records, make vegan food &
+                    treats, play the accordion or escape to the mountains.
+                </p>
+
+                <dl>
+                    <dt>Skills:</dt>
+                    <dd>AngularJS,</dd>
+                    <dd>Meteor,</dd>
+                    <dd>D3.js,</dd>
+                    <dd>Backbone,</dd>
+                    <dd>Javascript,</dd>
+                    <dd>HTML5,</dd>
+                    <dd>CSS3,</dd>
+                    <dd>Gulp/Grunt,</dd>
+                    <dd>Webstorm,</dd>
+                    <dd>Bootstrap,</dd>
+                    <dd>Handlebars,</dd>
+                    <dd>Git,</dd>
+                    <dd>SASS/LESS,</dd>
+                    <dd>SVN,</dd>
+                    <dd>Actionscript,</dd>
+                    <dd>PHP,</dd>
+                    <dd>Web & App Development for iOS/iPad/iPhone or Mobile/Tablet,</dd>
+                    <dd>Motion Graphics in After Effects,</dd>
+                    <dd>Analog and digital 2D illustration & animation techniques</dd>
+                </dl>
+            </div>
+        </div>
+    </div>
+
+</section>
+
+<section id="contact" class="container content-section text-center col-sm-12 invisible">
+    <div class="row">
+        <div class="col-lg-8 col-lg-offset-2">
+            <h2>Contact</h2>
+
+            <div id="contact-container"></div>
+            <ul class="col-md-12 list-inline banner-social-buttons">
+                <li>
+                    <a href="http://www.linkedin.com/in/leovelazquez" class="btn btn-default btn-lg"><i
+                            class="fa fa-linkedin fa-fw"></i> <span class="network-name">Linked In</span></a>
+                </li>
+                <li>
+                    <a href="https://github.com/lvelazquez" class="btn btn-default btn-lg"><i
+                            class="fa fa-github fa-fw"></i> <span class="network-name">Github</span></a>
+                </li>
+                <li>
+                    <a href="https://plus.google.com/111568277509717571535" class="btn btn-default btn-lg"><i
+                            class="fa fa-google-plus fa-fw"></i> <span class="network-name">Google+</span></a>
+                </li>
+            </ul>
+        </div>
+    </div>
+
+    <div id="map" class="col-lg-12"></div>
+
+</section>
+
+<! -- BEGIN TEMPLATES -->
+
+<script id="work-template" type="text/template">
+    <div data-key="{{id}}" class="thumbs">
+        <div class="caption">
+            <div class="caption-wrapper">
+                <span class="title">{{{title}}}</span>
+            </div>
+        </div>
+        <a href="#/work/{{id}}"><img class="lazy" data-original="assets/thumbs/{{thumb}}"/></a>
+    </div>
+</script>
+
+<script id="project-template" type="text/template">
+
+    <div class="project" data-key="{{id}}">
+
+        <h2 class="title">{{{title}}}</h2>
+        <a href="#/work/" id="close-btn" class="close-project">&times</a>
+
+        <div id="carousel-example-generic{{id}}" class="carousel slide wht-frame" data-ride="carousel">
+            <!-- Indicators -->
+
+            <ol class="carousel-indicators">
+
+                {{#each images}}
+                <li data-target="#carousel-example-generic{{../id}}" data-slide-to="{{@index}}"
+                    {{#ifZero @index}} class="active" {{/ifZero}}>
+                </li>
+                {{/each}}
+            </ol>
+
+            <!-- Wrapper for slides -->
+            <div class="carousel-inner">
+
+                {{#each images}}
+                <div class="item {{#ifZero @index}}active{{/ifZero}}"><img src="assets/{{image_url}}"/></div>
+                {{/each}}
+
+            </div>
+            <div class="carousel-caption"></div>
+            <!-- Controls -->
+            <a class="left carousel-control" href="#carousel-example-generic{{id}}" data-slide="prev">
+                <span class="glyphicon glyphicon-chevron-left"></span>
+            </a>
+            <a class="right carousel-control" href="#carousel-example-generic{{id}}" data-slide="next">
+                <span class="glyphicon glyphicon-chevron-right"></span>
+            </a>
+        </div>
+
+        <div class="detail">
+
+            {{#if description}}
+            <div class="description">{{description}}</div>
+            {{/if}}
+            {{#if url}}
+            <div class="link"><a href="{{url}}">View Project</a></div>
+            {{/if}}
+        </div>
+        <div id="project-bg" class="close-project"></div>
+    </div>
+
+</script>
+
+<script id="contact-template" type="text/template">
+
+    <div class="contact-form">
+
+        <form id="contact_form" class="input-lg form-group">
+
+            <span class="form-group contact-name contact-info has-feedback">
+                <input id="contact_name" type="text" class="contact_info form-control" name="name"
+                       placeholder="Your Name"/>
+            </span>
+            <span class="form-group contact-email contact-info has-feedback">
+                <input id="contact_email" type="text"
+                       class="contact_info form-control"
+                       name="email"
+                       placeholder="Your Email"/>
+            </span>
+            <span class="form-group contact-subject contact-info has-feedback"><input id="contact_subject" type="text"
+                                                                                      class="contact_info form-control"
+                                                                                      name="subject"
+                                                                                      placeholder="Subject"/>
+            </span>
+            <span class="form-group contact-message contact-info has-feedback">
+                <textarea id="contact_message" class="contact_info col-12 form-control"
+                          name="message"
+                          placeholder="Your Message"></textarea>
+            </span>
+            <button id="submit" type="submit" class="btn btn-block">
+                SUBMIT
+            </button>
+        </form>
+        <div id="statusMsg" style="display:none"></div>
+    </div>
+</script>
+
+<! -- END TEMPLATES -->
+
+
+<!-- JavaScript Libraries -->
+<script src="js/lib.js" type="text/javascript"></script>
+<!-- Google Maps API Key - You will need to use your own API key to use the map feature -->
+<script type="text/javascript"
+        src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCRngKslUGJTlibkQ3FkfTxj3Xss1UlZDA&sensor=false"></script>
+
+<!-- Custom JavaScript -->
+<script src="js/main.js" type="text/javascript"></script>
+
+<script>
+    (function (i, s, o, g, r, a, m) {
+        i['GoogleAnalyticsObject'] = r;
+        i[r] = i[r] || function () {
+                    (i[r].q = i[r].q || []).push(arguments)
+                }, i[r].l = 1 * new Date();
+        a = s.createElement(o),
+                m = s.getElementsByTagName(o)[0];
+        a.async = 1;
+        a.src = g;
+        m.parentNode.insertBefore(a, m)
+    })(window, document, 'script', '//www.google-analytics.com/analytics.js', 'ga');
+
+    ga('create', 'UA-60995195-1', 'auto');
+    ga('send', 'pageview');
+
+</script>
+
+</body>
+
+
 </html>
