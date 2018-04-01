@@ -1,4 +1,4 @@
-const projects = [
+const projectsData = [
     {
         id: "unwomen",
         thumb: "th_uw.png",
@@ -211,4 +211,4 @@ const projects = [
         }]
     }];
 
-export default projectData;
+export default projectsData;

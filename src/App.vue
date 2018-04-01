@@ -1,27 +1,27 @@
 <template>
   <div id="app">
-    <Nav msg="Welcome to Your Vue.js App"/>
+    <Background />
   </div>
 </template>
 
 <script>
-import Nav from './components/Nav.vue'
+import Nav from "./components/Nav.vue";
+import Background from "./components/Background";
+import Intro from "./components/pages/Intro";
 
 export default {
-  name: 'app',
+  name: "app",
   components: {
-    Nav
-  }
-}
+    Background,
+    Nav,
+    Intro
+  },
+  created() {}
+};
 </script>
 
 <style>
-#app {
-  font-family: 'Avenir', Helvetica, Arial, sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  text-align: center;
-  color: #2c3e50;
-  margin-top: 60px;
+body {
+  margin: 0;
 }
 </style>
