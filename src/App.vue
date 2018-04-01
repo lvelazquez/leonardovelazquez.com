@@ -1,6 +1,7 @@
 <template>
   <div id="app">
     <Background />
+    <Intro />
   </div>
 </template>
 
@@ -21,7 +22,15 @@ export default {
 </script>
 
 <style>
+@import "~reset-css";
+a {
+  text-decoration: none;
+}
 body {
   margin: 0;
+}
+
+section {
+  height: 100vh;
 }
 </style>
