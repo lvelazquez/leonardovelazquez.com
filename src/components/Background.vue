@@ -1,7 +1,7 @@
 <template>
     <div id="site-background">
-        <video id="site-player" :poster="`${cloudinaryUrl }lakehi.png`" class="fullscreen" autoplay preload loop>
-            <source :src="`${cloudinaryUrl }lakehi.mp4`" type="video/mp4"/>
+        <video id="site-player" v-once :poster="`${cloudinaryUrl }lakehi.png`" class="fullscreen" autoplay preload loop>
+            <source v-once :src="`${cloudinaryUrl }lakehi.mp4`" type="video/mp4"/>
         </video>
     </div>
 </template>
@@ -32,6 +32,7 @@ export default {
   opacity: 1;
   position: fixed;
   margin: 0;
+    background: aqua;
   .fullscreen {
     position: absolute;
     top: 50%;
