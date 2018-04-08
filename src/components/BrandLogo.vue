@@ -1,7 +1,7 @@
 <template>
-    <div :class="`brand-logo ${color}-logo`" :style="`font-size:${fontSize}`">
+    <div :class="`brand-logo ${color}-logo`">
         <Logo :width="`${logoWidth}`" :height="`${logoHeight}`"/>
-        <h1 class="title">
+        <h1 class="brand-title" :style="`font-size:${fontSize} !important`">
             <span class="titleLoader">Leonardo Vel&aacute;zquez</span>
             <span class="subheader titleLoader">Software Engineer</span></h1>
     </div>
@@ -41,20 +41,16 @@ export default {
 .brand-logo {
   display: flex;
   text-transform: uppercase;
-  line-height: 0.95;
-  margin-bottom: 5px;
-  .logo {
-    margin-right: 5px;
-    margin-top: 4px;
-  }
-  .title {
+  .brand-title {
     font-family: "Montserrat";
     font-weight: 700;
     font-size: 2.6rem;
     white-space: nowrap;
     width: 80%;
+    line-height: 0.75;
     span {
       display: block;
+      margin-bottom: 0.15em;
     }
   }
 }

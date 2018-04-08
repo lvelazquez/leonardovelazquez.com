@@ -1,5 +1,4 @@
 <template>
-
     <section id="about" class="container content-section text-left col-sm-12 invisible">
         <div class="row">
             <div class="col-sm-12">
@@ -56,15 +55,12 @@
 </template>
 
 <script>
-    export default {
-        name: 'About',
-        props: {
-            msg: String
-        }
-    }
+export default {
+  name: "About",
+  props: {}
+};
 </script>
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped>
-
 </style>

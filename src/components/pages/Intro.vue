@@ -1,13 +1,7 @@
 <template>
     <section class="intro">
         <div class="intro-container">
-
-                    <div class="intro-header">
-                        <Logo width="4.5" height="4.25"/>
-                        <h1 class="title">
-                            <span class="titleLoader">Leonardo Vel&aacute;zquez</span>
-                            <span class="subheader titleLoader">Software Engineer</span></h1>
-                </div>
+            <BrandLogo />
             <div class="intro-nav">
                 <ul>
                     <li>
@@ -31,12 +25,12 @@
 </template>
 
 <script>
-import Logo from "../Logo";
+import BrandLogo from "../BrandLogo";
 
 export default {
   name: "Intro",
   components: {
-    Logo
+    BrandLogo
   },
   props: {}
 };
@@ -60,28 +54,6 @@ export default {
   height: auto;
   flex-direction: column;
   font-size: 2.5rem;
-}
-
-.intro-header {
-  display: flex;
-  text-transform: uppercase;
-  line-height: 0.95;
-  margin-bottom: 5px;
-  .logo {
-    fill: $white-color;
-    margin-right: 5px;
-    margin-top: 4px;
-  }
-  .title {
-    font-family: "Montserrat";
-    font-weight: 700;
-    font-size: 2.6rem;
-    white-space: nowrap;
-    width: 80%;
-    span {
-      display: block;
-    }
-  }
 }
 
 .intro-nav {

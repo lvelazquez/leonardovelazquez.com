@@ -3,6 +3,8 @@
     <Nav />
     <Background />
     <Intro />
+    <About />
+    <Contact />
   </div>
 </template>
 
@@ -10,13 +12,19 @@
 import Nav from "./components/Nav.vue";
 import Background from "./components/Background";
 import Intro from "./components/pages/Intro";
+import Work from "./components/pages/Work";
+import About from "./components/pages/About";
+import Contact from "./components/pages/Contact";
 
 export default {
   name: "app",
   components: {
     Background,
     Nav,
-    Intro
+    Intro,
+    About,
+    Work,
+    Contact
   },
   created() {}
 };
