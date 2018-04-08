@@ -58,8 +58,20 @@ export default {
 }
 
 .brand-responsive {
+  .logo {
+    margin: 0 auto;
+  }
+  flex-direction: column;
+
   .brand-title {
+    width: 100% !important;
     white-space: normal;
+    text-align: center;
+    line-height: 1;
+    span {
+      margin: 0 auto;
+      width: 80%;
+    }
   }
 }
 </style>
