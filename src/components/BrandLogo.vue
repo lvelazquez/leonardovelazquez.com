@@ -1,9 +1,9 @@
 <template>
-    <div :class="`brand-logo ${color}-logo`">
+    <div :class="`brand-logo ${color}-logo ${responsive ? '' : 'brand-responsive'}`">
         <Logo :width="`${logoWidth}`" :height="`${logoHeight}`"/>
         <h1 class="brand-title" :style="`font-size:${fontSize} !important`">
             <span class="titleLoader">Leonardo Vel&aacute;zquez</span>
-            <span class="subheader titleLoader">Software Engineer</span></h1>
+            <span class="subheader titleLoader">Full Stack Engineer</span></h1>
     </div>
 </template>
 
@@ -19,13 +19,14 @@ export default {
     logoWidth: { type: String, default: "4.5rem" },
     logoHeight: { type: String, default: "4.25rem" },
     color: { type: String, default: "white" },
-    fontSize: { type: String }
+    fontSize: { type: String },
+    responsive: { type: Boolean, default: false }
   }
 };
 </script>
 
 <style lang="scss" scoped>
-@import "../settings";
+@import "../styles/settings";
 .white-logo {
   svg {
     fill: $white-color;
@@ -48,10 +49,17 @@ export default {
     white-space: nowrap;
     width: 80%;
     line-height: 0.75;
+    margin: 0;
     span {
       display: block;
       margin-bottom: 0.15em;
     }
+  }
+}
+
+.brand-responsive {
+  .brand-title {
+    white-space: normal;
   }
 }
 </style>

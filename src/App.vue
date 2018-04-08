@@ -31,15 +31,17 @@ export default {
 </script>
 
 <style>
-@import "~reset-css";
-a {
-  text-decoration: none;
-}
-body {
-  margin: 0;
-}
+  @import "~reset-css";
+  @import "./styles/base.css";
 
-section {
-  height: 100vh;
-}
+  a {
+    text-decoration: none;
+  }
+  body {
+    margin: 0;
+  }
+
+  section {
+    height: 100vh;
+  }
 </style>

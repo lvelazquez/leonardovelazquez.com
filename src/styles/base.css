@@ -25,7 +25,6 @@ h1 {
   position: relative;
   font-weight: 800;
   font-size: 40px;
-  text-indent: 39px;
   position: relative;
 }
 h2 {
@@ -53,9 +52,9 @@ p {
 }
 
 a {
-  -webkit-transition: all .2s ease-in-out;
-  -moz-transition: all .2s ease-in-out;
-  transition: all .2s ease-in-out;
+  -webkit-transition: all .12s ease-out;
+  -moz-transition: all .12s ease-out;
+  transition: all .12s ease-out;
 }
 
 a, a:hover, a:focus {
