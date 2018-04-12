@@ -27,6 +27,8 @@ export default {
 
 <style lang="scss" scoped>
 @import "../styles/settings";
+@import "../styles/media-queries";
+
 .white-logo {
   svg {
     fill: $white-color;
@@ -47,7 +49,7 @@ export default {
     font-weight: 700;
     font-size: 2.6rem;
     white-space: nowrap;
-    width: 80%;
+    width: 100%;
     line-height: 0.75;
     margin: 0;
     span {
@@ -62,15 +64,19 @@ export default {
     margin: 0 auto;
   }
   flex-direction: column;
-
   .brand-title {
-    width: 100% !important;
     white-space: normal;
     text-align: center;
     line-height: 1;
     span {
       margin: 0 auto;
-      width: 80%;
+      width: 100%;
+      @media (min-width: $bp-sm) {
+        width: 80%;
+      }
+        @media (min-width: $bp-lg) {
+            width: 100%;
+        }
     }
   }
 }
