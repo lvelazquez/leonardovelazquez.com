@@ -39,6 +39,7 @@ export default {
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style lang="scss" scoped>
 @import "../../styles/settings";
+@import "../../styles/media-queries";
 
 .intro {
   color: $white-color;
@@ -59,9 +60,12 @@ export default {
 .intro-nav {
   display: inline-flex;
   ul {
+    display: none;
+    @media screen and (min-width: $bp-sm) {
+      display: flex !important;
+    }
     padding: 0;
     margin: 0 auto;
-    display: flex;
     width: 90%;
     white-space: nowrap;
     text-align: center;
