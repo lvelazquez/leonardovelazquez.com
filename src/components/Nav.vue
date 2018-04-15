@@ -4,7 +4,7 @@
                 <button class="navbar-menu-btn" @click="isMenuOpen = !isMenuOpen">
                     <i class="fa fa-bars"></i>
                 </button>
-                <a class="navbar-brand nav-item" href="#/">
+                <a class="navbar-logo nav-item" href="#/">
                     <BrandLogo logoWidth="40px" logoHeight="40px" color="black" fontSize="1.55rem" responsive />
                 </a>
                 <div :class="{'navbar-collapse': !isMenuOpen, 'navbar-right':true }">
@@ -19,7 +19,7 @@
                             <a href="#/contact" class="nav-item" data-target="#contact">Contact</a>
                         </li>
                         <li>
-                            <a href="../src/assets/files/LeonardoVelazquezResume.pdf" download="LeonardoVelazquezResume">
+                            <a class="nav-item"  href="../src/assets/files/LeonardoVelazquezResume.pdf" download="LeonardoVelazquezResume">
                                 <i class="download-icon"></i>
                                 Resume
                             </a>
@@ -94,8 +94,8 @@ nav {
   top: -50px;
 }
 
-.nav-list {
-  color: black;
+.navbar-collapse {
+  display: none;
 }
 
 .nav-list li {
@@ -131,15 +131,11 @@ li:hover .download-icon {
   background-image: url(data:image/svg+xml;utf8;base64,PD94bWwgdmVyc2lvbj0iMS4wIiBlbmNvZGluZz0iaXNvLTg4NTktMSI/Pgo8IS0tIEdlbmVyYXRvcjogQWRvYmUgSWxsdXN0cmF0b3IgMTYuMC4wLCBTVkcgRXhwb3J0IFBsdWctSW4gLiBTVkcgVmVyc2lvbjogNi4wMCBCdWlsZCAwKSAgLS0+CjwhRE9DVFlQRSBzdmcgUFVCTElDICItLy9XM0MvL0RURCBTVkcgMS4xLy9FTiIgImh0dHA6Ly93d3cudzMub3JnL0dyYXBoaWNzL1NWRy8xLjEvRFREL3N2ZzExLmR0ZCI+CjxzdmcgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIiB4bWxuczp4bGluaz0iaHR0cDovL3d3dy53My5vcmcvMTk5OS94bGluayIgdmVyc2lvbj0iMS4xIiBpZD0iQ2FwYV8xIiB4PSIwcHgiIHk9IjBweCIgd2lkdGg9IjUxMnB4IiBoZWlnaHQ9IjUxMnB4IiB2aWV3Qm94PSIwIDAgNDMzLjUgNDMzLjUiIHN0eWxlPSJlbmFibGUtYmFja2dyb3VuZDpuZXcgMCAwIDQzMy41IDQzMy41OyIgeG1sOnNwYWNlPSJwcmVzZXJ2ZSI+CjxnPgoJPGcgaWQ9ImZpbGUtZG93bmxvYWQiPgoJCTxwYXRoIGQ9Ik0zOTUuMjUsMTUzaC0xMDJWMGgtMTUzdjE1M2gtMTAybDE3OC41LDE3OC41TDM5NS4yNSwxNTN6IE0zOC4yNSwzODIuNXY1MWgzNTd2LTUxSDM4LjI1eiIgZmlsbD0iI0ZGRkZGRiIvPgoJPC9nPgo8L2c+CjxnPgo8L2c+CjxnPgo8L2c+CjxnPgo8L2c+CjxnPgo8L2c+CjxnPgo8L2c+CjxnPgo8L2c+CjxnPgo8L2c+CjxnPgo8L2c+CjxnPgo8L2c+CjxnPgo8L2c+CjxnPgo8L2c+CjxnPgo8L2c+CjxnPgo8L2c+CjxnPgo8L2c+CjxnPgo8L2c+Cjwvc3ZnPgo=);
 }
 
-.navbar-collapse {
-  display: none;
-}
-
-.navbar-brand {
+.navbar-logo {
   position: relative;
   left: 5px;
   font-weight: 700;
-  display: block;
+  display: inline-block;
   padding: 0.5rem;
   .top-logo {
     min-width: 35px;
@@ -167,5 +163,27 @@ li:hover .download-icon {
   font-size: 1.9rem;
   height: 100%;
   cursor: pointer;
+}
+
+@media (min-width: $bp-ms) {
+  li {
+    display: inline-block;
+  }
+
+  .navbar-right {
+    display: inline-flex;
+    position: relative;
+    float: right;
+    height: 100%;
+    align-items: center;
+    .nav-item {
+      font-size: 0.8rem;
+      display: inline-block;
+    }
+  }
+
+  .navbar-menu-btn {
+    display: none;
+  }
 }
 </style>
