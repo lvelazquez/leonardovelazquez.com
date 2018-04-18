@@ -74,7 +74,6 @@ nav {
   height: 5rem;
   font-family: Montserrat, "Helvetica Neue", Helvetica, Arial, sans-serif;
   margin-bottom: 0;
-  border-bottom: 1px solid rgba(255, 255, 255, 0.3);
   text-transform: uppercase;
   z-index: 1000;
   background-color: $white-color;
@@ -101,8 +100,11 @@ nav {
 }
 
 .nav-list li {
-  padding: 1rem;
+  height: 100%;
   cursor: pointer;
+  display: inline-flex;
+  align-items: center;
+  padding: 0 1rem 0;
 }
 
 .nav-list li:hover,
@@ -167,11 +169,11 @@ li:hover .download-icon {
   height: 100%;
   cursor: pointer;
 }
+
 @media (min-width: $bp-ms) {
   li {
     display: inline-block;
   }
-
   .navbar-right {
     display: inline-flex;
     position: relative;
@@ -180,7 +182,6 @@ li:hover .download-icon {
     align-items: center;
     .nav-item {
       font-size: 0.8rem;
-      display: inline-block;
     }
   }
 
@@ -189,8 +190,6 @@ li:hover .download-icon {
   }
 }
 
-@media (min-width: $bp-ms) {
-
+@media (min-width: $bp-md) {
 }
-
 </style>

@@ -65,15 +65,23 @@ export default {
     width: 8vw;
     height: 8vw;
     max-width: 4rem;
+    transition: width, height 0.25s ease-out;
   }
   .brand-title {
     font-size: 5vw;
     letter-spacing: 0.15px;
+    transition: font-size 0.25s ease-out;
   }
   @media (min-width: $bp-sm) {
-    font-size: 2rem;
+    .brand-title {
+      font-size: 1.6rem;
+    }
+    .logo {
+      width: 2.6rem;
+      height: 2.6rem;
+    }
   }
-  @media (min-width: $bp-ms) {
+  @media (min-width: $bp-md) {
     .logo {
       width: 3.5rem;
       height: 3.5rem;
