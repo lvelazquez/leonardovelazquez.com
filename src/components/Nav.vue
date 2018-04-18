@@ -107,9 +107,12 @@ nav {
   padding: 0 1rem 0;
 }
 
+.nav-list li:hover {
+  background-color: $black-color;
+}
+
 .nav-list li:hover,
 .nav-list a:hover {
-  background-color: $black-color;
   color: $white-color;
   .download-icon {
     color: $white-color;
@@ -173,6 +176,7 @@ li:hover .download-icon {
 @media (min-width: $bp-ms) {
   li {
     display: inline-block;
+    font-weight: 500;
   }
   .navbar-right {
     display: inline-flex;
@@ -188,8 +192,5 @@ li:hover .download-icon {
   .navbar-menu-btn {
     display: none;
   }
-}
-
-@media (min-width: $bp-md) {
 }
 </style>

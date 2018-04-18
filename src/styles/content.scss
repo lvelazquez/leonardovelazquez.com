@@ -1,0 +1,13 @@
+@import "./media-queries.scss";
+
+.content-wrapper {
+  padding: 0 2rem;
+  @media (min-width: $bp-sm) {
+    .content-wrapper {
+      padding: 0 5rem;
+    }
+  }
+  @media (min-width: $bp-ms) {
+    padding: 0 10rem;
+  }
+}

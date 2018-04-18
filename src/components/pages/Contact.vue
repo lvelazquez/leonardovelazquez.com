@@ -28,15 +28,19 @@
 </template>
 
 <script>
-    export default {
-        name: 'Contact',
-        props: {
-
-        }
-    }
+export default {
+  name: "Contact",
+  props: {}
+};
 </script>
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped>
-
+.banner-social-buttons {
+  display: "flex";
+  li {
+    flex: 1;
+      display: inline-block;
+  }
+}
 </style>
