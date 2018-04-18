@@ -5,7 +5,7 @@
                     <i class="fa fa-bars"></i>
                 </button>
                 <a class="navbar-logo nav-item" href="#/">
-                    <BrandLogo logoWidth="40px" logoHeight="40px" color="black" fontSize="1.55rem" responsive />
+                    <BrandLogo type="header" color="black" />
                 </a>
                 <div :class="{'navbar-collapse': !isMenuOpen, 'navbar-right':true }">
                     <ul class="nav-list">
@@ -71,11 +71,13 @@ export default {
 nav {
   position: fixed;
   width: 100%;
-  height: 3.5rem;
+  height: 5rem;
   font-family: Montserrat, "Helvetica Neue", Helvetica, Arial, sans-serif;
   margin-bottom: 0;
   border-bottom: 1px solid rgba(255, 255, 255, 0.3);
   text-transform: uppercase;
+  z-index: 1000;
+  background-color: $white-color;
   .top-nav-container {
     background-color: #fff;
     height: 0;
@@ -135,8 +137,9 @@ li:hover .download-icon {
   position: relative;
   left: 5px;
   font-weight: 700;
-  display: inline-block;
-  padding: 0.5rem;
+  display: inline-flex;
+  height: 100%;
+  align-items: center;
   .top-logo {
     min-width: 35px;
     position: relative;
@@ -164,7 +167,6 @@ li:hover .download-icon {
   height: 100%;
   cursor: pointer;
 }
-
 @media (min-width: $bp-ms) {
   li {
     display: inline-block;
@@ -186,4 +188,9 @@ li:hover .download-icon {
     display: none;
   }
 }
+
+@media (min-width: $bp-ms) {
+
+}
+
 </style>

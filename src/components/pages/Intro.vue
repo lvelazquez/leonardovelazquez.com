@@ -1,7 +1,7 @@
 <template>
     <section class="intro">
         <div class="intro-container">
-            <BrandLogo />
+            <BrandLogo type="intro" />
             <div class="intro-nav">
                 <ul>
                     <li>

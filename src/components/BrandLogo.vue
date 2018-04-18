@@ -1,7 +1,7 @@
 <template>
-    <div :class="`brand-logo ${color}-logo ${responsive ? '' : 'brand-responsive'}`">
-        <Logo :width="`${logoWidth}`" :height="`${logoHeight}`"/>
-        <h1 class="brand-title" :style="`font-size:${fontSize} !important`">
+    <div :class="`brand-logo ${color}-logo ${type}`">
+        <Logo class="logo" />
+        <h1 class="brand-title">
             <span class="titleLoader">Leonardo Vel&aacute;zquez</span>
             <span class="subheader titleLoader">Full Stack Engineer</span></h1>
     </div>
@@ -16,11 +16,9 @@ export default {
     Logo
   },
   props: {
-    logoWidth: { type: String, default: "4.5rem" },
-    logoHeight: { type: String, default: "4.25rem" },
     color: { type: String, default: "white" },
     fontSize: { type: String },
-    responsive: { type: Boolean, default: false }
+    type: { type: String, default: "header" }
   }
 };
 </script>
@@ -41,6 +39,7 @@ export default {
   }
   color: $black-color;
 }
+
 .brand-logo {
   display: flex;
   text-transform: uppercase;
@@ -52,16 +51,47 @@ export default {
     width: 100%;
     line-height: 0.75;
     margin: 0;
+    span:first-child {
+      margin-bottom: 0.15em;
+    }
     span {
       display: block;
-      margin-bottom: 0.15em;
     }
   }
 }
 
-.brand-responsive {
+.header {
+  .logo {
+    width: 8vw;
+    height: 8vw;
+    max-width: 4rem;
+  }
+  .brand-title {
+    font-size: 5vw;
+    letter-spacing: 0.15px;
+  }
+  @media (min-width: $bp-sm) {
+    font-size: 2rem;
+  }
+  @media (min-width: $bp-ms) {
+    .logo {
+      width: 3.5rem;
+      height: 3.5rem;
+    }
+    .brand-logo {
+      padding: 0.25rem 0.25rem 0;
+    }
+    .brand-title {
+      font-size: 2.2rem;
+    }
+  }
+}
+
+.intro {
   .logo {
     margin: 0 auto;
+    width: 4rem;
+    height: 4rem;
   }
   flex-direction: column;
   .brand-title {
@@ -74,9 +104,9 @@ export default {
       @media (min-width: $bp-sm) {
         width: 80%;
       }
-        @media (min-width: $bp-lg) {
-            width: 100%;
-        }
+      @media (min-width: $bp-lg) {
+        width: 100%;
+      }
     }
   }
 }
