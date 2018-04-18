@@ -41,7 +41,4 @@ export default {
     margin: 0;
   }
 
-  section {
-    height: 100vh;
-  }
 </style>

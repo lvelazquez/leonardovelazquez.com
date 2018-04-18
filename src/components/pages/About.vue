@@ -15,7 +15,6 @@
                     </p>
 
                     <p>
-                        <!-- My philosophy is to think and articulate the needs of the project first, then code with scalability and re-usability in mind.-->
                         Lately, I'm very excited to develop applications using Vue.js, as well as to furthering my growth of Web Application Architecture, patterns and best practices.
                     </p>
 

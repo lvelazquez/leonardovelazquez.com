@@ -1,5 +1,5 @@
 <template>
-    <div :class="`brand-logo ${color}-logo ${type}`">
+    <div :class="`brand-logo ${color}-logo ${type}-logo`">
         <Logo class="logo" />
         <h1 class="brand-title">
             <span class="titleLoader">Leonardo Vel&aacute;zquez</span>
@@ -60,7 +60,7 @@ export default {
   }
 }
 
-.header {
+.header-logo {
   .logo {
     width: 8vw;
     height: 8vw;
@@ -95,7 +95,7 @@ export default {
   }
 }
 
-.intro {
+.intro-logo {
   .logo {
     margin: 0 auto;
     width: 4rem;

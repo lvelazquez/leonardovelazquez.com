@@ -35,12 +35,52 @@ export default {
 </script>
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
-<style scoped>
+<style scoped lang="scss">
+@import "../../styles/settings.scss";
+
 .banner-social-buttons {
-  display: "flex";
+  display: flex;
+  text-align: center;
+  margin: 0 auto;
+  min-width: 30rem;
+  flex-direction: column;
   li {
     flex: 1;
-      display: inline-block;
+    display: inline-block;
+    margin-bottom: 1rem;
   }
+}
+
+.btn {
+  max-width: 10rem;
+  margin-right: 1rem;
+  font-family: "Montserrat", Arial;
+  text-align: center;
+  display: inline-block;
+  text-transform: uppercase;
+  border: solid $light-gray-color 1px;
+  border-radius: 6px;
+  color: $black-color;
+  background-color: transparent;
+  transition: all 0.1s ease-in-out;
+  padding: 10px 16px;
+  font-size: 18px;
+  line-height: 1.33;
+  i {
+    color: $black-color;
+  }
+}
+
+.btn:hover {
+  color: $white-color;
+  background-color: $black-color;
+  i {
+    color: $white-color;
+  }
+}
+
+#contact {
+  color: $black-color;
+  background-color: $white-color;
 }
 </style>
