@@ -7,7 +7,6 @@ var Contact = Backbone.Model.extend({
         message: ''
     },
     validate: function (attrs) {
-
         var errors = [];
         _.each(attrs, function (value, key) {
             if (!attrs[key]) {

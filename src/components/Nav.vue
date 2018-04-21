@@ -144,11 +144,11 @@ li:hover .download-icon {
 
 .navbar-logo {
   position: relative;
-  left: 5px;
   font-weight: 700;
   display: inline-flex;
   height: 100%;
   align-items: center;
+  padding-left: 1rem;
   .top-logo {
     min-width: 35px;
     position: relative;
@@ -173,6 +173,7 @@ li:hover .download-icon {
   height: 100%;
   padding-right: 1rem;
   cursor: pointer;
+  background-color: $white-color;
 }
 
 @media (min-width: $bp-ms) {

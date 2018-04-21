@@ -118,7 +118,6 @@ export default {
 }
 
 .contact-form {
-  @extend .content-wrapper;
   max-width: 15rem;
   margin: 0 auto;
   text-align: center;
