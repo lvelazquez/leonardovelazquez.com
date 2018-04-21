@@ -40,5 +40,8 @@ export default {
   body {
     margin: 0;
   }
+  h2 {
+    margin-top: 4rem;
+  }
 
 </style>
