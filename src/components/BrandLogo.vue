@@ -96,23 +96,29 @@ export default {
 }
 
 .intro-logo {
+  @media (min-width: $bp-lg) {
+    flex-direction: row;
+  }
   .logo {
     margin: 0 auto;
-    width: 4rem;
-    height: 4rem;
+    width: 5rem;
+    height: 4.2rem;
   }
   flex-direction: column;
   .brand-title {
-    white-space: normal;
     text-align: center;
     line-height: 1;
     span {
       margin: 0 auto;
       width: 100%;
+      white-space: normal;
       @media (min-width: $bp-sm) {
         width: 80%;
       }
       @media (min-width: $bp-lg) {
+        white-space: nowrap;
+        text-align: left;
+        line-height: 0.75;
         width: 100%;
       }
     }

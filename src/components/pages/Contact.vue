@@ -150,6 +150,6 @@ export default {
   font-family: 'Open Sans', Helvetica;
   width: 100%;
   border: none;
-  padding: 0.25rem 0.5rem;
+  padding: 0.5rem;
 }
 </style>
