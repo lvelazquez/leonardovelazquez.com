@@ -1,7 +1,8 @@
 @import "./media-queries.scss";
 
 .content-wrapper {
-  padding: 0 2rem;
+  padding: 0 2rem 4rem;
+
   @media (min-width: $bp-sm) {
     .content-wrapper {
       padding: 0 5rem;

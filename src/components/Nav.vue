@@ -1,5 +1,5 @@
 <template>
-    <nav role="navigation" :class="updateNav">
+    <nav class="navbar" role="navigation" :class="updateNav">
             <div class="navbar-header">
                 <button class="navbar-menu-btn" @click="isMenuOpen = !isMenuOpen">
                     <i class="fa fa-bars"></i>
@@ -68,7 +68,7 @@ export default {
 @import "../styles/settings";
 @import "../styles/media-queries";
 
-nav {
+.navbar {
   position: fixed;
   width: 100%;
   height: 5rem;
@@ -102,7 +102,11 @@ nav {
 .nav-list li {
   height: 100%;
   cursor: pointer;
-  display: inline-flex;
+  display: flex;
+  font-weight: 500;
+  @media (min-width: $bp-sm) {
+    display: inline-flex;
+  }
   align-items: center;
   padding: 0 1rem 0;
 }
@@ -165,11 +169,9 @@ li:hover .download-icon {
   border: none;
   z-index: 1;
   outline: none;
-}
-
-.navbar-menu-btn {
-  font-size: 1.9rem;
+  font-size: 1.5rem;
   height: 100%;
+  padding-right: 1rem;
   cursor: pointer;
 }
 

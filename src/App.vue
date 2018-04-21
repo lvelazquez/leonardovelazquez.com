@@ -31,17 +31,16 @@ export default {
 </script>
 
 <style>
-  @import "~reset-css";
-  @import "./styles/base.css";
+@import "~reset-css";
+@import "./styles/base.css";
 
-  a {
-    text-decoration: none;
-  }
-  body {
-    margin: 0;
-  }
-  h2 {
-    margin-top: 4rem;
-  }
-
+a {
+  text-decoration: none;
+}
+body {
+  margin: 0;
+}
+h2 {
+  padding-top: 4rem;
+}
 </style>
