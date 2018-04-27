@@ -1,21 +1,21 @@
 <template>
-    <section class="intro">
+    <section id="intro" class="intro">
         <div class="intro-container">
             <BrandLogo type="intro" />
             <div class="intro-nav">
                 <ul>
                     <li>
-                        <a href="#/work" class="nav-item">Work</a>
+                        <Link to="/work" class="nav-item">Work</Link>
                     </li>
                     <li>
-                        <a href="#/about" class="nav-item">About me</a>
+                        <Link to="/about" class="nav-item">About me</Link>
                     </li>
                     <li>
-                        <a href="#/contact" class="nav-item">Contact</a>
+                        <Link to="/contact" class="nav-item">Contact</Link>
                     </li>
                 </ul>
                 <div class="page-scroll">
-                    <a href="#/work" class="btn-lv nav-item" data-target="#work">
+                    <a href="/work" class="btn-lv nav-item" data-target="#work">
                         <i class="glyphicon glyphicon-chevron-down animated"></i>
                     </a>
                 </div>
@@ -26,11 +26,12 @@
 
 <script>
 import BrandLogo from "../BrandLogo";
-
+import Link from "../Link";
 export default {
   name: "Intro",
   components: {
-    BrandLogo
+    BrandLogo,
+    Link
   },
   props: {}
 };
@@ -43,7 +44,6 @@ export default {
 
 .intro {
   color: $white-color;
-  height: 100vh;
 }
 
 .intro-container {

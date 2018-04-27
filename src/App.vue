@@ -1,5 +1,5 @@
 <template>
-  <div id="app">
+  <div id="app" @routechange="handleRouteChange">
     <Nav />
     <Background />
     <Intro />
@@ -9,7 +9,9 @@
 </template>
 
 <script>
+import { find } from "lodash";
 import Nav from "./components/Nav.vue";
+import NavBus from "./components/NavBus";
 import Background from "./components/Background";
 import Intro from "./components/pages/Intro";
 import Work from "./components/pages/Work";
@@ -26,7 +28,25 @@ export default {
     Work,
     Contact
   },
-  created() {}
+  mounted() {
+    this.navHeight = document.getElementsByClassName("navbar")[0].offsetHeight;
+    window.addEventListener("scroll", this.handleScroll);
+    NavBus.$on("routechange", this.handleRouteChange);
+  },
+  destroyed() {
+    NavBus.$off("routechange", this.handleRouteChange);
+  },
+  methods: {
+    handleRouteChange(route) {
+      const key = route.replace("/", "");
+      window.scrollTo(0, this.getTop(key) - this.navHeight);
+    },
+    handleScroll() {},
+    getTop(id) {
+      const el = document.getElementById(id);
+      return el === null ? 0 : el.offsetTop - document.body.scrollTop;
+    }
+  }
 };
 </script>
 

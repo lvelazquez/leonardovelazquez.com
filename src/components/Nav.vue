@@ -1,5 +1,5 @@
 <template>
-    <nav class="navbar" role="navigation" :class="updateNav">
+    <nav class="navbar" role="navigation" :class="updateNav" >
             <div class="navbar-header">
                 <button class="navbar-menu-btn" @click="isMenuOpen = !isMenuOpen">
                     <i class="fa fa-bars"></i>
@@ -10,13 +10,13 @@
                 <div :class="{'navbar-collapse': !isMenuOpen, 'navbar-right':true }">
                     <ul class="nav-list">
                         <li>
-                            <a href="#/work" class="nav-item" data-target="#work">Work</a>
+                            <Link to="/work" class="nav-item">Work</Link>
                         </li>
                         <li>
-                            <a href="#/about" class="nav-item" data-target="#about">About me</a>
+                            <Link to="/about" class="nav-item">About me</Link>
                         </li>
                         <li>
-                            <a href="#/contact" class="nav-item" data-target="#contact">Contact</a>
+                            <Link to="/contact" class="nav-item">Contact</Link>
                         </li>
                         <li>
                             <a class="nav-item"  href="../src/assets/files/LeonardoVelazquezResume.pdf" download="LeonardoVelazquezResume">
@@ -31,7 +31,10 @@
 </template>
 
 <script>
+
 import BrandLogo from "./BrandLogo";
+import Link from "./Link";
+import NavBus from "./NavBus";
 
 export default {
   name: "Nav",
@@ -41,12 +44,17 @@ export default {
     };
   },
   components: {
-    BrandLogo
+    BrandLogo,
+    Link
   },
   props: {},
   created() {
     this.updateNav = this.updateNav.bind(this);
     window.addEventListener("scroll", this.updateNav);
+
+    NavBus.$on('routechange',()=>{
+      console.log('')
+    });
   },
   destroyed() {
     window.removeEventListener("scroll", this.updateNav);
@@ -55,9 +63,8 @@ export default {
     updateNav() {
       return window.scrollY === 0 ? "navbar-hide" : "";
     },
-    handleMenu() {
-      console.log("handle menu");
-      // this.isMenuOpen = !this.isMenuOpen;
+    routeChange() {
+      console.log("change::");
     }
   }
 };
@@ -104,7 +111,7 @@ export default {
   cursor: pointer;
   display: flex;
   font-weight: 500;
-  @media (min-width: $bp-sm) {
+  @media (min-width: $bp-ms) {
     display: inline-flex;
   }
   align-items: center;
