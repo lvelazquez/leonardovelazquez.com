@@ -83,14 +83,14 @@ export default {
   }
   @media (min-width: $bp-md) {
     .logo {
-      width: 3.5rem;
-      height: 3.5rem;
+      width: 3.3rem;
+      height: 3.3rem;
     }
     .brand-logo {
       padding: 0.25rem 0.25rem 0;
     }
     .brand-title {
-      font-size: 2.2rem;
+      font-size: 2rem;
     }
   }
 }
