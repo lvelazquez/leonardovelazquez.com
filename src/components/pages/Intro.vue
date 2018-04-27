@@ -44,6 +44,7 @@ export default {
 
 .intro {
   color: $white-color;
+  height: 100vh;
 }
 
 .intro-container {

@@ -121,7 +121,11 @@ export default {
   max-width: 15rem;
   margin: 0 auto;
   text-align: center;
+  padding: 0 2rem 4rem;
   @media (min-width: $bp-sm) {
+    padding: 0 3rem 4rem;
+  }
+  @media (min-width: $bp-md) {
     padding: 0 10rem 4rem;
   }
 }
