@@ -39,7 +39,7 @@ export default {
     left: 50%;
     min-width: 100%;
     width: auto;
-    height: auto;
+    height: 100vh;
     z-index: -100;
     transform: translate(-50%, -50%);
   }

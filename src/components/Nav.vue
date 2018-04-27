@@ -1,5 +1,5 @@
 <template>
-    <nav class="navbar" role="navigation" :class="updateNav" >
+    <nav class="navbar" role="navigation" :class="{'navbar-hide': isNavHidden}" >
             <div class="navbar-header">
                 <button class="navbar-menu-btn" @click="isMenuOpen = !isMenuOpen">
                     <i class="fa fa-bars"></i>
@@ -31,16 +31,15 @@
 </template>
 
 <script>
-
 import BrandLogo from "./BrandLogo";
 import Link from "./Link";
-import NavBus from "./NavBus";
 
 export default {
   name: "Nav",
   data: function() {
     return {
-      isMenuOpen: false
+      isMenuOpen: false,
+      isNavHidden: false
     };
   },
   components: {
@@ -49,22 +48,14 @@ export default {
   },
   props: {},
   created() {
-    this.updateNav = this.updateNav.bind(this);
     window.addEventListener("scroll", this.updateNav);
-
-    NavBus.$on('routechange',()=>{
-      console.log('')
-    });
   },
   destroyed() {
     window.removeEventListener("scroll", this.updateNav);
   },
   methods: {
     updateNav() {
-      return window.scrollY === 0 ? "navbar-hide" : "";
-    },
-    routeChange() {
-      console.log("change::");
+      this.isNavHidden = window.scrollY === 0;
     }
   }
 };
@@ -77,6 +68,7 @@ export default {
 
 .navbar {
   position: fixed;
+  top: 0;
   width: 100%;
   height: 5rem;
   font-family: Montserrat, "Helvetica Neue", Helvetica, Arial, sans-serif;
@@ -84,6 +76,7 @@ export default {
   text-transform: uppercase;
   z-index: 1000;
   background-color: $white-color;
+  transition: all .5s ease-out;
   .top-nav-container {
     background-color: #fff;
     height: 0;
@@ -99,7 +92,7 @@ export default {
 }
 
 .navbar-hide {
-  top: -50px;
+  top: -80px;
 }
 
 .navbar-collapse {
