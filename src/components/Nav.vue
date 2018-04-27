@@ -33,10 +33,11 @@
 <script>
 import BrandLogo from "./BrandLogo";
 import Link from "./Link";
+import NavBus from "./NavBus";
 
 export default {
   name: "Nav",
-  data: function() {
+  data() {
     return {
       isMenuOpen: false,
       isNavHidden: false
@@ -48,6 +49,9 @@ export default {
   },
   props: {},
   created() {
+    NavBus.$on("routechange", o => {
+      this.isMenuOpen = false;
+    });
     window.addEventListener("scroll", this.updateNav);
   },
   destroyed() {
@@ -76,7 +80,7 @@ export default {
   text-transform: uppercase;
   z-index: 1000;
   background-color: $white-color;
-  transition: all .5s ease-out;
+  transition: all 0.25s ease-out;
   .top-nav-container {
     background-color: #fff;
     height: 0;
@@ -100,15 +104,17 @@ export default {
 }
 
 .nav-list li {
-  height: 100%;
-  cursor: pointer;
-  display: flex;
-  font-weight: 500;
-  @media (min-width: $bp-ms) {
-    display: inline-flex;
+  .nav-item {
+    height: 100%;
+    cursor: pointer;
+    display: flex;
+    font-weight: 500;
+    @media (min-width: $bp-ms) {
+      display: inline-flex;
+    }
+    align-items: center;
+    padding: 0 1rem 0;
   }
-  align-items: center;
-  padding: 0 1rem 0;
 }
 
 .nav-list li:hover {

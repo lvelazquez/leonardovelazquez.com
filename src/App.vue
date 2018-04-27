@@ -61,6 +61,6 @@ body {
   margin: 0;
 }
 h2 {
-  padding-top: 4rem;
+  padding-top: 3rem;
 }
 </style>
