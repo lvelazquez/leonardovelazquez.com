@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<browserconfig>
+  <msapplication>
+    <tile>
+      <square70x70logo src="http://res.cloudinary.com/dv7ollzw5/image/upload/c_fit,h_70,w_70/v1524936309/favicon.png"/>
+      <square150x150logo src="http://res.cloudinary.com/dv7ollzw5/image/upload/c_fit,h_270,w_270/v1524936309/favicon.png"/>
+      <square310x310logo src="http://res.cloudinary.com/dv7ollzw5/image/upload/c_fit,h_310,w_310/v1524936309/favicon.png"/>
+      <wide310x150logo src="http://res.cloudinary.com/dv7ollzw5/image/upload/c_fit,h_310,w_150/v1524936309/favicon.png"/>
+      <TileColor>#2b5797</TileColor>
+    </tile>
+  </msapplication>
+</browserconfig>
