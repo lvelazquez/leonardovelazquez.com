@@ -25,8 +25,8 @@
 </template>
 
 <script>
-import BrandLogo from "../BrandLogo";
-import Link from "../Link";
+import BrandLogo from "../components/BrandLogo";
+import Link from "../components/Link";
 export default {
   name: "Intro",
   components: {
@@ -39,8 +39,8 @@ export default {
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style lang="scss" scoped>
-@import "../../styles/settings";
-@import "../../styles/media-queries";
+@import "../styles/settings";
+@import "../styles/media-queries";
 
 .intro {
   color: $white-color;

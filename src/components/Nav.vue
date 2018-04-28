@@ -33,7 +33,7 @@
 <script>
 import BrandLogo from "./BrandLogo";
 import Link from "./Link";
-import NavBus from "./NavBus";
+import NavBus from "../NavBus";
 
 export default {
   name: "Nav",

@@ -63,7 +63,7 @@ export default {
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped lang="scss">
-@import "../../styles/content.scss";
+@import "../styles/content";
 
 #about {
   dd:after {

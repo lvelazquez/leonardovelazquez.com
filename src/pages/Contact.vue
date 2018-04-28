@@ -64,9 +64,9 @@ export default {
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped lang="scss">
-@import "../../styles/settings.scss";
-@import "../../styles/content.scss";
-@import "../../styles/media-queries.scss";
+@import "../styles/settings";
+@import "../styles/content";
+@import "../styles/media-queries";
 
 .banner-social-buttons {
   display: flex;

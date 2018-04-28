@@ -11,12 +11,12 @@
 <script>
 import { find } from "lodash";
 import Nav from "./components/Nav.vue";
-import NavBus from "./components/NavBus";
+import NavBus from "./NavBus";
 import Background from "./components/Background";
-import Intro from "./components/pages/Intro";
-import Work from "./components/pages/Work";
-import About from "./components/pages/About";
-import Contact from "./components/pages/Contact";
+import Intro from "./pages/Intro";
+import Work from "./pages/Work";
+import About from "./pages/About";
+import Contact from "./pages/Contact";
 
 export default {
   name: "app",

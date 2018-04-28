@@ -3,7 +3,7 @@
 </template>
 
 <script>
-import NavBus from "./NavBus";
+import NavBus from "../NavBus";
 
 export default {
   name: "Link",
