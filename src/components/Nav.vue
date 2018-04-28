@@ -109,9 +109,6 @@ export default {
     cursor: pointer;
     display: flex;
     font-weight: 500;
-    @media (min-width: $bp-ms) {
-      display: inline-flex;
-    }
     align-items: center;
     padding: 0 1rem 0;
   }

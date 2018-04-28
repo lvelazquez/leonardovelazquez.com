@@ -41,10 +41,15 @@ export default {
 <style lang="scss" scoped>
 @import "../styles/settings";
 @import "../styles/media-queries";
+@import "../styles/settings";
 
 .intro {
   color: $white-color;
   height: 100vh;
+}
+
+#intro-logo {
+  opacity: 0;
 }
 
 .intro-container {

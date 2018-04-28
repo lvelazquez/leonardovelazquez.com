@@ -1,9 +1,9 @@
 <template>
-    <div :class="`brand-logo ${color}-logo ${type}-logo`">
+    <div :id="`${type}-header`" :class="`brand-logo ${color}-logo ${type}-logo loader`">
         <Logo class="logo" />
         <h1 class="brand-title">
-            <span class="titleLoader">Leonardo Vel&aacute;zquez</span>
-            <span class="subheader titleLoader">Full Stack Engineer</span></h1>
+            <span>Leonardo Vel&aacute;zquez</span>
+            <span class="sub-header">Full Stack Engineer</span></h1>
     </div>
 </template>
 
@@ -122,6 +122,58 @@ export default {
         line-height: 0.75;
         width: 100%;
       }
+    }
+  }
+
+  @keyframes pulse {
+    0% {
+      transform: scale(1);
+    }
+
+    50% {
+      transform: scale(1.2);
+    }
+
+    100% {
+      transform: scale(1);
+    }
+  }
+
+  @keyframes fillLoop {
+    0% {
+      fill: $blue-loader-color;
+    }
+
+    50% {
+      fill: $black-loader-color;
+    }
+
+    100% {
+      fill: $blue-loader-color;
+    }
+  }
+
+  @keyframes colorLoop {
+    0% {
+      color: $blue-loader-color;
+    }
+
+    50% {
+      color: $black-loader-color;
+    }
+
+    100% {
+      color: $blue-loader-color;
+    }
+  }
+
+  &.loader {
+    .logo {
+      animation: fillLoop 4s infinite ease-in-out;
+    }
+
+    .brand-title {
+      animation: colorLoop 4s infinite ease-in-out;
     }
   }
 }
