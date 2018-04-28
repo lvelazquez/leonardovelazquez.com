@@ -1,5 +1,5 @@
 <template>
-    <section id="about" class="container content-section text-left col-sm-12 invisible">
+    <section id="about" class="container content-section invisible">
         <div class="row">
             <div class="col-sm-12">
                 <h2>About me</h2>

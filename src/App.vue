@@ -88,7 +88,6 @@ export default {
 </script>
 
 <style lang="scss">
-@import "~reset-css/_reset.scss";
 @import "./styles/base.css";
 
 a {

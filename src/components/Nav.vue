@@ -114,6 +114,15 @@ export default {
   }
 }
 
+.nav-list {
+  display: block;
+  padding: 0;
+  margin: 0;
+  @media (min-width: $bp-ms) {
+    display: flex;
+  }
+}
+
 .nav-list li:hover {
   background-color: $black-color;
 }

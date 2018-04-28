@@ -85,4 +85,9 @@ dd {
   font-size: 140%;
   display: inline;
   line-height: 1.7;
+  margin-left: 0.7rem;
+}
+
+li {
+  list-style: none;
 }
