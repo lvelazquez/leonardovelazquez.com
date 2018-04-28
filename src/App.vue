@@ -31,6 +31,7 @@ export default {
   mounted() {
     this.navHeight = document.getElementsByClassName("navbar")[0].offsetHeight;
     window.addEventListener("scroll", this.handleScroll);
+    this.videoBg = document.getElementById("site-background");
     NavBus.$on("routechange", this.handleRouteChange);
   },
   destroyed() {
@@ -41,7 +42,13 @@ export default {
       const key = route.replace("/", "");
       window.scrollTo(0, this.getTop(key) - this.navHeight);
     },
-    handleScroll() {},
+    handleScroll() {
+      if (window.scrollY > 20) {
+        this.videoBg.pause();
+      } else {
+        this.videoBg.play();
+      }
+    },
     getTop(id) {
       const el = document.getElementById(id);
       return el === null ? 0 : el.offsetTop - document.body.scrollTop;

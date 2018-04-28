@@ -13,9 +13,6 @@ export default {
     return {
       cloudinaryUrl: config.cloudinaryUrl
     };
-  },
-  mounted() {
-    console.log(document.getElementById("site-player"));
   }
 };
 </script>
