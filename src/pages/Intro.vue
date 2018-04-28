@@ -95,21 +95,14 @@ export default {
   clear: both;
   > i.animated {
     top: 8px;
-    -webkit-transition-property: -webkit-transform;
-    -webkit-transition-duration: 1s;
-    -moz-transition-property: -moz-transform;
-    -moz-transition-duration: 1s;
+    transition: transform 1s ease-out;
   }
 
   &:hover > .animated {
-    -webkit-animation-name: pulse;
-    -moz-animation-name: pulse;
-    -webkit-animation-duration: 1.5s;
-    -moz-animation-duration: 1.5s;
-    -webkit-animation-iteration-count: infinite;
-    -moz-animation-iteration-count: infinite;
-    -webkit-animation-timing-function: linear;
-    -moz-animation-timing-function: linear;
+    animation-name: pulse;
+    animation-duration: 1.5s;
+    animation-iteration-count: infinite;
+    animation-timing-function: linear;
   }
 }
 
@@ -121,8 +114,6 @@ export default {
   font-size: 40px;
   color: #fff;
   background: 0 0;
-  -webkit-transition: background 0.3s ease-in-out;
-  -moz-transition: background 0.3s ease-in-out;
   transition: background 0.3s ease-in-out;
 }
 </style>

@@ -96,7 +96,7 @@ export default {
 }
 
 .intro-logo {
-  @media (min-width: $bp-lg) {
+  @media (min-width: $bp-ms) {
     flex-direction: row;
   }
   .logo {
@@ -108,6 +108,7 @@ export default {
   .brand-title {
     text-align: center;
     line-height: 1;
+    margin-bottom: 1rem;
     span {
       margin: 0 auto;
       width: 100%;
@@ -115,7 +116,7 @@ export default {
       @media (min-width: $bp-sm) {
         width: 80%;
       }
-      @media (min-width: $bp-lg) {
+      @media (min-width: $bp-ms) {
         white-space: nowrap;
         text-align: left;
         line-height: 0.75;

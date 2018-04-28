@@ -40,7 +40,7 @@ export default {
   data() {
     return {
       isMenuOpen: false,
-      isNavHidden: false
+      isNavHidden: true
     };
   },
   components: {
