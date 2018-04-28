@@ -14,13 +14,14 @@ import TweenLite from "gsap/TweenLite";
 import "gsap/CSSPlugin";
 import { Strong, Circ } from "gsap/EasePack";
 
-import Nav from "./components/Nav.vue";
-import NavBus from "./NavBus";
-import Background from "./components/Background";
 import Intro from "./pages/Intro";
 import Work from "./pages/Work";
 import About from "./pages/About";
 import Contact from "./pages/Contact";
+
+import NavBus from "./NavBus";
+import Nav from "./components/Nav.vue";
+import Background from "./components/Background";
 
 export default {
   name: "app",
@@ -34,7 +35,7 @@ export default {
   },
   mounted() {
     this.introHeader = document.getElementById("intro-header");
-    this.contentSection = document.querySelector(".content-section");
+    this.contentSection = document.querySelectorAll(".content-section");
     this.videoBg = document.getElementById("site-background");
     this.navHeight = document.getElementsByClassName("navbar")[0].offsetHeight;
 
@@ -64,7 +65,9 @@ export default {
       return el === null ? 0 : el.offsetTop - document.body.scrollTop;
     },
     showSite() {
-      this.contentSection.classList.remove("invisible");
+      this.contentSection.forEach(section =>
+        section.classList.remove("invisible")
+      );
       TweenLite.to(this.videoBg, 2, {
         alpha: 1,
         ease: Circ.easeOut,
