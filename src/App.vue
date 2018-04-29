@@ -54,7 +54,7 @@ export default {
       window.scrollTo(0, this.getTop(key) - this.navHeight);
     },
     handleScroll() {
-      if (window.scrollY > 20) {
+      if (window.scrollY > 40) {
         this.videoBg.pause();
       } else {
         this.videoBg.play();
@@ -65,15 +65,17 @@ export default {
       return el === null ? 0 : el.offsetTop - document.body.scrollTop;
     },
     showSite() {
-      this.contentSection.forEach(section =>
-        section.classList.remove("invisible")
-      );
-      TweenLite.to(this.videoBg, 2, {
+
+      TweenLite.to(this.videoBg, 1.5, {
         alpha: 1,
         ease: Circ.easeOut,
         delay: 4,
         onStart: () => {
           this.introHeader.classList.remove("loader");
+          this.contentSection.forEach(section =>
+            section.classList.remove("invisible")
+          );
+          this.handleRouteChange(window.location.pathname);
         }
       });
     },
