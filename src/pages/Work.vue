@@ -6,6 +6,7 @@
                 <div class="thumbs-container">
                     <div v-for="(project) in thumbs" class="thumb-item">
                         <img :src="imageUrl(project.thumb)" />
+                        <div class="details">{{project.title}}</div>
                     </div>
                 </div>
             </div>
@@ -61,7 +62,7 @@ export default {
       column-gap: 5px;
     }
   }
-  .thumb-item {
+
     @media (min-width: $bp-ms) {
       margin-bottom: 5px;
     }
@@ -70,8 +71,29 @@ export default {
       width: 100%;
     }
   }
-}
 
+
+.thumb-item:hover {
+    .details {
+        opacity: 1;
+    }
+}
+.thumb-item {
+    position: relative;
+    .details {
+        font-family: "Montserrat", Helvetica;
+        font-size: 2rem;
+        position: absolute;
+        left: 0;
+        top: 0;
+        width: 100%;
+        text-transform: uppercase;
+        font-weight: 600;
+        background: $white-color;
+        color: $blue-color;
+        opacity: 0;
+    }
+}
 #project-container {
 }
 </style>
