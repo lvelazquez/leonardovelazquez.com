@@ -3,6 +3,7 @@
     <Nav />
     <Background />
     <Intro />
+    <Work />
     <About />
     <Contact />
   </div>
@@ -34,6 +35,7 @@ export default {
     Contact
   },
   mounted() {
+
     this.introHeader = document.getElementById("intro-header");
     this.contentSection = document.querySelectorAll(".content-section");
     this.videoBg = document.getElementById("site-background");
@@ -65,7 +67,6 @@ export default {
       return el === null ? 0 : el.offsetTop - document.body.scrollTop;
     },
     showSite() {
-
       TweenLite.to(this.videoBg, 1.5, {
         alpha: 1,
         ease: Circ.easeOut,
