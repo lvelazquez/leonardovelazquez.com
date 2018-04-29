@@ -44,6 +44,8 @@ export default {
 
 .work-container {
   display: flex;
+  column-count: 2;
+  column-gap: 5px;
 }
 
 .work-column {
@@ -56,10 +58,13 @@ export default {
   .thumbs-container {
     @media (min-width: $bp-ms) {
       column-count: 3;
-      column-gap: 0px;
+      column-gap: 5px;
     }
   }
   .thumb-item {
+    @media (min-width: $bp-ms) {
+      margin-bottom: 5px;
+    }
     cursor: pointer;
     img {
       width: 100%;
