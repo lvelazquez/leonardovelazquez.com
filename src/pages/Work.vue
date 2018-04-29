@@ -64,6 +64,7 @@
     .work-column {
         @media (min-width: $bp-ms) {
             flex: 1;
+            max-width: 50vw;
         }
     }
 
