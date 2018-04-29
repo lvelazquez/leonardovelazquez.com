@@ -33,7 +33,7 @@
 <script>
 import BrandLogo from "./BrandLogo";
 import Link from "./Link";
-import NavBus from "../NavBus";
+import EventBus from "../EventBus";
 
 export default {
   name: "Nav",
@@ -49,7 +49,7 @@ export default {
   },
   props: {},
   created() {
-    NavBus.$on("routechange", o => {
+    EventBus.$on("routechange", o => {
       this.isMenuOpen = false;
     });
     window.addEventListener("scroll", this.updateNav);

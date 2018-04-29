@@ -3,7 +3,7 @@
 </template>
 
 <script>
-import NavBus from "../NavBus";
+import EventBus from "../EventBus";
 
 export default {
   name: "Link",
@@ -14,7 +14,7 @@ export default {
     handleClick(e) {
       e.preventDefault();
       window.history.pushState({}, "", this.to);
-      NavBus.$emit("routechange", this.to);
+      EventBus.$emit("routechange", this.to);
     }
   }
 };

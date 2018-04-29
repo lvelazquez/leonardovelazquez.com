@@ -20,7 +20,7 @@ import Work from "./pages/Work";
 import About from "./pages/About";
 import Contact from "./pages/Contact";
 
-import NavBus from "./NavBus";
+import EventBus from "./EventBus";
 import Nav from "./components/Nav.vue";
 import Background from "./components/Background";
 
@@ -44,11 +44,11 @@ export default {
     this.init();
 
     window.addEventListener("scroll", this.handleScroll);
-    NavBus.$on("routechange", this.handleRouteChange);
+    EventBus.$on("routechange", this.handleRouteChange);
   },
   destroyed() {
     window.removeEventListener("scroll", this.handleScroll);
-    NavBus.$off("routechange", this.handleRouteChange);
+    EventBus.$off("routechange", this.handleRouteChange);
   },
   methods: {
     handleRouteChange(route) {
