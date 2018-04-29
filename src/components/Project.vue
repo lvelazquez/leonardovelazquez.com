@@ -90,7 +90,6 @@
 
     .link {
         font-family: "Montserrat", Helvetica;
-
     }
 
     .project h2 {

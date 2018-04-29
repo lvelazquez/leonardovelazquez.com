@@ -4,9 +4,9 @@
             <div id="thumb-container" class="work-column">
                 <h2>Work</h2>
                 <div class="thumbs-container">
-                    <div v-for="(project) in thumbs" class="thumb-item">
+                    <div v-for="(project) in thumbs" class="thumb-item" @click="handleProject(project.id)">
                         <img :src="imageUrl(project.thumb)"/>
-                        <div class="details" @click="handleProject(project.id)">{{project.title}}</div>
+                        <div class="details">{{project.title}}</div>
                     </div>
                 </div>
             </div>
@@ -93,6 +93,7 @@
     .thumb-item {
         position: relative;
         .details {
+            pointer-events: none;
             font-family: "Montserrat", Helvetica;
             font-size: 1.5rem;
             position: absolute;
