@@ -166,7 +166,6 @@
     }
 
     .carousel-caption {
-
         font-family: 'Open Sans', Helvetica;
         padding: 1rem;
         letter-spacing: .01rem;
