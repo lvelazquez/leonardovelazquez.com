@@ -100,18 +100,18 @@
 
     .carousel {
         position: relative;
-        background-color: rgba($white-color, .45);
     }
 
     .carousel-wrapper {
         width: 100%;
+        background-color: rgba($white-color, .6);
         @media (min-width: $bp-ms) {
             height: auto;
         }
     }
 
     .item {
-        max-height: 70vh;
+        max-height: 60vh;
         img {
             display: inline-block;
             width: 100%;
@@ -140,25 +140,21 @@
         cursor: pointer;
     }
 
-    .carousel-details {
-        background-color: $white-color;
-    }
-
     .carousel-indicators {
         display: table;
         padding: 1rem 0 0;
-        margin: 1rem auto 0;
+        margin: 0 auto 0;
         z-index: 1000;
         li {
             background-color: $white-color;
             margin-left: 5px;
             cursor: pointer;
             list-style: none;
-            border: solid $blue-color;
             border-radius: 20px;
-            width: 10px;
-            height: 10px;
+            width: .75rem;
+            height: .75rem;
             float: left;
+            border: solid $blue-color 1px;
             &.active {
                 background-color: $blue-color;
             }
@@ -169,7 +165,7 @@
         font-family: 'Open Sans', Helvetica;
         padding: 1rem;
         letter-spacing: .01rem;
-        color: $black-color;
+        color: $white-color;
         font-weight: 500;
         font-size: 1.3rem;
     }
