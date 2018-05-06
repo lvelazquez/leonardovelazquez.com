@@ -45,6 +45,7 @@ export default {
 
     window.addEventListener("scroll", this.handleScroll);
     EventBus.$on("routechange", this.handleRouteChange);
+
   },
   destroyed() {
     window.removeEventListener("scroll", this.handleScroll);
