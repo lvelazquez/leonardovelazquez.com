@@ -1,5 +1,5 @@
 <template>
-  <a @click="handleClick">{{this.$slots.default[0]['text']}}</a>
+  <a :data-key="`${to.replace('/','')}`" @click="handleClick">{{this.$slots.default[0]['text']}}</a>
 </template>
 
 <script>
@@ -13,7 +13,9 @@ export default {
   methods: {
     handleClick(e) {
       e.preventDefault();
-      window.history.pushState({}, "", this.to);
+      document.getElementById(this.to.replace('/','')).scrollIntoView({
+        behavior: "smooth"
+      });
       EventBus.$emit("routechange", this.to);
     }
   }

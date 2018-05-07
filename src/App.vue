@@ -1,16 +1,16 @@
 <template>
   <div id="app" @routechange="handleRouteChange">
-    <Nav />
-    <Background />
-    <Intro />
-    <Work />
-    <About />
-    <Contact />
+    <Nav currentSection="currentSection"/>
+    <Background/>
+    <Intro/>
+    <Work/>
+    <About/>
+    <Contact/>
   </div>
 </template>
 
 <script>
-import { find } from "lodash";
+import { find, map, get } from "lodash";
 import TweenLite from "gsap/TweenLite";
 import "gsap/CSSPlugin";
 import { Strong, Circ } from "gsap/EasePack";
@@ -34,10 +34,13 @@ export default {
     Work,
     Contact
   },
+  data() {
+    return {
+      currentSectionId: "intro"
+    };
+  },
   mounted() {
-
     this.introHeader = document.getElementById("intro-header");
-    this.contentSection = document.querySelectorAll(".content-section");
     this.videoBg = document.getElementById("site-background");
     this.navHeight = document.getElementsByClassName("navbar")[0].offsetHeight;
 
@@ -45,13 +48,21 @@ export default {
 
     window.addEventListener("scroll", this.handleScroll);
     EventBus.$on("routechange", this.handleRouteChange);
-
   },
   destroyed() {
     window.removeEventListener("scroll", this.handleScroll);
     EventBus.$off("routechange", this.handleRouteChange);
   },
   methods: {
+    init() {
+      TweenLite.to(this.introHeader, 2, {
+        delay: 1,
+        alpha: 1,
+        ease: Strong.easeOut
+      });
+
+      this.videoBg.addEventListener("canplay", this.showSite);
+    },
     handleRouteChange(route) {
       const key = route.replace("/", "");
       window.scrollTo(0, this.getTop(key) - this.navHeight);
@@ -62,6 +73,35 @@ export default {
       } else {
         this.videoBg.play();
       }
+
+      const scrollY = window.scrollY + this.navHeight;
+
+      document.querySelectorAll(".nav-item").forEach(navItem => {
+        if (this.currentSectionId !== navItem.getAttribute("data-key"))
+          navItem.classList.remove("active");
+      });
+
+      document.querySelectorAll("section").forEach(section => {
+        section.classList.remove("active");
+        const currentId = section.getAttribute("id");
+
+        if (
+          scrollY >= section.offsetTop &&
+          scrollY <= section.offsetTop + section.offsetHeight
+        ) {
+          if (currentId !== this.currentSectionId) {
+            this.currentSectionId = currentId;
+            if (currentId !== "intro") {
+              history.pushState({}, "", currentId);
+              document
+                .querySelector(`a[data-key="${currentId}"]`)
+                .classList.add("active");
+            } else {
+              history.pushState({}, "", "");
+            }
+          }
+        }
+      });
     },
     getTop(id) {
       const el = document.getElementById(id);
@@ -74,21 +114,11 @@ export default {
         delay: 4,
         onStart: () => {
           this.introHeader.classList.remove("loader");
-          this.contentSection.forEach(section =>
-            section.classList.remove("invisible")
-          );
-          this.handleRouteChange(window.location.pathname);
+          document
+            .querySelectorAll("section")
+            .forEach(section => section.classList.remove("invisible"));
         }
       });
-    },
-    init() {
-      TweenLite.to(this.introHeader, 2, {
-        delay: 1,
-        alpha: 1,
-        ease: Strong.easeOut
-      });
-
-      this.videoBg.addEventListener("canplay", this.showSite);
     }
   }
 };
@@ -100,12 +130,15 @@ export default {
 a {
   text-decoration: none;
 }
+
 body {
   margin: 0;
 }
+
 h2 {
   padding-top: 3rem;
 }
+
 .invisible {
   display: none;
 }

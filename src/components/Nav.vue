@@ -135,7 +135,7 @@ export default {
   }
 }
 
-.nav-list li.active {
+.nav-list .nav-item.active {
   color: $white-color;
   background-color: $black-color;
 }
