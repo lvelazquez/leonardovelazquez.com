@@ -7,7 +7,7 @@
                 <a class="navbar-logo nav-item" href="#/">
                     <BrandLogo type="header" color="black" />
                 </a>
-                <div :class="{'navbar-collapse': !isMenuOpen, 'navbar-right':true }">
+                <div :class="{'navbar-collapse': !isMenuOpen}" class="navbar-right">
                     <ul class="nav-list">
                         <li>
                             <Link to="/work" class="nav-item">Work</Link>
@@ -47,11 +47,8 @@ export default {
     BrandLogo,
     Link
   },
-  props: {},
-  created() {
-    EventBus.$on("routechange", o => {
-      this.isMenuOpen = false;
-    });
+  mounted() {
+    EventBus.$on("routechange", this.openMenu);
     window.addEventListener("scroll", this.updateNav);
   },
   destroyed() {
@@ -60,6 +57,9 @@ export default {
   methods: {
     updateNav() {
       this.isNavHidden = window.scrollY === 0;
+    },
+    openMenu() {
+      this.isMenuOpen = false;
     }
   }
 };
