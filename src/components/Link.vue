@@ -13,10 +13,9 @@ export default {
   methods: {
     handleClick(e) {
       e.preventDefault();
-      document.getElementById(this.to.replace('/','')).scrollIntoView({
-        behavior: "smooth"
-      });
-      EventBus.$emit("routechange", this.to);
+      const key = this.to.replace('/','');
+
+      EventBus.$emit("routechange", key);
     }
   }
 };

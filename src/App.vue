@@ -1,6 +1,6 @@
 <template>
   <div id="app" @routechange="handleRouteChange">
-    <Nav currentSection="currentSection"/>
+    <Nav :isNavHidden="`${isNavHidden}`" currentSection="currentSection"/>
     <Background/>
     <Intro/>
     <Work/>
@@ -10,7 +10,7 @@
 </template>
 
 <script>
-import { find, map, get } from "lodash";
+import { find, map, get, isNumber } from "lodash";
 import TweenLite from "gsap/TweenLite";
 import "gsap/CSSPlugin";
 import { Strong, Circ } from "gsap/EasePack";
@@ -36,22 +36,26 @@ export default {
   },
   data() {
     return {
-      currentSectionId: "intro"
+      currentSectionId: "intro",
+      isNavHidden: true
     };
   },
   mounted() {
+
     this.introHeader = document.getElementById("intro-header");
     this.videoBg = document.getElementById("site-background");
-    this.navHeight = document.getElementsByClassName("navbar")[0].offsetHeight;
+    this.navHeight = document.querySelector(".navbar").offsetHeight;
 
     this.init();
 
     window.addEventListener("scroll", this.handleScroll);
+    window.addEventListener("popstate", this.handlePopstate);
+
     EventBus.$on("routechange", this.handleRouteChange);
   },
   destroyed() {
     window.removeEventListener("scroll", this.handleScroll);
-    EventBus.$off("routechange", this.handleRouteChange);
+    window.removeEventListener("popstate", this.handlePopstate);
   },
   methods: {
     init() {
@@ -63,9 +67,15 @@ export default {
 
       this.videoBg.addEventListener("canplay", this.showSite);
     },
-    handleRouteChange(route) {
-      const key = route.replace("/", "");
-      window.scrollTo(0, this.getTop(key) - this.navHeight);
+    handlePopstate(e) {
+      e.preventDefault();
+      this.handleRouteChange(window.location.pathname);
+    },
+    // TODO click and scroll into view, currently not working
+    handleRouteChange(key) {
+      if (key) {
+        window.scrollTo(0, document.getElementById(key).offsetTop - this.navHeight);
+      }
     },
     handleScroll() {
       if (window.scrollY > 40) {
@@ -74,17 +84,24 @@ export default {
         this.videoBg.play();
       }
 
+      this.isNavHidden = window.scrollY === 0;
+
       const scrollY = window.scrollY + this.navHeight;
-
-      document.querySelectorAll(".nav-item").forEach(navItem => {
-        if (this.currentSectionId !== navItem.getAttribute("data-key"))
-          navItem.classList.remove("active");
-      });
-
+      this.updateSections(scrollY);
+    },
+    getTop(id) {
+      const el = document.getElementById(id);
+      return el === null ? 0 : el.offsetTop;
+    },
+    updateSections(scrollY) {
+      // loops thourhg sections as we scroll so that we can find if we are in the current section
+      // TODO add project route to the work section
+      // project route has to be remembered in a state object
+      // there's an initial default project
+      // we can alsoread current project from the dom
       document.querySelectorAll("section").forEach(section => {
         section.classList.remove("active");
         const currentId = section.getAttribute("id");
-
         if (
           scrollY >= section.offsetTop &&
           scrollY <= section.offsetTop + section.offsetHeight
@@ -92,20 +109,24 @@ export default {
           if (currentId !== this.currentSectionId) {
             this.currentSectionId = currentId;
             if (currentId !== "intro") {
-              history.pushState({}, "", currentId);
+              history.pushState(null, null, currentId);
               document
                 .querySelector(`a[data-key="${currentId}"]`)
                 .classList.add("active");
             } else {
-              history.pushState({}, "", "");
+              history.pushState(null, null, "/");
             }
           }
         }
       });
+
+      this.updateNavItems();
     },
-    getTop(id) {
-      const el = document.getElementById(id);
-      return el === null ? 0 : el.offsetTop - document.body.scrollTop;
+    updateNavItems() {
+      document.querySelectorAll(".nav-item").forEach(navItem => {
+        if (this.currentSectionId !== navItem.getAttribute("data-key"))
+          navItem.classList.remove("active");
+      });
     },
     showSite() {
       TweenLite.to(this.videoBg, 1.5, {
@@ -117,6 +138,8 @@ export default {
           document
             .querySelectorAll("section")
             .forEach(section => section.classList.remove("invisible"));
+
+          setTimeout(this.handleRouteChange(window.location.pathname), 400);
         }
       });
     }
