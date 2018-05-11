@@ -41,7 +41,6 @@ export default {
     };
   },
   mounted() {
-
     this.introHeader = document.getElementById("intro-header");
     this.videoBg = document.getElementById("site-background");
     this.navHeight = document.querySelector(".navbar").offsetHeight;
@@ -74,7 +73,10 @@ export default {
     // TODO click and scroll into view, currently not working
     handleRouteChange(key) {
       if (key) {
-        window.scrollTo(0, document.getElementById(key).offsetTop - this.navHeight);
+        window.scrollTo(
+          0,
+          document.getElementById(key).offsetTop - this.navHeight
+        );
       }
     },
     handleScroll() {
