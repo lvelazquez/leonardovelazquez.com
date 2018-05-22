@@ -72,7 +72,7 @@ export default {
     },
     // TODO click and scroll into view, currently not working
     handleRouteChange(key) {
-      if (key) {
+      if (key != '/') {
         window.scrollTo(
           0,
           document.getElementById(key).offsetTop - this.navHeight
