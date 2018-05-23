@@ -13,8 +13,13 @@ Including a selection of projects from my illustrious career.
 - reuse data
 - eventually could use a webserver/node based CMS
 
-// TODO modularize with browserify
-// TODO debug and optimize router & auto scroll
+// TODO power up form
+// TODO throw more animation into carousel
+// TODO add a few new projects
+// TODO update portfolio design, add some color
+// TODO print out business cards
+// TODO form validation
 // TODO support swiping for mobile
+// TODO debug and optimize router & auto scroll
 // TODO make slideshow degrade gracefully without javascript
-// TODO test deploy with heroku
+// TODO create routes for projects

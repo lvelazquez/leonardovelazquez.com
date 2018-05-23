@@ -68,6 +68,7 @@ export default {
     },
     handlePopstate(e) {
       e.preventDefault();
+      // TODO verify that route handling is progressive, anchor fallback?
       this.handleRouteChange(window.location.pathname);
     },
     // TODO click and scroll into view, currently not working
