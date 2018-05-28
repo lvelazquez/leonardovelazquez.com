@@ -37,7 +37,8 @@
                 SUBMIT
               </button>
             </form>
-            <div class="warning-text" v-if="!this.isValid && this.hasSubmit">All fields are required.</div>
+            <div class="warning-text form-text" v-if="!isValid && hasSubmit">All fields are required.</div>
+            <div class="form-text" v-if="isSuccess">Successfully sent!</div>
           </div>
         </div>
         <ul class="col-md-12 list-inline banner-social-buttons">
@@ -63,7 +64,7 @@
 
 <script>
 import Map from "../components/Map";
-import { some } from "lodash";
+import { every } from "lodash";
 
 export default {
   name: "Contact",
@@ -77,6 +78,7 @@ export default {
     return {
       hasSubmit: false,
       isValid: false,
+      isSuccess: false,
       contact: {
         name: "",
         email: "",
@@ -88,9 +90,10 @@ export default {
   methods: {
     handleSubmit() {
       this.hasSubmit = true;
-      this.isValid = some(this.contact, value => value !== "");
+      this.isValid = every(this.contact, value => value !== "");
       if (this.isValid) {
-        console.log("submit!", this.contact);
+        console.log("submit!", this.contact, this.isValid);
+        this.isSuccess = true;
       }
     }
   }
@@ -202,11 +205,15 @@ export default {
 .warning {
   border: solid $warning-color 2px;
 }
-.warning-text {
-  color: $warning-color;
+.form-text {
+  color: $blue-color;
   font-family: "Open Sans", Helvetica, sans-serif;
   font-weight: 700;
   font-size: 1.2rem;
   white-space: nowrap;
+}
+
+.warning-text {
+  color: $warning-color;
 }
 </style>
