@@ -1,20 +1,18 @@
 <template>
-  <section id="contact" class="container content-section invisible">
+  <section id="contact" class="container content-section" :class="{invisible: !isLoaded}">
     <div class="contact-wrapper">
       <div>
         <h2>Contact</h2>
         <div id="contact-container">
           <div class="contact-form">
             <form id="contact_form" @submit.prevent="handleSubmit">
-              <div class="input-group contact-name contact-info" :class="{warning: !contact.name && hasSubmit }"
-                   v-model="contact.name">
-                <input id="contact_name" type="text" class="contact_info input-field" name="name"
+              <div class="input-group contact-name contact-info" :class="{warning: !contact.name && hasSubmit }">
+                <input id="contact_name" type="text" class="contact_info input-field" name="name" v-model="contact.name"
                        placeholder="Your Name"
                 />
               </div>
               <div class="input-group contact-email contact-info has-feedback"
-                   :class="{warning: !contact.email && hasSubmit }"
-              >
+                   :class="{warning: !contact.email && hasSubmit }">
                 <input id="contact_email" type="text"
                        class="contact_info input-field"
                        name="email"
@@ -22,25 +20,24 @@
                        placeholder="Your Email"/>
               </div>
               <div class="input-group contact-info" :class="{warning: !contact.title && hasSubmit }"
-                   v-model="contact.title"
+
               ><input id="contact_subject"
                       type="text"
-
                       class="contact_info input-field"
                       name="subject"
-                      placeholder="Subject"/>
+                      placeholder="Subject" v-model="contact.title"/>
               </div>
               <div class="input-group contact-message contact-info has-feedback"
-                   :class="{warning: !contact.message && hasSubmit }" v-model="contact.message">
+                   :class="{warning: !contact.message && hasSubmit }">
                 <textarea id="contact_message" class="contact_info col-12 input-field"
                           name="message"
-                          placeholder="Your Message"></textarea>
+                          placeholder="Your Message" v-model="contact.message"></textarea>
               </div>
               <button id="submit" type="submit" class="btn btn-block">
                 SUBMIT
               </button>
             </form>
-            <div id="statusMsg" style="display:none"></div>
+            <div class="warning-text" v-if="!this.isValid && this.hasSubmit">All fields are required.</div>
           </div>
         </div>
         <ul class="col-md-12 list-inline banner-social-buttons">
@@ -66,17 +63,20 @@
 
 <script>
 import Map from "../components/Map";
-import { each } from "lodash";
+import { some } from "lodash";
 
 export default {
   name: "Contact",
-  props: {},
+  props: {
+    isLoaded: Boolean
+  },
   components: {
     Map
   },
   data() {
     return {
       hasSubmit: false,
+      isValid: false,
       contact: {
         name: "",
         email: "",
@@ -88,16 +88,8 @@ export default {
   methods: {
     handleSubmit() {
       this.hasSubmit = true;
-      // validate fields
-      // show message
-      each(this.contact, fields => {
-        if (fields === "") {
-          this.isValid = false;
-          return false;
-        }
-      });
+      this.isValid = some(this.contact, value => value !== "");
       if (this.isValid) {
-        // submit data
         console.log("submit!", this.contact);
       }
     }
@@ -129,7 +121,7 @@ export default {
 }
 
 .btn {
-  font-family: "Montserrat", Arial;
+  font-family: "Montserrat", Arial, sans-serif;
   max-width: 10rem;
   text-align: center;
   display: inline-block;
@@ -209,5 +201,12 @@ export default {
 
 .warning {
   border: solid $warning-color 2px;
+}
+.warning-text {
+  color: $warning-color;
+  font-family: "Open Sans", Helvetica, sans-serif;
+  font-weight: 700;
+  font-size: 1.2rem;
+  white-space: nowrap;
 }
 </style>

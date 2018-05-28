@@ -1,5 +1,5 @@
 <template>
-    <nav class="navbar" role="navigation" :class="{'navbar-hide': isNavHidden}" >
+    <nav class="navbar" role="navigation" :class="{'navbar-hide': isNavHidden, invisible: !isLoaded}" >
             <div class="navbar-header">
                 <button class="navbar-menu-btn" @click="isMenuOpen = !isMenuOpen">
                     <i class="fa fa-bars"></i>
@@ -37,6 +37,9 @@ import EventBus from "../EventBus";
 
 export default {
   name: "Nav",
+  props: {
+    isLoaded: Boolean
+  },
   data() {
     return {
       isMenuOpen: false,

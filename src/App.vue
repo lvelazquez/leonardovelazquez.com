@@ -1,11 +1,11 @@
 <template>
   <div id="app" @routechange="handleRouteChange">
-    <Nav :isNavHidden="`${isNavHidden}`" currentSection="currentSection"/>
+    <Nav :isNavHidden="`${isNavHidden}`" :isLoaded="this.isLoaded" :currentSectionId="currentSectionId"/>
     <Background/>
     <Intro/>
-    <Work/>
-    <About/>
-    <Contact/>
+    <Work :isLoaded="this.isLoaded"/>
+    <About :isLoaded="this.isLoaded"/>
+    <Contact :isLoaded="this.isLoaded"/>
   </div>
 </template>
 
@@ -37,6 +37,7 @@ export default {
   data() {
     return {
       currentSectionId: "intro",
+      isLoaded: false,
       isNavHidden: true
     };
   },
@@ -135,9 +136,7 @@ export default {
         delay: 4,
         onStart: () => {
           this.introHeader.classList.remove("loader");
-          document
-            .querySelectorAll("section")
-            .forEach(section => section.classList.remove("invisible"));
+          this.isLoaded = true;
           this.handleRouteChange(window.location.pathname);
         }
       });
