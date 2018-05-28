@@ -1,11 +1,11 @@
 <template>
   <div id="app" @routechange="handleRouteChange">
-    <Nav :isNavHidden="`${isNavHidden}`" :isLoaded="this.isLoaded" :currentSectionId="currentSectionId"/>
+    <Nav :isNavHidden="`${isNavHidden}`" :currentSectionId="currentSectionId"/>
     <Background/>
     <Intro/>
-    <Work :isLoaded="this.isLoaded"/>
-    <About :isLoaded="this.isLoaded"/>
-    <Contact :isLoaded="this.isLoaded"/>
+    <Work :currentSectionId="currentSectionId" :isLoaded="isLoaded"/>
+    <About :currentSectionId="currentSectionId"  :isLoaded="isLoaded"/>
+    <Contact :currentSectionId="currentSectionId"  :isLoaded="isLoaded"/>
   </div>
 </template>
 
@@ -99,8 +99,9 @@ export default {
       // TODO add project route to the work section
       // project route has to be remembered in a state object
       // there's an initial default project
+      this.sections = document.querySelectorAll("section");
       // we can alsoread current project from the dom
-      document.querySelectorAll("section").forEach(section => {
+      this.sections.forEach(section => {
         section.classList.remove("active");
         const currentId = section.getAttribute("id");
         if (
@@ -111,9 +112,6 @@ export default {
             this.currentSectionId = currentId;
             if (currentId !== "intro") {
               history.pushState(null, null, currentId);
-              document
-                .querySelector(`a[data-key="${currentId}"]`)
-                .classList.add("active");
             } else {
               history.pushState(null, null, "/");
             }

@@ -1,5 +1,5 @@
 <template>
-    <nav class="navbar" role="navigation" :class="{'navbar-hide': isNavHidden, invisible: !isLoaded}" >
+    <nav class="navbar" role="navigation" :class="{'navbar-hide': isNavHidden}" >
             <div class="navbar-header">
                 <button class="navbar-menu-btn" @click="isMenuOpen = !isMenuOpen">
                     <i class="fa fa-bars"></i>
@@ -10,13 +10,13 @@
                 <div :class="{'navbar-collapse': !isMenuOpen}" class="navbar-right">
                     <ul class="nav-list">
                         <li>
-                            <Link to="/work" class="nav-item">Work</Link>
+                            <Link to="/work" class="nav-item" :class="{active: currentSectionId === 'work' }">Work</Link>
                         </li>
                         <li>
-                            <Link to="/about" class="nav-item">About me</Link>
+                            <Link to="/about" class="nav-item" :class="{active: currentSectionId === 'about' }">About me</Link>
                         </li>
                         <li>
-                            <Link to="/contact" class="nav-item">Contact</Link>
+                            <Link to="/contact" class="nav-item" :class="{active: currentSectionId === 'contact' }">Contact</Link>
                         </li>
                         <li>
                             <a class="nav-item"  href="../src/assets/files/LeonardoVelazquezResume.pdf" download="LeonardoVelazquezResume">
@@ -38,7 +38,7 @@ import EventBus from "../EventBus";
 export default {
   name: "Nav",
   props: {
-    isLoaded: Boolean
+    currentSectionId: String
   },
   data() {
     return {
