@@ -138,8 +138,6 @@ export default {
           document
             .querySelectorAll("section")
             .forEach(section => section.classList.remove("invisible"));
-        },
-        onComplete: () => {
           this.handleRouteChange(window.location.pathname);
         }
       });
