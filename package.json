@@ -9,6 +9,7 @@
   "dependencies": {
     "google-maps": "^3.3.0",
     "gsap": "^1.20.4",
+    "nodemailer": "^4.6.5",
     "vue": "^2.5.13"
   },
   "devDependencies": {

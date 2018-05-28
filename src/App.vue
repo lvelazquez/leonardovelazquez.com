@@ -10,7 +10,7 @@
 </template>
 
 <script>
-import { find, map, get, isNumber } from "lodash";
+import { find, map, get, isNumber, isEmpty } from "lodash";
 import TweenLite from "gsap/TweenLite";
 import "gsap/CSSPlugin";
 import { Strong, Circ } from "gsap/EasePack";
@@ -45,27 +45,24 @@ export default {
     this.videoBg = document.getElementById("site-background");
     this.navHeight = document.querySelector(".navbar").offsetHeight;
 
-    this.init();
-
     window.addEventListener("scroll", this.handleScroll);
     window.addEventListener("popstate", this.handlePopstate);
 
     EventBus.$on("routechange", this.handleRouteChange);
+
+    this.videoBg.addEventListener("canplay", this.showSite);
+
+    TweenLite.to(this.introHeader, 2, {
+      delay: 1,
+      alpha: 1,
+      ease: Strong.easeOut
+    });
   },
   destroyed() {
     window.removeEventListener("scroll", this.handleScroll);
     window.removeEventListener("popstate", this.handlePopstate);
   },
   methods: {
-    init() {
-      TweenLite.to(this.introHeader, 2, {
-        delay: 1,
-        alpha: 1,
-        ease: Strong.easeOut
-      });
-
-      this.videoBg.addEventListener("canplay", this.showSite);
-    },
     handlePopstate(e) {
       e.preventDefault();
       // TODO verify that route handling is progressive, anchor fallback?
@@ -73,11 +70,11 @@ export default {
     },
     // TODO click and scroll into view, currently not working
     handleRouteChange(key) {
-      if (key != '/') {
-        window.scrollTo(
-          0,
-          document.getElementById(key).offsetTop - this.navHeight
-        );
+      if (key !== "/") {
+        const section = document.getElementById(key.replace("/", ""));
+        if (!isEmpty(section)) {
+          window.scrollTo(0, get(section, "offsetTop") - this.navHeight);
+        }
       }
     },
     handleScroll() {
@@ -141,8 +138,9 @@ export default {
           document
             .querySelectorAll("section")
             .forEach(section => section.classList.remove("invisible"));
-
-          setTimeout(this.handleRouteChange(window.location.pathname), 400);
+        },
+        onComplete: () => {
+          this.handleRouteChange(window.location.pathname);
         }
       });
     }
