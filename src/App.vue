@@ -70,12 +70,15 @@ export default {
       this.handleRouteChange(window.location.pathname);
     },
     // TODO click and scroll into view, currently not working
-    handleRouteChange(key) {
-      if (key !== "/") {
-        const section = document.getElementById(key.replace("/", ""));
+    handleRouteChange(route) {
+      const key = route.replace("/", "");
+      if (key !== "") {
+        const section = document.getElementById();
         if (!isEmpty(section)) {
           window.scrollTo(0, get(section, "offsetTop") - this.navHeight);
         }
+      } else {
+        window.scrollTo(0, 0);
       }
     },
     handleScroll() {

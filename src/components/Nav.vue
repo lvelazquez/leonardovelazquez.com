@@ -4,9 +4,9 @@
                 <button class="navbar-menu-btn" @click="isMenuOpen = !isMenuOpen">
                     <i class="fa fa-bars"></i>
                 </button>
-                <a class="navbar-logo nav-item" href="#/">
+                <Link class="navbar-logo nav-item" to="/">
                     <BrandLogo type="header" color="black" />
-                </a>
+                </Link>
                 <div :class="{'navbar-collapse': !isMenuOpen}" class="navbar-right">
                     <ul class="nav-list">
                         <li>
@@ -31,8 +31,8 @@
 </template>
 
 <script>
-import BrandLogo from "./BrandLogo";
 import Link from "./Link";
+import BrandLogo from "./BrandLogo";
 import EventBus from "../EventBus";
 
 export default {
