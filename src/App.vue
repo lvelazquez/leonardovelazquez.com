@@ -73,7 +73,7 @@ export default {
     handleRouteChange(route) {
       const key = route.replace("/", "");
       if (key !== "") {
-        const section = document.getElementById();
+        const section = document.getElementById(key);
         if (!isEmpty(section)) {
           window.scrollTo(0, get(section, "offsetTop") - this.navHeight);
         }
