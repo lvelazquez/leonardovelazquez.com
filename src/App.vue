@@ -48,7 +48,6 @@ export default {
 
     window.addEventListener("scroll", this.handleScroll);
     window.addEventListener("popstate", this.handlePopstate);
-
     EventBus.$on("routechange", this.handleRouteChange);
 
     this.videoBg.addEventListener("canplay", this.showSite);
@@ -62,6 +61,8 @@ export default {
   destroyed() {
     window.removeEventListener("scroll", this.handleScroll);
     window.removeEventListener("popstate", this.handlePopstate);
+    EventBus.$off("routechange", this.handleRouteChange);
+    this.videoBg.removeEventListener("canplay", this.showSite);
   },
   methods: {
     handlePopstate(e) {
@@ -98,10 +99,7 @@ export default {
       return el === null ? 0 : el.offsetTop;
     },
     updateSections(scrollY) {
-      // loops thourhg sections as we scroll so that we can find if we are in the current section
       // TODO add project route to the work section
-      // project route has to be remembered in a state object
-      // there's an initial default project
       this.sections = document.querySelectorAll("section");
       // we can alsoread current project from the dom
       this.sections.forEach(section => {
