@@ -136,6 +136,7 @@ export default {
         onStart: () => {
           this.introHeader.classList.remove("loader");
           this.isLoaded = true;
+          this.videoBg.play();
           this.handleRouteChange(window.location.pathname);
         }
       });
