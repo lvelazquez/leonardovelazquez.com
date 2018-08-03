@@ -46,7 +46,7 @@
         </div>
         <ul class="col-md-12 list-inline banner-social-buttons">
           <li>
-            <a href="http://www.linkedin.com/in/leovelazquez" class="btn btn-default btn-lg"><i
+            <a href="https://www.linkedin.com/in/leovelazquez" class="btn btn-default btn-lg"><i
               class="fa fa-linkedin fa-fw"></i> <span class="network-name">Linked In</span></a>
           </li>
           <li>
