@@ -6,14 +6,15 @@
         <div id="contact-container">
           <div class="contact-form">
             <form id="contact_form" @submit.prevent="handleSubmit">
-              <div class="input-group contact-name contact-info" :class="{warning: !contact.name && hasSubmit }">
+              <div class="input-group contact-name contact-info"
+                   :class="{warning: !contact.name && submitStatus === 'error' }">
                 <input id="contact_name" type="text" class="contact_info input-field" name="name" v-model="contact.name"
                        placeholder="Your Name"
                        autocomplete="true"
                 />
               </div>
               <div class="input-group contact-email contact-info has-feedback"
-                   :class="{warning: !contact.email && hasSubmit }">
+                   :class="{warning: (!contact.email || !validateEmail(contact.email)) && submitStatus === 'error' }">
                 <input id="contact_email" type="text"
                        class="contact_info input-field"
                        name="email"
@@ -21,7 +22,7 @@
                        placeholder="Your Email"
                        autocomplete="true"/>
               </div>
-              <div class="input-group contact-info" :class="{warning: !contact.title && hasSubmit }"
+              <div class="input-group contact-info" :class="{warning: !contact.title && submitStatus === 'error' }"
 
               ><input id="contact_subject"
                       type="text"
@@ -30,7 +31,7 @@
                       placeholder="Subject" v-model="contact.title"/>
               </div>
               <div class="input-group contact-message contact-info has-feedback"
-                   :class="{warning: !contact.message && hasSubmit }">
+                   :class="{warning: !contact.message && submitStatus === 'error' }">
                 <textarea id="contact_message" class="contact_info col-12 input-field"
                           name="message"
                           placeholder="Your Message" v-model="contact.message"></textarea>
@@ -39,11 +40,13 @@
                 SUBMIT
               </button>
             </form>
-            <div class="warning-text form-text" v-if="!isValid || !isSuccess && hasSubmit">{{errorMessage}}</div>
-            <p class="email-text" v-if="!isSuccess && hasSubmit">Please try again later or reach me at <a
+            <div class="warning-text form-text" v-if="this.errorMessage !== '' && submitStatus === 'error'">
+              {{errorMessage}}
+            </div>
+            <p class="email-text" v-if="submitStatus === 'serverError'">Please try again later or reach me at <a
               href="mailto:leo@leonardovelazquez.com">leo@leonardovelazquez.com</a>
             </p>
-            <div class="form-text" v-if="isSuccess">Successfully sent!</div>
+            <div class="form-text" v-if="submitStatus === 'success'">Successfully sent!</div>
           </div>
         </div>
         <ul class="col-md-12 list-inline banner-social-buttons">
@@ -81,10 +84,9 @@
     },
     data() {
       return {
-        hasSubmit: false,
         isValid: false,
-        isSuccess: false,
-        errorMessage: "All fields are required.",
+        submitStatus: '',
+        errorMessage: "",
         contact: {
           name: "",
           email: "",
@@ -93,10 +95,30 @@
         }
       };
     },
+
     methods: {
+      validateForm() {
+        let isValid = every(this.contact, value => value !== "");
+        if (isValid) {
+          isValid = this.validateEmail(this.contact.email);
+          if (!isValid) {
+            this.errorMessage = "Please enter a valid email";
+            this.submitStatus = 'error';
+          }
+        } else {
+          this.errorMessage = "All fields are required.";
+          this.submitStatus = 'error';
+        }
+        return isValid;
+      },
+      validateEmail(email) {
+        const re = /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i;
+        return re.test(String(email).toLowerCase());
+      },
       async handleSubmit() {
-        this.hasSubmit = true;
-        this.isValid = every(this.contact, value => value !== "");
+        this.errorMessage = '';
+        this.submitStatus = 'sending';
+        this.isValid = this.validateForm();
         if (this.isValid) {
           const response = await fetch("/contact", {
             body: JSON.stringify(this.contact), // must match 'Content-Type' header
@@ -113,12 +135,13 @@
           });
           const res = JSON.parse(await response.json());
           if (res.ok) {
-            this.isSuccess = true;
+            this.submitStatus = 'success';
           } else {
-            console.error(res.error);
-            this.isSuccess = false;
+            this.submitStatus = 'serverError';
             this.errorMessage = "There's been a server side error.";
           }
+        } else {
+          this.submitStatus = 'error';
         }
       }
     }
