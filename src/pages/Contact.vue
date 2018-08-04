@@ -9,6 +9,7 @@
               <div class="input-group contact-name contact-info" :class="{warning: !contact.name && hasSubmit }">
                 <input id="contact_name" type="text" class="contact_info input-field" name="name" v-model="contact.name"
                        placeholder="Your Name"
+                       autocomplete="true"
                 />
               </div>
               <div class="input-group contact-email contact-info has-feedback"
@@ -17,7 +18,8 @@
                        class="contact_info input-field"
                        name="email"
                        v-model="contact.email"
-                       placeholder="Your Email"/>
+                       placeholder="Your Email"
+                       autocomplete="true"/>
               </div>
               <div class="input-group contact-info" :class="{warning: !contact.title && hasSubmit }"
 
@@ -82,7 +84,7 @@
         hasSubmit: false,
         isValid: false,
         isSuccess: false,
-        errorMessage: 'All fields are required.',
+        errorMessage: "All fields are required.",
         contact: {
           name: "",
           email: "",
@@ -96,16 +98,15 @@
         this.hasSubmit = true;
         this.isValid = every(this.contact, value => value !== "");
         if (this.isValid) {
-
           const response = await fetch("/contact", {
             body: JSON.stringify(this.contact), // must match 'Content-Type' header
             cache: "no-cache", // *default, no-cache, reload, force-cache, only-if-cached
             // credentials: "same-origin", // include, same-origin, *omit
             headers: {
-              'Accept': 'application/json',
-              'Content-Type': 'application/json'
+              Accept: "application/json",
+              "Content-Type": "application/json"
             },
-            method: "POST", // *GET, POST, PUT, DELETE, etc.
+            method: "POST" // *GET, POST, PUT, DELETE, etc.
             //mode: "cors", // no-cors, cors, *same-origin
             //redirect: "follow", // manual, *follow, error
             //referrer: "no-referrer" // *client, no-referrer
@@ -116,7 +117,7 @@
           } else {
             console.error(res.error);
             this.isSuccess = false;
-            this.errorMessage = "There's been a server side error."
+            this.errorMessage = "There's been a server side error.";
           }
         }
       }
@@ -247,5 +248,4 @@
     font-weight: 700;
     font-size: 1.1rem;
   }
-
 </style>
