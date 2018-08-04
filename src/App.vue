@@ -45,6 +45,7 @@
       this.introHeader = document.getElementById("intro-header");
       this.videoBg = document.getElementById("site-background");
       this.navHeight = document.querySelector(".navbar").offsetHeight;
+      this.showSite = this.showSite.bind(this);
 
       window.addEventListener("scroll", this.handleScroll, {passive: true});
       window.addEventListener("popstate", this.handlePopstate);
