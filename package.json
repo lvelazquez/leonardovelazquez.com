@@ -5,6 +5,7 @@
   "scripts": {
     "dev": "concurrently \"vue-cli-service serve --open\" \"nodemon server/index.js\"",
     "build": "vue-cli-service build",
+    "postinstall": "npm run build",
     "start": "node server/index.js",
     "test": ""
   },
