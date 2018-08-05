@@ -4,15 +4,17 @@
     <div class="carousel">
       <!-- Wrapper for slides -->
       <div class="carousel-wrapper" :style="`backgroundColor: ${hexToRGB(currentProject.backgroundColor)}`">
-        <div class="item">
-          <img :src="loadImage(currentProject.images[this.currentImageIndex].image_url)"/>
+        <div class="item" v-for="(image, index) in currentProject.images" :class="{active: currentImageIndex === index}">
+          <img :src="loadImage(image.image_url)"/>
         </div>
-        <button class="carousel-control carousel-left" @click="handleUpdate(1)">
-          <span class="glyphicon glyphicon-chevron-left"> < </span>
-        </button>
-        <button class="carousel-control carousel-right" @click="handleUpdate(1)">
-          <span class="glyphicon glyphicon-chevron-right"> > </span>
-        </button>
+        <div class="controls">
+          <button class="carousel-control carousel-left" @click="handleUpdate(1)">
+            <span class="glyphicon glyphicon-chevron-left"> < </span>
+          </button>
+          <button class="carousel-control carousel-right" @click="handleUpdate(1)">
+            <span class="glyphicon glyphicon-chevron-right"> > </span>
+          </button>
+        </div>
       </div>
       <div class="carousel-details">
         <ol class="carousel-indicators">
@@ -111,14 +113,27 @@ export default {
 .carousel-wrapper {
   position: relative;
   width: 100%;
+  height: 100%;
   background-color: rgba($white-color, 0.6);
   @media (min-width: $bp-ms) {
-    height: auto;
+    height: 70vh;
   }
 }
 
+.controls {
+  height: 100%;
+}
+
 .item {
-  max-height: 60vh;
+  position: absolute;
+  opacity: 0;
+  transform: translate(-50%, -100%);
+  left: 50%;
+  transition: transform 0.35s ease-out;
+  &.active {
+    opacity: 1;
+    transform: translate(-50%, 0);
+  }
   img {
     display: inline-block;
     width: 100%;
