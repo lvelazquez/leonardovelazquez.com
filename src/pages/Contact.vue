@@ -71,204 +71,204 @@
 </template>
 
 <script>
-  import Map from "../components/Map";
-  import {every} from "lodash";
+import { Map } from '../components/';
+import { every } from 'lodash';
 
-  export default {
-    name: "Contact",
-    props: {
-      isLoaded: Boolean
-    },
-    components: {
-      Map
-    },
-    data() {
-      return {
-        isValid: false,
-        submitStatus: '',
-        errorMessage: "",
-        contact: {
-          name: "",
-          email: "",
-          title: "",
-          message: ""
-        }
-      };
-    },
+export default {
+  name: 'Contact',
+  props: {
+    isLoaded: Boolean
+  },
+  components: {
+    Map
+  },
+  data() {
+    return {
+      isValid: false,
+      submitStatus: '',
+      errorMessage: '',
+      contact: {
+        name: '',
+        email: '',
+        title: '',
+        message: ''
+      }
+    };
+  },
 
-    methods: {
-      validateForm() {
-        let isValid = every(this.contact, value => value !== "");
-        if (isValid) {
-          isValid = this.validateEmail(this.contact.email);
-          if (!isValid) {
-            this.errorMessage = "Please enter a valid email";
-            this.submitStatus = 'error';
-          }
-        } else {
-          this.errorMessage = "All fields are required.";
+  methods: {
+    validateForm() {
+      let isValid = every(this.contact, value => value !== '');
+      if (isValid) {
+        isValid = this.validateEmail(this.contact.email);
+        if (!isValid) {
+          this.errorMessage = 'Please enter a valid email';
           this.submitStatus = 'error';
         }
-        return isValid;
-      },
-      validateEmail(email) {
-        const re = /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i;
-        return re.test(String(email).toLowerCase());
-      },
-      async handleSubmit() {
-        this.errorMessage = '';
-        this.submitStatus = 'sending';
-        this.isValid = this.validateForm();
-        if (this.isValid) {
-          const response = await fetch("/contact", {
-            body: JSON.stringify(this.contact), // must match 'Content-Type' header
-            cache: "no-cache", // *default, no-cache, reload, force-cache, only-if-cached
-            // credentials: "same-origin", // include, same-origin, *omit
-            headers: {
-              Accept: "application/json",
-              "Content-Type": "application/json"
-            },
-            method: "POST" // *GET, POST, PUT, DELETE, etc.
-            //mode: "cors", // no-cors, cors, *same-origin
-            //redirect: "follow", // manual, *follow, error
-            //referrer: "no-referrer" // *client, no-referrer
-          });
-          const res = JSON.parse(await response.json());
-          if (res.ok) {
-            this.submitStatus = 'success';
-          } else {
-            this.submitStatus = 'serverError';
-            this.errorMessage = "There's been a server side error.";
-          }
+      } else {
+        this.errorMessage = 'All fields are required.';
+        this.submitStatus = 'error';
+      }
+      return isValid;
+    },
+    validateEmail(email) {
+      const re = /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i;
+      return re.test(String(email).toLowerCase());
+    },
+    async handleSubmit() {
+      this.errorMessage = '';
+      this.submitStatus = 'sending';
+      this.isValid = this.validateForm();
+      if (this.isValid) {
+        const response = await fetch('/contact', {
+          body: JSON.stringify(this.contact), // must match 'Content-Type' header
+          cache: 'no-cache', // *default, no-cache, reload, force-cache, only-if-cached
+          // credentials: "same-origin", // include, same-origin, *omit
+          headers: {
+            Accept: 'application/json',
+            'Content-Type': 'application/json'
+          },
+          method: 'POST' // *GET, POST, PUT, DELETE, etc.
+          //mode: "cors", // no-cors, cors, *same-origin
+          //redirect: "follow", // manual, *follow, error
+          //referrer: "no-referrer" // *client, no-referrer
+        });
+        const res = JSON.parse(await response.json());
+        if (res.ok) {
+          this.submitStatus = 'success';
         } else {
-          this.submitStatus = 'error';
+          this.submitStatus = 'serverError';
+          this.errorMessage = "There's been a server side error.";
         }
+      } else {
+        this.submitStatus = 'error';
       }
     }
-  };
+  }
+};
 </script>
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped lang="scss">
-  @import "../styles/settings";
-  @import "../styles/content";
-  @import "../styles/media-queries";
+@import '../styles/settings';
+@import '../styles/content';
+@import '../styles/media-queries';
 
-  .banner-social-buttons {
-    display: flex;
-    text-align: center;
-    margin: 0 auto;
-    flex-direction: column;
-    li {
-      flex: 1;
-      display: inline-block;
-      margin-bottom: 1rem;
-    }
-    @media (min-width: $bp-ms) {
-      flex-direction: row;
-      max-width: 30rem;
-      margin: 0 auto;
-    }
-  }
-
-  .btn {
-    font-family: "Montserrat", Arial, sans-serif;
-    max-width: 10rem;
-    text-align: center;
+.banner-social-buttons {
+  display: flex;
+  text-align: center;
+  margin: 0 auto;
+  flex-direction: column;
+  li {
+    flex: 1;
     display: inline-block;
-    text-transform: uppercase;
-    border: solid $light-gray-color 1px;
-    border-radius: 6px;
-    color: $black-color;
-    background-color: transparent;
-    transition: all 0.1s ease-in-out;
-    padding: 10px 16px;
-    font-size: 18px;
-    line-height: 1.33;
-    i {
-      color: $black-color;
-    }
-  }
-
-  .btn:hover {
-    color: $white-color;
-    background-color: $black-color;
-    i {
-      color: $white-color;
-    }
-  }
-
-  #contact {
-    color: $black-color;
-    background-color: $white-color;
-    padding: 0;
-  }
-
-  .contact-form {
-    max-width: 15rem;
-    margin: 0 auto;
-    text-align: center;
-    padding: 0 2rem 4rem;
-    @media (min-width: $bp-sm) {
-      padding: 0 3rem 4rem;
-    }
-    @media (min-width: $bp-md) {
-      padding: 0 10rem 4rem;
-    }
-  }
-
-  .contact-wrapper {
-    padding-bottom: 3rem;
-  }
-
-  #submit {
-    font-weight: 600;
-    background-color: $blue-color;
-    color: $white-color;
-    cursor: pointer;
-    transition: background-color 0.25s ease-out;
-    &:hover {
-      background-color: darken($blue-color, 25%);
-    }
-  }
-
-  .input-group {
-    width: 100%;
-    border: solid $light-gray-color 2px;
-    border-radius: 5px;
     margin-bottom: 1rem;
-    outline: none;
   }
+  @media (min-width: $bp-ms) {
+    flex-direction: row;
+    max-width: 30rem;
+    margin: 0 auto;
+  }
+}
 
-  .input-field {
-    font-family: "Open Sans", Helvetica, sans-serif;
-    width: 100%;
-    padding: 0.5rem;
-    outline: none;
-    box-shadow: none;
-    background: none;
-    border: none;
+.btn {
+  font-family: 'Montserrat', Arial, sans-serif;
+  max-width: 10rem;
+  text-align: center;
+  display: inline-block;
+  text-transform: uppercase;
+  border: solid $light-gray-color 1px;
+  border-radius: 6px;
+  color: $black-color;
+  background-color: transparent;
+  transition: all 0.1s ease-in-out;
+  padding: 10px 16px;
+  font-size: 18px;
+  line-height: 1.33;
+  i {
+    color: $black-color;
   }
+}
 
-  .warning {
-    border: solid $warning-color 2px;
+.btn:hover {
+  color: $white-color;
+  background-color: $black-color;
+  i {
+    color: $white-color;
   }
+}
 
-  .form-text {
-    color: $blue-color;
-    font-family: "Open Sans", Helvetica, sans-serif;
-    font-weight: 700;
-    font-size: 1.2rem;
-    white-space: nowrap;
-  }
+#contact {
+  color: $black-color;
+  background-color: $white-color;
+  padding: 0;
+}
 
-  .warning-text {
-    color: $warning-color;
+.contact-form {
+  max-width: 15rem;
+  margin: 0 auto;
+  text-align: center;
+  padding: 0 2rem 4rem;
+  @media (min-width: $bp-sm) {
+    padding: 0 3rem 4rem;
   }
+  @media (min-width: $bp-md) {
+    padding: 0 10rem 4rem;
+  }
+}
 
-  .email-text {
-    font-family: Montserrat;
-    font-weight: 700;
-    font-size: 1.1rem;
+.contact-wrapper {
+  padding-bottom: 3rem;
+}
+
+#submit {
+  font-weight: 600;
+  background-color: $blue-color;
+  color: $white-color;
+  cursor: pointer;
+  transition: background-color 0.25s ease-out;
+  &:hover {
+    background-color: darken($blue-color, 25%);
   }
+}
+
+.input-group {
+  width: 100%;
+  border: solid $light-gray-color 2px;
+  border-radius: 5px;
+  margin-bottom: 1rem;
+  outline: none;
+}
+
+.input-field {
+  font-family: 'Open Sans', Helvetica, sans-serif;
+  width: 100%;
+  padding: 0.5rem;
+  outline: none;
+  box-shadow: none;
+  background: none;
+  border: none;
+}
+
+.warning {
+  border: solid $warning-color 2px;
+}
+
+.form-text {
+  color: $blue-color;
+  font-family: 'Open Sans', Helvetica, sans-serif;
+  font-weight: 700;
+  font-size: 1.2rem;
+  white-space: nowrap;
+}
+
+.warning-text {
+  color: $warning-color;
+}
+
+.email-text {
+  font-family: Montserrat;
+  font-weight: 700;
+  font-size: 1.1rem;
+}
 </style>

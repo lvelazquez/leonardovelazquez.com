@@ -18,13 +18,13 @@
 </template>
 
 <script>
-import projectData from "../data";
-import config from "../config";
-import Project from "../components/Project";
-import EventBus from "../EventBus";
+import projectData from '../data';
+import config from '../config';
+import { Project } from '../components/';
+import EventBus from '../EventBus';
 
 export default {
-  name: "Work",
+  name: 'Work',
   components: {
     Project
   },
@@ -45,15 +45,15 @@ export default {
     },
     handleProject(id) {
       this.currentProjectId = id;
-      EventBus.$emit("project.changed", id);
+      EventBus.$emit('project.changed', id);
     }
   }
 };
 </script>
 
 <style lang="scss" scoped>
-@import "../styles/settings.scss";
-@import "../styles/media-queries.scss";
+@import '../styles/settings.scss';
+@import '../styles/media-queries.scss';
 
 .work-container {
   display: flex;
@@ -95,7 +95,7 @@ export default {
   position: relative;
   .details {
     pointer-events: none;
-    font-family: "Montserrat", Helvetica;
+    font-family: 'Montserrat', Helvetica;
     font-size: 1.5rem;
     position: absolute;
     left: 0;
