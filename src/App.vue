@@ -63,7 +63,11 @@ export default {
     window.removeEventListener("scroll", this.handleScroll);
     window.removeEventListener("popstate", this.handlePopstate);
     EventBus.$off("routechange", this.handleRouteChange);
-    this.videoBg.removeEventListener("canplay", this.showSite);
+    if (video.readyState >= video.HAVE_FUTURE_DATA) {
+      this.showSite();
+    } else {
+      this.videoBg.removeEventListener("canplay", this.showSite);
+    }
   },
   methods: {
     handlePopstate(e) {
