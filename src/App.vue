@@ -14,15 +14,10 @@ import { find, map, get, isNumber, isEmpty } from "lodash";
 import { TweenLite } from "gsap";
 import "gsap/CSSPlugin";
 import { Strong, Circ } from "gsap/EasePack";
-
-import Intro from "./pages/Intro";
-import Work from "./pages/Work";
-import About from "./pages/About";
-import Contact from "./pages/Contact";
-
 import EventBus from "./EventBus";
-import Nav from "./components/Nav.vue";
-import Background from "./components/Background";
+
+import { Intro, Work, About, Contact } from "./pages/";
+import { Nav, Background } from "./components/";
 
 export default {
   name: "app",
@@ -45,8 +40,8 @@ export default {
     this.introHeader = document.getElementById("intro-header");
     this.videoBg = document.getElementById("site-background");
     this.navHeight = document.querySelector(".navbar").offsetHeight;
-    this.showSite = this.showSite.bind(this);
 
+    this.showSite = this.showSite.bind(this);
     window.addEventListener("scroll", this.handleScroll, { passive: true });
     window.addEventListener("popstate", this.handlePopstate);
     EventBus.$on("routechange", this.handleRouteChange);
@@ -129,7 +124,7 @@ export default {
     },
     updateNavItems() {
       document.querySelectorAll(".nav-item").forEach(navItem => {
-        if (this.currentSectionId !== navItem.getAttribute("data-key"))
+        if (this.currentSectionId !== navItem.getAttribute("href"))
           navItem.classList.remove("active");
       });
     },
