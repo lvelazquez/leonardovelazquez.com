@@ -25,7 +25,7 @@
 </template>
 
 <script>
-import { BrandLogo, Link } from '../components/BrandLogo';
+import { BrandLogo, Link } from '../components/';
 export default {
   name: 'Intro',
   components: {

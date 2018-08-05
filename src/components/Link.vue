@@ -1,5 +1,5 @@
 <template>
-  <a :data-key="`${to.replace('/','')}`" @click="handleClick"><slot></slot></a>
+  <a :data-key="`${to.replace('/','')}`" :href="`${to}`" @click="handleClick"><slot></slot></a>
 </template>
 
 <script>
