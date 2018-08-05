@@ -6,7 +6,7 @@
                 <div class="thumbs-container">
                     <div v-for="(project) in thumbs" class="thumb-item" @click="handleProject(project.id)">
                         <img :src="imageUrl(project.thumb)"/>
-                        <div class="details">{{project.title}}</div>
+                        <div class="details"><span>{{project.title}}</span></div>
                     </div>
                 </div>
             </div>
@@ -18,13 +18,13 @@
 </template>
 
 <script>
-import projectData from '../data';
-import config from '../config';
-import { Project } from '../components/';
-import EventBus from '../EventBus';
+import projectData from "../data";
+import config from "../config";
+import { Project } from "../components/";
+import EventBus from "../EventBus";
 
 export default {
-  name: 'Work',
+  name: "Work",
   components: {
     Project
   },
@@ -45,15 +45,15 @@ export default {
     },
     handleProject(id) {
       this.currentProjectId = id;
-      EventBus.$emit('project.changed', id);
+      EventBus.$emit("project.changed", id);
     }
   }
 };
 </script>
 
 <style lang="scss" scoped>
-@import '../styles/settings.scss';
-@import '../styles/media-queries.scss';
+@import "../styles/settings.scss";
+@import "../styles/media-queries.scss";
 
 .work-container {
   display: flex;
@@ -85,17 +85,11 @@ export default {
   }
 }
 
-.thumb-item:hover {
-  .details {
-    opacity: 1;
-  }
-}
-
 .thumb-item {
   position: relative;
   .details {
+    font-family: "Montserrat", Helvetica, sans-serif;
     pointer-events: none;
-    font-family: 'Montserrat', Helvetica;
     font-size: 1.5rem;
     position: absolute;
     left: 0;
@@ -105,10 +99,46 @@ export default {
     font-weight: 600;
     background: $white-color;
     color: $blue-color;
+    transition: opacity 0.25s ease-out;
     opacity: 0;
+    height: 100%;
+    line-height: 1;
+    display: flex;
+    align-items: center;
+    overflow: hidden;
+    flex-direction: row;
+    & span {
+      padding: 5px;
+      flex: 1;
+      text-indent: 0;
+      transition: all 0.25s ease-out;
+      transform: translateX(-100%);
+    }
+  }
+
+  &:hover {
+    .details {
+      opacity: 1;
+      background: transparentize($white-color, 0.3);
+      color: $black-color;
+      & span {
+        transform: translateX(0);
+      }
+    }
+  }
+
+  @media (min-width: $bp-ms) {
+    & .details {
+      font-size: 1rem;
+    }
+  }
+
+  @media (min-width: $bp-lg) {
+    & .details {
+      font-size: 1.5rem;
+    }
   }
 }
-
 #project-container {
 }
 </style>
