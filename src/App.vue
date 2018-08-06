@@ -1,5 +1,5 @@
 <template>
-  <div id="app" @routechange="handleRouteChange">
+  <div id="app">
     <Nav :isNavHidden="`${isNavHidden}`" :currentSectionId="currentSectionId"/>
     <Background/>
     <Intro/>
@@ -10,17 +10,17 @@
 </template>
 
 <script>
-import { find, map, get, isNumber, isEmpty } from 'lodash';
-import { TweenLite } from 'gsap';
-import 'gsap/CSSPlugin';
-import { Strong, Circ } from 'gsap/EasePack';
-import EventBus from './EventBus';
+import { find, map, get, isNumber, isEmpty } from "lodash";
+import { TweenLite } from "gsap";
+import "gsap/CSSPlugin";
+import { Strong, Circ } from "gsap/EasePack";
+import EventBus from "./EventBus";
 
-import { Intro, Work, About, Contact } from './pages/';
-import { Nav, Background } from './components/';
+import { Intro, Work, About, Contact } from "./pages/";
+import { Nav, Background } from "./components/";
 
 export default {
-  name: 'app',
+  name: "app",
   components: {
     Background,
     Nav,
@@ -31,22 +31,26 @@ export default {
   },
   data() {
     return {
-      currentSectionId: 'intro',
+      currentSectionId: "intro",
       isLoaded: false,
       isNavHidden: true
     };
   },
   mounted() {
-    this.introHeader = document.getElementById('intro-header');
-    this.videoBg = document.getElementById('site-background');
-    this.navHeight = document.querySelector('.navbar').offsetHeight;
+    this.introHeader = document.getElementById("intro-header");
+    this.videoBg = document.getElementById("site-background");
+    this.navHeight = document.querySelector(".navbar").offsetHeight;
 
     this.showSite = this.showSite.bind(this);
-    window.addEventListener('scroll', this.handleScroll, { passive: true });
-    window.addEventListener('popstate', this.handlePopstate);
-    EventBus.$on('routechange', this.handleRouteChange);
+    window.addEventListener("scroll", this.handleScroll, { passive: true });
+    window.addEventListener("popstate", this.handlePopstate);
+    EventBus.$on("routechange", this.handleRouteChange);
 
-    this.videoBg.addEventListener('canplay', this.showSite);
+    if (this.videoBg.readyState >= this.videoBg.HAVE_FUTURE_DATA) {
+      this.showSite();
+    } else {
+      this.videoBg.addEventListener("canplay", this.handleVideo);
+    }
 
     TweenLite.to(this.introHeader, 2, {
       delay: 1,
@@ -55,34 +59,39 @@ export default {
     });
   },
   destroyed() {
-    window.removeEventListener('scroll', this.handleScroll);
-    window.removeEventListener('popstate', this.handlePopstate);
-    EventBus.$off('routechange', this.handleRouteChange);
-    if (this.videoBg.readyState >= this.videoBg.HAVE_FUTURE_DATA) {
-      this.showSite();
-    } else {
-      this.videoBg.removeEventListener('canplay', this.showSite);
-    }
+    window.removeEventListener("scroll", this.handleScroll);
+    window.removeEventListener("popstate", this.handlePopstate);
+    this.videoBg.removeEventListener("canplay", this.handleVideo);
+    delete this.videoBg;
+    EventBus.$off("routechange", this.handleRouteChange);
   },
   methods: {
     handlePopstate(e) {
       e.preventDefault();
-      // TODO verify that route handling is progressive, anchor fallback?
-      this.handleRouteChange(window.location.pathname);
+      this.handleRouteChange(get(e.target, "location.pathname"));
+    },
+    handleVideo(e) {
+      debugger;
+      this.videoBg.removeEventListener("canplay", this.handleVideo);
+      this.showSite();
     },
     // TODO click and scroll into view, currently not working
     handleRouteChange(route) {
-      const key = route.replace('/', '');
-      if (key !== '') {
+      const key = route.replace("/", "");
+      this.navigating = true;
+
+      if (key !== "") {
         const section = document.getElementById(key);
         if (!isEmpty(section)) {
-          window.scrollTo(0, get(section, 'offsetTop') - this.navHeight);
+          window.scrollTo(0, get(section, "offsetTop") - this.navHeight);
+          // setTimeout(()=> this.navigating = false, 10);
         }
       } else {
         window.scrollTo(0, 0);
       }
     },
     handleScroll() {
+      if (this.navigating) return;
       if (window.scrollY > 40) {
         this.videoBg.pause();
       } else {
@@ -100,32 +109,31 @@ export default {
     },
     updateSections(scrollY) {
       // TODO add project route to the work section
-      this.sections = document.querySelectorAll('section');
+      this.sections = document.querySelectorAll("section");
       // we can alsoread current project from the dom
       this.sections.forEach(section => {
-        section.classList.remove('active');
-        const currentId = section.getAttribute('id');
+        section.classList.remove("active");
+        const currentId = section.getAttribute("id");
         if (
           scrollY >= section.offsetTop &&
           scrollY <= section.offsetTop + section.offsetHeight
         ) {
           if (currentId !== this.currentSectionId) {
             this.currentSectionId = currentId;
-            if (currentId !== 'intro') {
-              history.pushState(null, null, currentId);
+            if (currentId !== "intro") {
+              history.pushState(null, null, `/${currentId}`);
             } else {
-              history.pushState(null, null, '/');
+              history.pushState(null, null, "/");
             }
+            this.updateNavItems();
           }
         }
       });
-
-      this.updateNavItems();
     },
     updateNavItems() {
-      document.querySelectorAll('.nav-item').forEach(navItem => {
-        if (this.currentSectionId !== navItem.getAttribute('href'))
-          navItem.classList.remove('active');
+      document.querySelectorAll(".nav-item").forEach(navItem => {
+        if (this.currentSectionId !== navItem.getAttribute("data-id"))
+          navItem.classList.remove("active");
       });
     },
     showSite() {
@@ -135,7 +143,7 @@ export default {
         ease: Circ.easeOut,
         delay: 4,
         onStart: function() {
-          self.introHeader.classList.remove('loader');
+          self.introHeader.classList.remove("loader");
           self.isLoaded = true;
           self.videoBg.play();
           self.handleRouteChange(window.location.pathname);
@@ -147,7 +155,7 @@ export default {
 </script>
 
 <style lang="scss">
-@import './styles/base.css';
+@import "./styles/base.css";
 
 a {
   text-decoration: none;
