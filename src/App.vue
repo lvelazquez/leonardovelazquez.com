@@ -112,7 +112,10 @@ export default {
     onReady() {
       this.isLoaded = true;
       this.isVideoPlaying = true;
-      this.handleRouteChange(window.location.pathname);
+      this.$nextTick(() => {
+        this.handleRouteChange(window.location.pathname);
+        this.updateNavItems();
+      });
     }
   }
 };
