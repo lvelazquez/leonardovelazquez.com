@@ -29,13 +29,13 @@
 </template>
 
 <script>
-import projectData from "../data";
-import { find, get } from "lodash";
-import config from "../config";
-import EventBus from "../EventBus";
+import projectData from '../data';
+import { find, get } from 'lodash';
+import config from '../config';
+import EventBus from '../EventBus';
 
 export default {
-  name: "Project",
+  name: 'Project',
   data() {
     return {
       currentProject: projectData[0],
@@ -48,7 +48,7 @@ export default {
     }
   },
   mounted() {
-    EventBus.$on("project.changed", id => this.getProject(id));
+    EventBus.$on('project.changed', id => this.getProject(id));
   },
   methods: {
     loadImage(item) {
@@ -59,7 +59,7 @@ export default {
     },
     handleUpdate(dir) {
       let index = this.currentImageIndex + dir;
-      const imagesLength = get(this.currentProject, "images.length");
+      const imagesLength = get(this.currentProject, 'images.length');
       if (index > imagesLength - 1) {
         index = 0;
       }
@@ -70,7 +70,7 @@ export default {
       this.currentImageIndex = index;
     },
     hexToRGB(hex, opacity = 0.65) {
-      hex = hex.replace("#", "");
+      hex = hex.replace('#', '');
       return `rgba(${parseInt(hex.substring(0, 2), 16)},${parseInt(
         hex.substring(2, 4),
         16
@@ -81,8 +81,8 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-@import "../styles/settings";
-@import "../styles/media-queries";
+@import '../styles/settings';
+@import '../styles/media-queries';
 
 .project-wrapper {
   position: fixed;
@@ -127,12 +127,13 @@ export default {
 .item {
   position: absolute;
   opacity: 0;
+  pointer-events: none;
   transform: translate(-50%, -100%);
   left: 50%;
-  transition: transform 0.35s ease-out;
+  transition: transform 0.45s ease-out;
   &.active {
-    opacity: 1;
     transform: translate(-50%, 0);
+    opacity: 1;
   }
   img {
     display: inline-block;
@@ -184,7 +185,7 @@ export default {
 }
 
 .carousel-caption {
-  font-family: "Open Sans", Helvetica;
+  font-family: 'Open Sans', Helvetica;
   padding: 1rem;
   letter-spacing: 0.01rem;
   color: $white-color;
@@ -193,7 +194,7 @@ export default {
 }
 
 .link {
-  font-family: "Montserrat", Helvetica;
+  font-family: 'Montserrat', Helvetica;
 }
 
 .project h2 {
