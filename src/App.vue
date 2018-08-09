@@ -35,6 +35,7 @@ export default {
   },
   mounted() {
     this.navHeight = document.querySelector('.navbar').offsetHeight;
+    this.navItems = document.querySelectorAll('.nav-item');
     window.addEventListener('scroll', this.handleScroll, { passive: true });
     window.addEventListener('popstate', this.handlePopstate);
     EventBus.$on('routechange', this.handleRouteChange);
@@ -103,9 +104,9 @@ export default {
       });
     },
     updateNavItems() {
-      document.querySelectorAll(".nav-item").forEach(navItem => {
-        if (this.currentSectionId !== navItem.getAttribute("data-id"))
-          navItem.classList.remove("active");
+      this.navItems.forEach(navItem => {
+        if (this.currentSectionId !== navItem.getAttribute('data-id'))
+          navItem.classList.remove('active');
       });
     },
     onReady() {
@@ -118,7 +119,7 @@ export default {
 </script>
 
 <style lang="scss">
-@import "./styles/base.css";
+@import './styles/base.css';
 
 a {
   text-decoration: none;

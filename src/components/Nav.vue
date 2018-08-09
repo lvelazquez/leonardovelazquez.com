@@ -31,7 +31,7 @@
 </template>
 
 <script>
-import {Link, BrandLogo} from "./";
+import { Link, BrandLogo } from "./.";
 import EventBus from "../EventBus";
 
 export default {
