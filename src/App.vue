@@ -97,15 +97,15 @@ export default {
             } else {
               history.pushState(null, null, '/');
             }
+            this.updateNavItems();
           }
         }
       });
-      this.updateNavItems();
     },
     updateNavItems() {
-      document.querySelectorAll('.nav-item').forEach(navItem => {
-        if (this.currentSectionId !== navItem.getAttribute('href'))
-          navItem.classList.remove('active');
+      document.querySelectorAll(".nav-item").forEach(navItem => {
+        if (this.currentSectionId !== navItem.getAttribute("data-id"))
+          navItem.classList.remove("active");
       });
     },
     onReady() {
@@ -118,7 +118,7 @@ export default {
 </script>
 
 <style lang="scss">
-@import './styles/base.css';
+@import "./styles/base.css";
 
 a {
   text-decoration: none;

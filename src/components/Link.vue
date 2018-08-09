@@ -1,5 +1,7 @@
 <template>
-  <a :href="`${to}`" @click="handleClick"><slot></slot></a>
+  <a :href="`${to}`" :data-id="`${this.sectionId}`" @click="handleClick">
+    <slot></slot>
+  </a>
 </template>
 
 <script>
@@ -10,11 +12,20 @@ export default {
   props: {
     to: String
   },
+  data() {
+    return {
+      sectionId: ""
+    };
+  },
+  mounted() {
+    this.sectionId = this.to.replace("/", "");
+  },
   methods: {
     handleClick(e) {
       e.preventDefault();
-      const key = this.to.replace("/", "");
-      EventBus.$emit("routechange", key);
+      if (this.to !== location.pathname) {
+        EventBus.$emit("routechange", this.sectionId);
+      }
     }
   }
 };
