@@ -1,7 +1,7 @@
 <template>
     <section id="intro" class="intro">
         <div class="intro-container">
-            <BrandLogo type="intro" />
+            <BrandLogo :class="{loader: !isLoaded}" type="intro" />
             <div class="intro-nav">
                 <ul>
                     <li>
@@ -25,22 +25,25 @@
 </template>
 
 <script>
-import { BrandLogo, Link } from '../components/';
+import { BrandLogo, Link } from "../components/";
+
 export default {
-  name: 'Intro',
+  name: "Intro",
   components: {
     BrandLogo,
     Link
   },
-  props: {}
+  props: {
+    isLoaded: { type: Boolean, default: false }
+  }
 };
 </script>
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style lang="scss" scoped>
-@import '../styles/settings';
-@import '../styles/media-queries';
-@import '../styles/settings';
+@import "../styles/settings";
+@import "../styles/media-queries";
+@import "../styles/settings";
 
 .intro {
   color: $white-color;

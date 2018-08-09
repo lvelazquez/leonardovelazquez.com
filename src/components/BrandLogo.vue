@@ -1,5 +1,5 @@
 <template>
-    <div :id="`${type}-header`" :class="`brand-logo ${color}-logo ${type}-logo loader`">
+    <div :id="`${type}-header`" :class="`brand-logo ${color}-logo ${type}-logo`">
         <Logo class="logo" />
         <h1 class="brand-title">
             <span>Leonardo Vel&aacute;zquez</span>
