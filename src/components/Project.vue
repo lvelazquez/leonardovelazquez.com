@@ -2,11 +2,11 @@
   <div class="project-wrapper">
     <h2 class="title">{{currentProject.title}}</h2>
     <div class="carousel">
-      <!-- Wrapper for slides -->
       <div class="carousel-wrapper" :style="`backgroundColor: ${hexToRGB(currentProject.backgroundColor)}`">
         <div class="item" v-for="(image, index) in currentProject.images" :class="{active: currentImageIndex === index}">
-          <img :src="loadImage(image.image_url)"/>
+          <img v-on:load="handleLoader" :src="loadImage(image.image_url)"/>
         </div>
+        <div :class="{loading: isLoading, loader: true}"><Loader/></div>
         <div class="controls">
           <div @click="handleUpdate(1)" class="overlay-btn"></div>
           <button class="carousel-control carousel-left" @click="handleUpdate(-1)">
@@ -20,7 +20,7 @@
       <div class="carousel-details">
         <ol class="carousel-indicators">
           <li v-for="(image, index) in currentProject.images" :class="{active: currentImageIndex === index}"
-              @click="currentImageIndex = index"/>
+              @click="currentImageIndex = index; isLoading = true"/>
         </ol>
         <div class="carousel-caption">{{currentProject.description}}</div>
       </div>
@@ -34,13 +34,16 @@ import projectData from "../data";
 import { find, get } from "lodash";
 import config from "../config";
 import EventBus from "../EventBus";
+import Loader from "./Loader";
 
 export default {
   name: "Project",
+  components: { Loader },
   data() {
     return {
       currentProject: projectData[0],
-      currentImageIndex: 0
+      currentImageIndex: 0,
+      isLoading: false
     };
   },
   props: {
@@ -49,6 +52,7 @@ export default {
     }
   },
   mounted() {
+    this.handleLoader = this.handleLoader.bind(this);
     EventBus.$on("project.changed", id => this.getProject(id));
   },
   methods: {
@@ -56,7 +60,18 @@ export default {
       return `${config.cloudinaryUrl}${item}`;
     },
     getProject(id) {
+      this.isLoading = true;
+      this.currentImageIndex = null;
       this.currentProject = find(projectData, { id });
+      clearInterval(this.interval);
+      this.interval = setTimeout(() => {
+        this.currentImageIndex = 0;
+        this.isLoading = false;
+      }, 1000);
+    },
+    handleLoader() {
+      clearInterval(this.loadInterval);
+      this.loadInterval = setTimeout(() => (this.isLoading = false), 500);
     },
     handleUpdate(dir) {
       let index = this.currentImageIndex + dir;
@@ -106,6 +121,18 @@ export default {
 .project-container a,
 .project-container a:hover {
   text-decoration: underline;
+}
+
+.loader {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  opacity: 0;
+  transition: opacity .25s ease-out;
+  &.loading {
+    opacity: 1;
+  }
 }
 
 .carousel {
