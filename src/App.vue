@@ -84,7 +84,6 @@ export default {
       this.sections = document.querySelectorAll('section');
       // we can alsoread current project from the dom
       const currentRoute = window.location.pathname.replace('/', '');
-      console.log(currentRoute, 'currentRoute');
       this.sections.forEach(section => {
         section.classList.remove('active');
         const currentId = section.getAttribute('id');

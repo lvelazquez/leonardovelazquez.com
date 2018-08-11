@@ -66,7 +66,6 @@ export default {
       if (index < 0) {
         index = imagesLength - 1;
       }
-      console.log(index, imagesLength, dir);
       this.currentImageIndex = index;
     },
     hexToRGB(hex, opacity = 0.65) {
