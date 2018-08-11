@@ -31,11 +31,11 @@
 </template>
 
 <script>
-import { Link, BrandLogo } from "./.";
-import EventBus from "../EventBus";
+import { Link, BrandLogo } from './.';
+import EventBus from '../EventBus';
 
 export default {
-  name: "Nav",
+  name: 'Nav',
   props: {
     currentSectionId: String
   },
@@ -50,11 +50,11 @@ export default {
     Link
   },
   mounted() {
-    EventBus.$on("routechange", this.openMenu);
-    window.addEventListener("scroll", this.updateNav);
+    EventBus.$on('routechange', this.openMenu);
+    window.addEventListener('scroll', this.updateNav);
   },
   destroyed() {
-    window.removeEventListener("scroll", this.updateNav);
+    window.removeEventListener('scroll', this.updateNav);
   },
   methods: {
     updateNav() {
@@ -69,15 +69,15 @@ export default {
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style lang="scss" scoped>
-@import "../styles/settings";
-@import "../styles/media-queries";
+@import '../styles/settings';
+@import '../styles/media-queries';
 
 .navbar {
   position: fixed;
   top: 0;
   width: 100%;
   height: 5rem;
-  font-family: Montserrat, "Helvetica Neue", Helvetica, Arial, sans-serif;
+  font-family: Montserrat, 'Helvetica Neue', Helvetica, Arial, sans-serif;
   margin-bottom: 0;
   text-transform: uppercase;
   z-index: 1000;
@@ -106,6 +106,7 @@ export default {
 }
 
 .nav-list li {
+  transition: background-color 0.15s ease-out;
   .nav-item {
     height: 100%;
     cursor: pointer;
@@ -113,6 +114,15 @@ export default {
     font-weight: 500;
     align-items: center;
     padding: 0 1rem 0;
+
+    &.active {
+      color: $white-color;
+      background-color: $black-color;
+    }
+  }
+
+  &:hover {
+    background-color: $gray-color;
   }
 }
 
@@ -125,21 +135,12 @@ export default {
   }
 }
 
-.nav-list li:hover {
-  background-color: $black-color;
-}
-
 .nav-list li:hover,
 .nav-list a:hover {
   color: $white-color;
   .download-icon {
     color: $white-color;
   }
-}
-
-.nav-list .nav-item.active {
-  color: $white-color;
-  background-color: $black-color;
 }
 
 .download-icon {

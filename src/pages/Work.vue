@@ -58,10 +58,11 @@ export default {
 .work-container {
   display: flex;
   column-count: 2;
-  column-gap: 5px;
+  column-width: 50vw;
+  column-gap: 0;
 }
-
 .work-column {
+  display: inline-block;
   @media (min-width: $bp-ms) {
     flex: 1;
     max-width: 50vw;
@@ -133,9 +134,15 @@ export default {
     }
   }
 
+  @media (min-width: $bp-md) {
+    & .details {
+      font-size: 1rem;
+    }
+  }
+
   @media (min-width: $bp-lg) {
     & .details {
-      font-size: 1.5rem;
+      font-size: 1.25rem;
     }
   }
 }

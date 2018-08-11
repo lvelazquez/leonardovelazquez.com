@@ -223,10 +223,10 @@ export default {
 
 #submit {
   font-weight: 600;
-  background-color: $blue-color;
+  background-color: $gray-color;
   color: $white-color;
   cursor: pointer;
-  transition: background-color 0.25s ease-out;
+  transition: background-color 0.15s ease-out;
   &:hover {
     background-color: darken($blue-color, 25%);
   }
