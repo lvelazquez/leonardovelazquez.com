@@ -146,10 +146,18 @@ export default {
 
 .carousel-right {
   right: 0;
+  opacity: 0.8;
+  &:hover {
+    opacity: 1;
+  }
 }
 
 .carousel-left {
   left: 0;
+  opacity: 0.8;
+  &:hover {
+    opacity: 1;
+  }
 }
 
 .carousel-control {
@@ -161,6 +169,7 @@ export default {
   height: 5rem;
   background-color: rgba($white-color, 0.85);
   cursor: pointer;
+  transition: opacity 0.25s ease-out;
 }
 
 .carousel-indicators {

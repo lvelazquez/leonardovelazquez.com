@@ -1,14 +1,27 @@
 <template>
-  <a :href="`${to}`" :data-id="`${this.sectionId}`" @click="handleClick">
+  <a :href="`${to}`" v-scroll-to="`#${this.sectionId}`" :data-id="`${this.sectionId}`" @click="handleClick">
     <slot></slot>
   </a>
 </template>
 
 <script>
-import EventBus from "../EventBus";
+import Vue from "vue";
+import VueScrollTo from "vue-scrollto";
+
+// You can also pass in the default options
+Vue.use(VueScrollTo, {
+    container: 'body',
+    duration: 500,
+    easing: 'ease-in-out',
+    offset: -75,
+    cancelable: true,
+    x: false,
+    y: true
+});
 
 export default {
   name: "Link",
+  mixins: { VueScrollTo },
   props: {
     to: String
   },
@@ -24,7 +37,8 @@ export default {
     handleClick(e) {
       e.preventDefault();
       if (this.to !== location.pathname) {
-        EventBus.$emit("routechange", this.sectionId);
+        history.replaceState(null, null, this.to);
+        // dispatchEvent(new PopStateEvent("popstate"));
       }
     }
   }
