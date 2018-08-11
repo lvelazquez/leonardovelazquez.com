@@ -3,7 +3,7 @@
   "version": "0.1.0",
   "private": true,
   "scripts": {
-    "dev": "npm run build && concurrently \"vue-cli-service serve --open\" \"nodemon server/index.js\"",
+    "dev": "concurrently \"vue-cli-service serve --open\" \"nodemon server/index.js\"",
     "build": "vue-cli-service build",
     "heroku-postbuild": "vue-cli-service build",
     "start": "node server/index.js",

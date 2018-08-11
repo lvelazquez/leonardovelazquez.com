@@ -71,11 +71,11 @@
 </template>
 
 <script>
-import { Map } from '../components/';
-import { every } from 'lodash';
+import { Map } from "../components/";
+import { every } from "lodash";
 
 export default {
-  name: 'Contact',
+  name: "Contact",
   props: {
     isLoaded: Boolean
   },
@@ -85,29 +85,29 @@ export default {
   data() {
     return {
       isValid: false,
-      submitStatus: '',
-      errorMessage: '',
+      submitStatus: "",
+      errorMessage: "",
       contact: {
-        name: '',
-        email: '',
-        title: '',
-        message: ''
+        name: "",
+        email: "",
+        title: "",
+        message: ""
       }
     };
   },
 
   methods: {
     validateForm() {
-      let isValid = every(this.contact, value => value !== '');
+      let isValid = every(this.contact, value => value !== "");
       if (isValid) {
         isValid = this.validateEmail(this.contact.email);
         if (!isValid) {
-          this.errorMessage = 'Please enter a valid email';
-          this.submitStatus = 'error';
+          this.errorMessage = "Please enter a valid email";
+          this.submitStatus = "error";
         }
       } else {
-        this.errorMessage = 'All fields are required.';
-        this.submitStatus = 'error';
+        this.errorMessage = "All fields are required.";
+        this.submitStatus = "error";
       }
       return isValid;
     },
@@ -116,32 +116,32 @@ export default {
       return re.test(String(email).toLowerCase());
     },
     async handleSubmit() {
-      this.errorMessage = '';
-      this.submitStatus = 'sending';
+      this.errorMessage = "";
+      this.submitStatus = "sending";
       this.isValid = this.validateForm();
       if (this.isValid) {
-        const response = await fetch('/contact', {
+        const response = await fetch("/contact", {
           body: JSON.stringify(this.contact), // must match 'Content-Type' header
-          cache: 'no-cache', // *default, no-cache, reload, force-cache, only-if-cached
+          cache: "no-cache", // *default, no-cache, reload, force-cache, only-if-cached
           // credentials: "same-origin", // include, same-origin, *omit
           headers: {
-            Accept: 'application/json',
-            'Content-Type': 'application/json'
+            Accept: "application/json",
+            "Content-Type": "application/json"
           },
-          method: 'POST' // *GET, POST, PUT, DELETE, etc.
+          method: "POST" // *GET, POST, PUT, DELETE, etc.
           //mode: "cors", // no-cors, cors, *same-origin
           //redirect: "follow", // manual, *follow, error
           //referrer: "no-referrer" // *client, no-referrer
         });
         const res = JSON.parse(await response.json());
         if (res.ok) {
-          this.submitStatus = 'success';
+          this.submitStatus = "success";
         } else {
-          this.submitStatus = 'serverError';
+          this.submitStatus = "serverError";
           this.errorMessage = "There's been a server side error.";
         }
       } else {
-        this.submitStatus = 'error';
+        this.submitStatus = "error";
       }
     }
   }
@@ -150,9 +150,9 @@ export default {
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped lang="scss">
-@import '../styles/settings';
-@import '../styles/content';
-@import '../styles/media-queries';
+@import "../styles/settings";
+@import "../styles/content";
+@import "../styles/media-queries";
 
 .banner-social-buttons {
   display: flex;
@@ -172,7 +172,7 @@ export default {
 }
 
 .btn {
-  font-family: 'Montserrat', Arial, sans-serif;
+  font-family: "Montserrat", Arial, sans-serif;
   max-width: 10rem;
   text-align: center;
   display: inline-block;
@@ -223,12 +223,14 @@ export default {
 
 #submit {
   font-weight: 600;
-  background-color: $gray-color;
-  color: $white-color;
+  background-color: $white-color;
+  border: solid $gray-color 2px;
+  color: $black-color;
   cursor: pointer;
   transition: background-color 0.15s ease-out;
   &:hover {
     background-color: darken($blue-color, 25%);
+    color: $white-color;
   }
 }
 
@@ -241,7 +243,7 @@ export default {
 }
 
 .input-field {
-  font-family: 'Open Sans', Helvetica, sans-serif;
+  font-family: "Open Sans", Helvetica, sans-serif;
   width: 100%;
   padding: 0.5rem;
   outline: none;
@@ -256,7 +258,7 @@ export default {
 
 .form-text {
   color: $blue-color;
-  font-family: 'Open Sans', Helvetica, sans-serif;
+  font-family: "Open Sans", Helvetica, sans-serif;
   font-weight: 700;
   font-size: 1.2rem;
   white-space: nowrap;

@@ -129,7 +129,7 @@ export default {
   left: 50%;
   transform: translate(-50%, -50%);
   opacity: 0;
-  transition: opacity .25s ease-out;
+  transition: opacity 0.25s ease-out;
   &.loading {
     opacity: 1;
   }
@@ -144,6 +144,7 @@ export default {
   width: 100%;
   height: 100%;
   background-color: rgba($white-color, 0.6);
+  transition: background-color .5s ease-out;
   @media (min-width: $bp-ms) {
     height: 70vh;
   }
