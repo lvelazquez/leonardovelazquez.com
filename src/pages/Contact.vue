@@ -242,9 +242,9 @@ export default {
   width: 7rem;
   height: 3rem;
   font-weight: 600;
-  background-color: $white-color;
+  background-color: $gray-color;
   border: solid $gray-color 2px;
-  color: $black-color;
+  color: $white-color;
   cursor: pointer;
   transition: background-color 0.15s ease-out;
   &:hover {

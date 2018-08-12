@@ -65,7 +65,7 @@ export default {
     },
     updateRoute(id) {
       this.currentSectionId = id;
-      history.replaceState(null, null, id);
+      history.replaceState(null, null, id === "intro" ? "" : id);
     },
     updateSections(scrollY) {
       // TODO add project route to the work section
