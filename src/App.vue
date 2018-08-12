@@ -53,18 +53,6 @@ export default {
       const cancelScroll = this.$scrollTo(`#${sectionId}`, 100);
       cancelScroll();
     },
-    // TODO click and scroll into view, currently not working
-    handleScrollToSection(key) {
-      if (key !== "") {
-        const section = document.getElementById(key);
-        if (!isEmpty(section)) {
-          const sectionTop = get(section, "offsetTop");
-          window.scrollTo(0, sectionTop - this.navHeight);
-        }
-      } else {
-        window.scrollTo(0, 0);
-      }
-    },
     handleScroll() {
       if (window.scrollY > 40) {
         this.isVideoPlaying = false;
