@@ -36,17 +36,19 @@
                           name="message"
                           placeholder="Your Message" v-model="contact.message"></textarea>
               </div>
-              <button id="submit" type="submit" class="btn btn-block">
-                SUBMIT
+
+              <button id="submit" :disabled="submitStatus === 'sending'" type="submit" class="btn btn-block">
+                <div class="loader" v-if="submitStatus === 'sending'" ><div></div><div></div><div></div></div>
+                {{submitStatus !== 'sending' ? 'SUBMIT' : ''}}
               </button>
             </form>
-            <div class="warning-text form-text" v-if="this.errorMessage !== '' && submitStatus === 'error'">
+            <div class="warning-text form-text" v-if="errorMessage !== '' && submitStatus === 'error'">
               {{errorMessage}}
             </div>
             <p class="email-text" v-if="submitStatus === 'serverError'">Please try again later or reach me at <a
               href="mailto:leo@leonardovelazquez.com">leo@leonardovelazquez.com</a>
             </p>
-            <div class="form-text" v-if="submitStatus === 'success'">Successfully sent!</div>
+            <div class="form-text success-text" v-if="submitStatus === 'success'">Successfully sent!</div>
           </div>
         </div>
         <ul class="col-md-12 list-inline banner-social-buttons">
@@ -136,6 +138,7 @@ export default {
         const res = JSON.parse(await response.json());
         if (res.ok) {
           this.submitStatus = "success";
+          setTimeout(() => (this.submitStatus = ""), 2000);
         } else {
           this.submitStatus = "serverError";
           this.errorMessage = "There's been a server side error.";
@@ -222,6 +225,8 @@ export default {
 }
 
 #submit {
+  width: 7rem;
+  height: 3rem;
   font-weight: 600;
   background-color: $white-color;
   border: solid $gray-color 2px;
@@ -231,6 +236,11 @@ export default {
   &:hover {
     background-color: darken($blue-color, 25%);
     color: $white-color;
+  }
+  &[disabled]:hover {
+    cursor: auto;
+    background-color: $white-color !important;
+    color: $black-color !important;
   }
 }
 
@@ -272,5 +282,118 @@ export default {
   font-family: Montserrat;
   font-weight: 700;
   font-size: 1.1rem;
+}
+
+@keyframes loader_1 {
+  0% {
+    top: 36px;
+    height: 128px;
+  }
+  50% {
+    top: 60px;
+    height: 80px;
+  }
+  100% {
+    top: 60px;
+    height: 80px;
+  }
+}
+@-webkit-keyframes loader_1 {
+  0% {
+    top: 36px;
+    height: 128px;
+  }
+  50% {
+    top: 60px;
+    height: 80px;
+  }
+  100% {
+    top: 60px;
+    height: 80px;
+  }
+}
+@keyframes loader_2 {
+  0% {
+    top: 41.99999999999999px;
+    height: 116.00000000000001px;
+  }
+  50% {
+    top: 60px;
+    height: 80px;
+  }
+  100% {
+    top: 60px;
+    height: 80px;
+  }
+}
+@-webkit-keyframes loader_2 {
+  0% {
+    top: 41.99999999999999px;
+    height: 116.00000000000001px;
+  }
+  50% {
+    top: 60px;
+    height: 80px;
+  }
+  100% {
+    top: 60px;
+    height: 80px;
+  }
+}
+@keyframes loader_3 {
+  0% {
+    top: 48px;
+    height: 104px;
+  }
+  50% {
+    top: 60px;
+    height: 80px;
+  }
+  100% {
+    top: 60px;
+    height: 80px;
+  }
+}
+@-webkit-keyframes loader_3 {
+  0% {
+    top: 48px;
+    height: 104px;
+  }
+  50% {
+    top: 60px;
+    height: 80px;
+  }
+  100% {
+    top: 60px;
+    height: 80px;
+  }
+}
+.loader {
+  position: relative;
+  margin-top: -10px;
+}
+.loader div {
+  position: absolute;
+  width: 30px;
+}
+.loader div:nth-child(1) {
+  left: 35px;
+  background: #dce4eb;
+  animation: loader_1 1s cubic-bezier(0, 0.5, 0.5, 1) infinite;
+  animation-delay: -0.2s;
+}
+.loader div:nth-child(2) {
+  left: 85px;
+  background: #bbcedd;
+  animation: loader_2 1s cubic-bezier(0, 0.5, 0.5, 1) infinite;
+  animation-delay: -0.1s;
+}
+.loader div:nth-child(3) {
+  left: 135px;
+  background: #85a2b6;
+  animation: loader_3 1s cubic-bezier(0, 0.5, 0.5, 1) infinite;
+}
+.loader {
+  transform: translate(-31px, -31px) scale(0.31) translate(31px, 31px);
 }
 </style>
