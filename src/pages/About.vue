@@ -1,7 +1,7 @@
 <template>
     <section id="about" class="container content-section" :class="{invisible: !isLoaded}">
         <div class="row">
-            <div class="col-sm-12">
+            <div class="">
                 <h2>About me</h2>
 
                 <div class="content-wrapper">

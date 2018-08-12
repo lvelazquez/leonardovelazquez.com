@@ -8,7 +8,7 @@
             <form id="contact_form" @submit.prevent="handleSubmit">
               <div class="input-group contact-name contact-info"
                    :class="{warning: !contact.name && submitStatus === 'error' }">
-                <input id="contact_name" type="text" class="contact_info input-field" name="name" v-model="contact.name"
+                <input id="contact_name" type="text" class="input-field" name="name" v-model="contact.name"
                        placeholder="Your Name"
                        autocomplete="true"
                 />
@@ -16,7 +16,7 @@
               <div class="input-group contact-email contact-info has-feedback"
                    :class="{warning: (!contact.email || !validateEmail(contact.email)) && submitStatus === 'error' }">
                 <input id="contact_email" type="text"
-                       class="contact_info input-field"
+                       class="input-field"
                        name="email"
                        v-model="contact.email"
                        placeholder="Your Email"
@@ -26,18 +26,18 @@
 
               ><input id="contact_subject"
                       type="text"
-                      class="contact_info input-field"
+                      class="input-field"
                       name="subject"
                       placeholder="Subject" v-model="contact.title"/>
               </div>
               <div class="input-group contact-message contact-info has-feedback"
                    :class="{warning: !contact.message && submitStatus === 'error' }">
-                <textarea id="contact_message" class="contact_info col-12 input-field"
+                <textarea id="contact_message" class="input-field"
                           name="message"
                           placeholder="Your Message" v-model="contact.message"></textarea>
               </div>
 
-              <button id="submit" :disabled="submitStatus === 'sending'" type="submit" class="btn btn-block">
+              <button id="submit" :disabled="submitStatus === 'sending'" type="submit" class="btn">
                 <transition name="fade">
                   <div class="loader" v-if="submitStatus === 'sending'">
                     <div></div>
@@ -62,17 +62,17 @@
           </div>
 
         </div>
-        <ul class="col-md-12 list-inline banner-social-buttons">
+        <ul class="banner-social-buttons">
           <li>
-            <a href="https://www.linkedin.com/in/leovelazquez" class="btn btn-default btn-lg"><i
+            <a href="https://www.linkedin.com/in/leovelazquez" class="btn"><i
               class="fa fa-linkedin fa-fw"></i> <span class="network-name">Linked In</span></a>
           </li>
           <li>
-            <a href="https://github.com/lvelazquez" class="btn btn-default btn-lg"><i
+            <a href="https://github.com/lvelazquez" class="btn"><i
               class="fa fa-github fa-fw"></i> <span class="network-name">Github</span></a>
           </li>
           <li>
-            <a href="https://plus.google.com/111568277509717571535" class="btn btn-default btn-lg"><i
+            <a href="https://plus.google.com/111568277509717571535" class="btn"><i
               class="fa fa-google-plus fa-fw"></i> <span class="network-name">Google+</span></a>
           </li>
         </ul>
@@ -173,6 +173,7 @@ export default {
   text-align: center;
   margin: 0 auto;
   flex-direction: column;
+  padding: 0;
   li {
     flex: 1;
     display: inline-block;
@@ -191,7 +192,7 @@ export default {
   text-align: center;
   display: inline-block;
   text-transform: uppercase;
-  border: solid $light-gray-color 1px;
+  border: solid $black-color 1px;
   border-radius: 6px;
   color: $black-color;
   background-color: transparent;
@@ -199,6 +200,7 @@ export default {
   padding: 10px 16px;
   font-size: 18px;
   line-height: 1.33;
+  font-weight: 500;
   i {
     color: $black-color;
   }
@@ -295,7 +297,8 @@ export default {
 
 .message-container {
   width: 100%;
-  height: 5rem;
+  padding: 2rem 0 2rem;
+  min-height: 1.5rem;
 }
 
 .warning-text {
