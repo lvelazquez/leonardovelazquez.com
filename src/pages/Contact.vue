@@ -38,18 +38,29 @@
               </div>
 
               <button id="submit" :disabled="submitStatus === 'sending'" type="submit" class="btn btn-block">
-                <div class="loader" v-if="submitStatus === 'sending'" ><div></div><div></div><div></div></div>
-                {{submitStatus !== 'sending' ? 'SUBMIT' : ''}}
+                <transition name="fade">
+                  <div class="loader" v-if="submitStatus === 'sending'">
+                    <div></div>
+                    <div></div>
+                    <div></div>
+                  </div>
+                  <span v-if="submitStatus !== 'sending'">{{submitStatus !== 'sending' ? 'SUBMIT' : ''}}</span>
+                </transition>
               </button>
             </form>
-            <div class="warning-text form-text" v-if="errorMessage !== '' && submitStatus === 'error'">
-              {{errorMessage}}
+            <div class="message-container">
+              <transition name="fade">
+                <div class="warning-text form-text" v-if="errorMessage !== '' && submitStatus === 'error'">
+                  {{errorMessage}}
+                </div>
+                <p class="email-text" v-if="submitStatus === 'serverError'">Please try again later or reach me at <a
+                  href="mailto:leo@leonardovelazquez.com">leo@leonardovelazquez.com</a>
+                </p>
+                <div class="form-text success-text" v-if="submitStatus === 'success'">Successfully sent!</div>
+              </transition>
             </div>
-            <p class="email-text" v-if="submitStatus === 'serverError'">Please try again later or reach me at <a
-              href="mailto:leo@leonardovelazquez.com">leo@leonardovelazquez.com</a>
-            </p>
-            <div class="form-text success-text" v-if="submitStatus === 'success'">Successfully sent!</div>
           </div>
+
         </div>
         <ul class="col-md-12 list-inline banner-social-buttons">
           <li>
@@ -211,12 +222,12 @@ export default {
   max-width: 15rem;
   margin: 0 auto;
   text-align: center;
-  padding: 0 2rem 4rem;
+  padding: 0 2rem 0;
   @media (min-width: $bp-sm) {
-    padding: 0 3rem 4rem;
+    padding: 0 3rem 0;
   }
   @media (min-width: $bp-md) {
-    padding: 0 10rem 4rem;
+    padding: 0 10rem 0;
   }
 }
 
@@ -225,6 +236,7 @@ export default {
 }
 
 #submit {
+  position: relative;
   width: 7rem;
   height: 3rem;
   font-weight: 600;
@@ -241,6 +253,13 @@ export default {
     cursor: auto;
     background-color: $white-color !important;
     color: $black-color !important;
+  }
+
+  span {
+    position: absolute;
+    transform: translate(-50%, -50%);
+    top: 50%;
+    left: 50%;
   }
 }
 
@@ -274,6 +293,11 @@ export default {
   white-space: nowrap;
 }
 
+.message-container {
+  width: 100%;
+  height: 5rem;
+}
+
 .warning-text {
   color: $warning-color;
 }
@@ -298,6 +322,7 @@ export default {
     height: 80px;
   }
 }
+
 @-webkit-keyframes loader_1 {
   0% {
     top: 36px;
@@ -312,6 +337,7 @@ export default {
     height: 80px;
   }
 }
+
 @keyframes loader_2 {
   0% {
     top: 41.99999999999999px;
@@ -326,6 +352,7 @@ export default {
     height: 80px;
   }
 }
+
 @-webkit-keyframes loader_2 {
   0% {
     top: 41.99999999999999px;
@@ -340,6 +367,7 @@ export default {
     height: 80px;
   }
 }
+
 @keyframes loader_3 {
   0% {
     top: 48px;
@@ -354,6 +382,7 @@ export default {
     height: 80px;
   }
 }
+
 @-webkit-keyframes loader_3 {
   0% {
     top: 48px;
@@ -368,32 +397,48 @@ export default {
     height: 80px;
   }
 }
+
 .loader {
   position: relative;
   margin-top: -10px;
 }
+
 .loader div {
   position: absolute;
   width: 30px;
 }
+
 .loader div:nth-child(1) {
   left: 35px;
   background: #dce4eb;
   animation: loader_1 1s cubic-bezier(0, 0.5, 0.5, 1) infinite;
   animation-delay: -0.2s;
 }
+
 .loader div:nth-child(2) {
   left: 85px;
   background: #bbcedd;
   animation: loader_2 1s cubic-bezier(0, 0.5, 0.5, 1) infinite;
   animation-delay: -0.1s;
 }
+
 .loader div:nth-child(3) {
   left: 135px;
   background: #85a2b6;
   animation: loader_3 1s cubic-bezier(0, 0.5, 0.5, 1) infinite;
 }
+
 .loader {
   transform: translate(-31px, -31px) scale(0.31) translate(31px, 31px);
+}
+
+.fade-enter-active,
+.fade-leave-active {
+  transition: opacity 0.5s;
+}
+
+.fade-enter, .fade-leave-to /* .fade-leave-active below version 2.1.8 */
+ {
+  opacity: 0;
 }
 </style>
