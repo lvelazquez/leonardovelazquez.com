@@ -10,13 +10,28 @@
 </template>
 
 <script>
-import { find, map, get, isNumber, isEmpty } from "lodash";
+import { find, map, get, isNumber, isEmpty, throttle } from "lodash";
 import { Intro, Work, About, Contact } from "./pages/";
 import { Nav, Background } from "./components/";
 
 import Vue from "vue";
 import VueScrollTo from "vue-scrollto";
 Vue.use(VueScrollTo, { offset: -80 });
+
+const routes = {
+  "": {
+    sectionId: "intro"
+  },
+  work: {
+    sectionId: "work"
+  },
+  about: {
+    sectionId: "about"
+  },
+  contact: {
+    sectionId: "contact"
+  }
+};
 
 export default {
   name: "app",
@@ -30,7 +45,7 @@ export default {
   },
   data() {
     return {
-      currentSectionId: "",
+      currentSectionId: "intro",
       isLoaded: false,
       isVideoPlaying: false,
       isNavHidden: true
@@ -39,6 +54,7 @@ export default {
   mounted() {
     this.navHeight = document.querySelector(".navbar").offsetHeight;
     this.navItems = document.querySelectorAll(".nav-list .nav-item");
+
     window.addEventListener("scroll", this.handleScroll, { passive: true });
     window.addEventListener("popstate", this.handlePopstate);
   },
@@ -47,11 +63,8 @@ export default {
     window.removeEventListener("popstate", this.handlePopstate);
   },
   methods: {
-    handlePopstate(e) {
-      e.preventDefault();
-      const sectionId = window.location.pathname.replace("/", "");
-      const cancelScroll = this.$scrollTo(`#${sectionId}`, 100);
-      cancelScroll();
+    scrollTo(sectionId) {
+      this.$scrollTo(`#${sectionId}`, 100);
     },
     handleScroll() {
       if (window.scrollY > 40) {
@@ -63,15 +76,22 @@ export default {
       const scrollY = window.scrollY + this.navHeight;
       this.updateSections(scrollY);
     },
+    handlePopstate(e) {
+      e.preventDefault();
+      const sectionId = window.location.pathname.replace("/", "");
+      this.scrollTo(sectionId);
+    },
     updateRoute(id) {
-      this.currentSectionId = id;
-      history.replaceState(null, null, id === "intro" ? "" : id);
+      console.log("updateRoute: ", id, this.currentSectionId);
+      if (id !== this.currentSectionId) {
+        this.currentSectionId = id;
+        history.replaceState(null, null, id === "intro" ? "/" : id);
+      }
     },
     updateSections(scrollY) {
-      // TODO add project route to the work section
+      console.log("updateSections", scrollY);
+      const currentRoute = window.location.pathname.split("/")[1];
       this.sections = document.querySelectorAll("section");
-      // we can alsoread current project from the dom
-      const currentRoute = window.location.pathname.replace("/", "");
       this.sections.forEach(section => {
         section.classList.remove("active");
         const currentId = section.getAttribute("id");
@@ -79,17 +99,19 @@ export default {
           scrollY >= section.offsetTop &&
           scrollY <= section.offsetTop + section.offsetHeight
         ) {
+          console.log("currentId: ", currentId, "currentRoute", currentRoute);
           if (currentId !== currentRoute) {
             this.updateRoute(currentId);
-            this.updateNavItems(currentRoute);
+            this.updateNavItems(currentId);
           }
         }
       });
     },
     updateNavItems(currentRoute) {
+      console.log("updateNavItems", currentRoute);
       if (!currentRoute) return;
       this.navItems.forEach(navItem => {
-        if (this.currentSectionId === navItem.getAttribute("data-id")) {
+        if (currentRoute === navItem.getAttribute("data-id")) {
           navItem.classList.add("active");
         } else {
           navItem.classList.remove("active");
@@ -100,9 +122,10 @@ export default {
       this.isLoaded = true;
       this.isVideoPlaying = true;
       this.$nextTick(() => {
-        const key = window.location.pathname.replace("/", "");
-        // this.handleScrollToSection(key);
-        this.updateNavItems(key);
+        const keys = window.location.pathname.split("/");
+        const currentSectionId = keys[1] === "" ? "intro" : keys[1];
+        this.currentSectionId = currentSectionId;
+        this.scrollTo(currentSectionId);
       });
     }
   }

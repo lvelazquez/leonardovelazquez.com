@@ -74,6 +74,8 @@ export default {
     @media (min-width: $bp-ms) {
       column-count: 3;
       column-gap: 5px;
+      box-sizing: border-box;
+      padding-left: 1rem;
     }
   }
 

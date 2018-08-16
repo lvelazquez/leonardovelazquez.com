@@ -37,7 +37,7 @@
                           placeholder="Your Message" v-model="contact.message"></textarea>
               </div>
 
-              <button id="submit" :disabled="submitStatus === 'sending'" type="submit" class="btn">
+              <button id="submit" :disabled="submitStatus === 'sending'" type="submit" :class="{btn:true, sending: submitStatus === 'sending'}">
                 <transition name="fade">
                   <div class="loader" v-if="submitStatus === 'sending'">
                     <div></div>
@@ -218,11 +218,14 @@ export default {
   color: $black-color;
   background-color: $white-color;
   padding: 0;
+  form {
+    margin-bottom: 0;
+  }
 }
 
 .contact-form {
   max-width: 15rem;
-  margin: 0 auto;
+  margin: 0 auto 0;
   text-align: center;
   padding: 0 2rem 0;
   @media (min-width: $bp-sm) {
@@ -247,6 +250,9 @@ export default {
   color: $white-color;
   cursor: pointer;
   transition: background-color 0.15s ease-out;
+  &.sending {
+    background-color: $white-color;
+  }
   &:hover {
     background-color: darken($blue-color, 25%);
     color: $white-color;
@@ -309,6 +315,7 @@ export default {
   font-family: Montserrat;
   font-weight: 700;
   font-size: 1.1rem;
+  margin-bottom: 0;
 }
 
 @keyframes loader_1 {

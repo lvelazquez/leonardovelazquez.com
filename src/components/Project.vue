@@ -106,6 +106,8 @@ export default {
   width: 100%;
   @media (min-width: $bp-ms) {
     position: relative;
+    box-sizing: border-box;
+    padding: 0 1rem;
   }
 }
 
@@ -144,7 +146,8 @@ export default {
   width: 100%;
   height: 100%;
   background-color: rgba($white-color, 0.6);
-  transition: background-color .5s ease-out;
+  transition: background-color 0.5s ease-out;
+  overflow: hidden;
   @media (min-width: $bp-ms) {
     height: 70vh;
   }
@@ -169,7 +172,7 @@ export default {
   position: absolute;
   opacity: 0;
   pointer-events: none;
-  transform: translate(-50%, -100%);
+  transform: translate(200%, 0);
   left: 50%;
   transition: transform 0.45s ease-out;
   width: calc(100% - 3rem);
