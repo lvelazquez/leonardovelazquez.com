@@ -3,7 +3,7 @@
     <Nav :is-nav-hidden="`${isNavHidden}`"/>
     <Background :is-playing ="isVideoPlaying" @is-ready="onReady" />
     <Intro :is-loaded="isLoaded"/>
-    <Work :is-loaded="isLoaded"/>
+    <Work :is-loaded="isLoaded" :isProjectModalOpen="isProjectModalOpen" :currentProjectId="projectId"/>
     <About :is-loaded="isLoaded"/>
     <Contact :is-loaded="isLoaded"/>
   </div>
@@ -13,6 +13,7 @@
 import { find, map, get, isNumber, isEmpty, throttle } from "lodash";
 import { Intro, Work, About, Contact } from "./pages/";
 import { Nav, Background } from "./components/";
+import projectData from "./data";
 
 import Vue from "vue";
 import VueScrollTo from "vue-scrollto";
@@ -48,7 +49,9 @@ export default {
       currentSectionId: "intro",
       isLoaded: false,
       isVideoPlaying: false,
-      isNavHidden: true
+      isNavHidden: true,
+      projectId: Object.keys(projectData)[0],
+      isProjectModalOpen: false
     };
   },
   mounted() {
@@ -78,18 +81,25 @@ export default {
     },
     handlePopstate(e) {
       e.preventDefault();
-      const sectionId = window.location.pathname.replace("/", "");
+      const keys = window.location.pathname.split("/");
+      const sectionId = keys[1];
       this.scrollTo(sectionId);
+      if (sectionId === "work" && keys.length > 2) {
+        this.projectId = keys[2];
+      }
     },
     updateRoute(id) {
-      console.log("updateRoute: ", id, this.currentSectionId);
       if (id !== this.currentSectionId) {
         this.currentSectionId = id;
-        history.replaceState(null, null, id === "intro" ? "/" : id);
+        if (id === "work" && this.projectId) {
+          id = `work/${this.projectId}`;
+        } else if (id === "intro") {
+          id = "";
+        }
+        history.replaceState(null, null, `/${id}`);
       }
     },
     updateSections(scrollY) {
-      console.log("updateSections", scrollY);
       const currentRoute = window.location.pathname.split("/")[1];
       this.sections = document.querySelectorAll("section");
       this.sections.forEach(section => {
@@ -97,18 +107,20 @@ export default {
         const currentId = section.getAttribute("id");
         if (
           scrollY >= section.offsetTop &&
-          scrollY <= section.offsetTop + section.offsetHeight
+          scrollY < section.offsetTop + section.offsetHeight
         ) {
-          console.log("currentId: ", currentId, "currentRoute", currentRoute);
           if (currentId !== currentRoute) {
             this.updateRoute(currentId);
             this.updateNavItems(currentId);
+          }
+
+          if (this.isProjectModalOpen && currentRoute !== "work") {
+            this.isProjectModalOpen = false;
           }
         }
       });
     },
     updateNavItems(currentRoute) {
-      console.log("updateNavItems", currentRoute);
       if (!currentRoute) return;
       this.navItems.forEach(navItem => {
         if (currentRoute === navItem.getAttribute("data-id")) {
@@ -124,7 +136,12 @@ export default {
       this.$nextTick(() => {
         const keys = window.location.pathname.split("/");
         const currentSectionId = keys[1] === "" ? "intro" : keys[1];
+
+        if (currentSectionId === "work" && keys.length > 2) {
+          this.projectId = keys[2];
+        }
         this.currentSectionId = currentSectionId;
+
         this.scrollTo(currentSectionId);
       });
     }

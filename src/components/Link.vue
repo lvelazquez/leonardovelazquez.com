@@ -10,13 +10,13 @@ import VueScrollTo from "vue-scrollto";
 
 // You can also pass in the default options
 Vue.use(VueScrollTo, {
-    container: 'body',
-    duration: 500,
-    easing: 'ease-in-out',
-    offset: -80,
-    cancelable: true,
-    x: false,
-    y: true
+  container: "body",
+  duration: 500,
+  easing: "ease-in-out",
+  offset: -80,
+  cancelable: true,
+  x: false,
+  y: true
 });
 
 export default {
@@ -38,7 +38,6 @@ export default {
       e.preventDefault();
       if (this.to !== location.pathname) {
         history.replaceState(null, null, this.to);
-        // dispatchEvent(new PopStateEvent("popstate"));
       }
     }
   }

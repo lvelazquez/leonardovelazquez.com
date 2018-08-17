@@ -41,14 +41,19 @@ export default {
   components: { Loader },
   data() {
     return {
-      currentProject: projectData[0],
       currentImageIndex: 0,
       isLoading: false
     };
   },
   props: {
-    projectId: {
-      type: String
+    currentProjectId: {
+      type: String,
+      default: Object.keys(projectData)[0]
+    }
+  },
+  computed: {
+    currentProject: function() {
+      return projectData[this.currentProjectId];
     }
   },
   mounted() {
@@ -60,9 +65,10 @@ export default {
       return `${config.cloudinaryUrl}${item}`;
     },
     getProject(id) {
+      if (!projectData[id]) return;
       this.isLoading = true;
       this.currentImageIndex = null;
-      this.currentProject = find(projectData, { id });
+      this.currentProject = projectData[id];
       clearInterval(this.interval);
       this.interval = setTimeout(() => {
         this.currentImageIndex = 0;
@@ -101,11 +107,12 @@ export default {
 
 .project-wrapper {
   position: fixed;
-  top: 0;
+  top: 5rem;
   left: 0;
   width: 100%;
   @media (min-width: $bp-ms) {
     position: relative;
+    top: 0;
     box-sizing: border-box;
     padding: 0 1rem;
   }
@@ -116,8 +123,19 @@ export default {
   width: 100%;
   overflow: hidden;
   text-overflow: ellipsis;
-  max-width: calc(50vw - 2rem);
   text-align: center;
+  margin: 0;
+  display: inline-block;
+  background-color: rgba($black-color, 0.95);
+  font-size: 1.4rem;
+  padding: 1.5rem 1rem 1.5rem;
+  @media (min-width: $bp-ms) {
+    max-width: calc(50vw - 2rem);
+    padding: 3rem 0 0;
+    margin: 0 0 35px;
+    font-size: 2rem;
+    background-color: transparent;
+  }
 }
 
 .project-container a,
@@ -144,27 +162,27 @@ export default {
 .carousel-wrapper {
   position: relative;
   width: 100%;
-  height: 100%;
+  height: 70vh;
   background-color: rgba($white-color, 0.6);
   transition: background-color 0.5s ease-out;
   overflow: hidden;
-  @media (min-width: $bp-ms) {
-    height: 70vh;
-  }
 }
 
 .controls {
   width: 100%;
   transition: opacity 0.25s ease-out;
-  opacity: 0;
+  opacity: 1;
   height: 100%;
   .overlay-btn {
     width: inherit;
     height: inherit;
     cursor: pointer;
   }
-  &:hover {
-    opacity: 1;
+  @media (min-width: $bp-ms) {
+    opacity: 0;
+    &:hover {
+      opacity: 1;
+    }
   }
 }
 
@@ -189,20 +207,23 @@ export default {
   }
 }
 
+.carousel-right,
+.carousel-left {
+  opacity: 1;
+  @media (min-width: $bp-ms) {
+    opacity: 0.8;
+    &:hover {
+      opacity: 1;
+    }
+  }
+}
+
 .carousel-right {
   right: 0;
-  opacity: 0.8;
-  &:hover {
-    opacity: 1;
-  }
 }
 
 .carousel-left {
   left: 0;
-  opacity: 0.8;
-  &:hover {
-    opacity: 1;
-  }
 }
 
 .carousel-control {
@@ -239,16 +260,16 @@ export default {
 }
 
 .carousel-caption {
-  font-family: "Open Sans", Helvetica;
+  font-family: Roboto, Helvetica, Arial, serif;
   padding: 1rem;
-  letter-spacing: 0.01rem;
+  letter-spacing: 1px;
   color: $white-color;
-  font-weight: 500;
+  font-weight: 400;
   font-size: 1.3rem;
 }
 
 .link {
-  font-family: "Montserrat", Helvetica;
+  font-family: "Montserrat", Helvetica, sans-serif;
 }
 
 .project h2 {

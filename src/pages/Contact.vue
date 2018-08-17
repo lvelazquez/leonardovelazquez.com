@@ -411,6 +411,7 @@ export default {
 .loader {
   position: relative;
   margin-top: -10px;
+  pointer-events: none;
 }
 
 .loader div {
