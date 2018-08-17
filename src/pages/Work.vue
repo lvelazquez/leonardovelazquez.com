@@ -4,14 +4,14 @@
             <div id="thumb-container" class="work-column">
                 <h2>Work</h2>
                 <div class="thumbs-container">
-                    <div v-for="(project) in thumbs" class="thumb-item" @click="handleProject(project.id)">
+                    <div v-for="(project, index) in thumbs" class="thumb-item" @click="handleProject(index)">
                         <img :src="imageUrl(project.thumb)"/>
                         <div class="details"><span>{{project.title}}</span></div>
                     </div>
                 </div>
             </div>
             <div id="project-container" class="work-column">
-                <Project :projectId="currentProjectId"/>
+                <Project :currentProjectId="currentProjectId"/>
             </div>
         </div>
     </section>
@@ -21,7 +21,6 @@
 import projectData from "../data";
 import config from "../config";
 import { Project } from "../components/";
-import EventBus from "../EventBus";
 
 export default {
   name: "Work",
@@ -31,21 +30,25 @@ export default {
   data() {
     return {
       thumbs: [],
-      cloudinaryUrl: config.cloudinaryUrl,
-      currentProjectId: projectData[0].id
+      cloudinaryUrl: config.cloudinaryUrl
     };
   },
-  props: { isLoaded: Boolean },
+  props: { isLoaded: Boolean, currentProjectId: String },
   mounted() {
     this.thumbs = projectData;
+  },
+  computed: {
+    projectId: function() {
+      return this.currentProjectId;
+    }
   },
   methods: {
     imageUrl(thumb) {
       return `${this.cloudinaryUrl}image/upload/${thumb}`;
     },
     handleProject(id) {
-      this.currentProjectId = id;
-      EventBus.$emit("project.changed", id);
+      history.pushState(null, null, `/work/${id}`);
+      dispatchEvent(new PopStateEvent("popstate"));
     }
   }
 };
