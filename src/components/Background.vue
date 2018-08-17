@@ -1,6 +1,6 @@
 <template>
     <div :class="{loaded: isLoaded}" >
-        <video id="site-background" v-once :poster="`${cloudinaryUrl}video/upload/lakehi.png`" autoplay preload="auto" loop muted>
+        <video id="site-background" v-once :poster="`${cloudinaryUrl}video/upload/lakehi.jpg`" autoplay preload="auto" loop muted>
             <source v-once :src="`${cloudinaryUrl}video/upload/lakehi.mp4`" type="video/mp4"/>
         </video>
     </div>
@@ -31,7 +31,7 @@ export default {
     this.video = document.getElementById('site-background');
     this.handlePlay = this.handlePlay.bind(this);
     if (this.video.readyState >= this.video.HAVE_FUTURE_DATA) {
-      setTimeout(this.handlePlay, 2000);
+      setTimeout(this.handlePlay, 10);
     } else {
       this.video.addEventListener('canplay', this.handlePlay);
     }

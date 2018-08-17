@@ -2,7 +2,7 @@
   <div class="project-wrapper" :class="{mobileClose: mobileClose}">
     <div class="project-header">
       <h2 class="title">{{currentProject.title}}</h2>
-      <button @click="mobileClose=true" class="close-btn">X</button>
+      <button @click="isProjectModalOpen=false" class="close-btn">X</button>
     </div>
     <div class="carousel">
       <div class="carousel-wrapper" :style="`backgroundColor: ${hexToRGB(currentProject.backgroundColor)}`">
@@ -49,17 +49,21 @@ export default {
     return {
       currentImageIndex: 0,
       isLoading: false,
-      mobileClose: true
+      mobileClose: !this.isProjectModalOpen
     };
   },
   props: {
     currentProjectId: {
       type: String,
       default: Object.keys(projectData)[0]
+    },
+    isProjectModalOpen: {
+      type: Boolean,
+      default: false
     }
   },
-  computed: {
-    currentProject: function() {
+  watch: {
+    currentProject: function(newProject, oldProject) {
       this.getProject(this.currentProjectId);
       return projectData[this.currentProjectId];
     }
@@ -70,12 +74,12 @@ export default {
   },
   methods: {
     loadImage(item) {
-      return `${config.cloudinaryUrl}${item}`;
+      return `${config.cloudinaryUrl}q_auto/${item}`;
     },
     getProject(id) {
       if (!projectData[id]) return;
       this.isLoading = true;
-      this.mobileClose = false;
+      this.isProjectModalOpen = true;
       this.currentImageIndex = null;
       this.currentProject = projectData[id];
       clearInterval(this.interval);

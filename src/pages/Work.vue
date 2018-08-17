@@ -11,7 +11,7 @@
                 </div>
             </div>
             <div id="project-container" class="work-column">
-                <Project :currentProjectId="currentProjectId"/>
+                <Project :currentProjectId="currentProjectId" :isProjectModalOpen="isProjectModalOpen"/>
             </div>
         </div>
     </section>
@@ -33,7 +33,11 @@ export default {
       cloudinaryUrl: config.cloudinaryUrl
     };
   },
-  props: { isLoaded: Boolean, currentProjectId: String },
+  props: {
+    isLoaded: Boolean,
+    currentProjectId: String,
+    isProjectModalOpen: Boolean
+  },
   mounted() {
     this.thumbs = projectData;
   },

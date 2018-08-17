@@ -1,6 +1,6 @@
 const projectsData = {
   unwomen: {
-    thumb: "th_uw.png",
+    thumb: "th_uw.jpg",
     thumbWidth: "200",
     thumbHeight: "300",
     backgroundColor: "#000000",
@@ -11,18 +11,18 @@ const projectsData = {
     url: "http://www.heforshe.org",
     images: [
       {
-        image_url: "unw.png"
+        image_url: "unw.jpg"
       },
       {
-        image_url: "unw2.png"
+        image_url: "unw2.jpg"
       },
       {
-        image_url: "unw3.png"
+        image_url: "unw3.jpg"
       }
     ]
   },
   wgl: {
-    thumb: "wgl1.png",
+    thumb: "wgl1.jpg",
     thumbWidth: "200",
     thumbHeight: "200",
     backgroundColor: "#FFFFFF",
@@ -33,18 +33,18 @@ const projectsData = {
     url: "",
     images: [
       {
-        image_url: "wgl1.png"
+        image_url: "wgl1.jpg"
       },
       {
-        image_url: "wgl2.png"
+        image_url: "wgl2.jpg"
       },
       {
-        image_url: "wgl3.png"
+        image_url: "wgl3.jpg"
       }
     ]
   },
   pp: {
-    thumb: "pp1.png",
+    thumb: "pp1.jpg",
     thumbWidth: "200",
     thumbHeight: "200",
     backgroundColor: "#000000",
@@ -55,19 +55,19 @@ const projectsData = {
     url: "",
     images: [
       {
-        image_url: "pp1.png"
+        image_url: "pp1.jpg"
       },
       {
-        image_url: "pp2.png"
+        image_url: "pp2.jpg"
       },
       {
-        image_url: "pp3.png"
+        image_url: "pp3.jpg"
       },
       {
-        image_url: "pp4.png"
+        image_url: "pp4.jpg"
       },
       {
-        image_url: "pp5.png"
+        image_url: "pp5.jpg"
       }
     ]
   },
@@ -110,10 +110,10 @@ const projectsData = {
       "http://social.macys.com/believe/?cm_mmc=VanityUrl-_-believe-_-n-_-n#/believeomagic",
     images: [
       {
-        image_url: "believe1.png"
+        image_url: "believe1.jpg"
       },
       {
-        image_url: "believe2.png"
+        image_url: "believe2.jpg"
       }
     ]
   },
@@ -129,28 +129,28 @@ const projectsData = {
     url: "",
     images: [
       {
-        image_url: "finder3.png"
+        image_url: "finder3.jpg"
       },
       {
-        image_url: "finder4.png"
+        image_url: "finder4.jpg"
       },
       {
-        image_url: "finder1.png"
+        image_url: "finder1.jpg"
       },
       {
-        image_url: "finder2.png"
+        image_url: "finder2.jpg"
       },
       {
-        image_url: "finder5.png"
+        image_url: "finder5.jpg"
       },
       {
-        image_url: "finder6.png"
+        image_url: "finder6.jpg"
       },
       {
-        image_url: "finder7.png"
+        image_url: "finder7.jpg"
       },
       {
-        image_url: "finder8.png"
+        image_url: "finder8.jpg"
       }
     ]
   },
@@ -206,13 +206,13 @@ const projectsData = {
     url: "",
     images: [
       {
-        image_url: "fireworks1.png"
+        image_url: "fireworks1.jpg"
       },
       {
-        image_url: "fireworks2.png"
+        image_url: "fireworks2.jpg"
       },
       {
-        image_url: "fireworks3.png"
+        image_url: "fireworks3.jpg"
       }
     ]
   },

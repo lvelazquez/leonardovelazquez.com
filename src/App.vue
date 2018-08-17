@@ -139,6 +139,8 @@ export default {
 
         if (currentSectionId === "work" && keys.length > 2) {
           this.projectId = keys[2];
+        } else {
+          this.isProjectModalOpen = false;
         }
         this.currentSectionId = currentSectionId;
 
