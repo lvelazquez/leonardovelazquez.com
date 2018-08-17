@@ -132,9 +132,12 @@ export default {
       }
     }
   }
-
+  .details {
+    display: none;
+  }
   @media (min-width: $bp-ms) {
     & .details {
+      display: block;
       font-size: 1rem;
     }
   }

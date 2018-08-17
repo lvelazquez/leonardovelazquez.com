@@ -1,12 +1,18 @@
 <template>
-  <div class="project-wrapper">
-    <h2 class="title">{{currentProject.title}}</h2>
+  <div class="project-wrapper" :class="{mobileClose: mobileClose}">
+    <div class="project-header">
+      <h2 class="title">{{currentProject.title}}</h2>
+      <button @click="mobileClose=true" class="close-btn">X</button>
+    </div>
     <div class="carousel">
       <div class="carousel-wrapper" :style="`backgroundColor: ${hexToRGB(currentProject.backgroundColor)}`">
-        <div class="item" v-for="(image, index) in currentProject.images" :class="{active: currentImageIndex === index}">
+        <div class="item" v-for="(image, index) in currentProject.images"
+             :class="{active: currentImageIndex === index}">
           <img v-on:load="handleLoader" :src="loadImage(image.image_url)"/>
         </div>
-        <div :class="{loading: isLoading, loader: true}"><Loader/></div>
+        <div :class="{loading: isLoading, loader: true}">
+          <Loader/>
+        </div>
         <div class="controls">
           <div @click="handleUpdate(1)" class="overlay-btn"></div>
           <button class="carousel-control carousel-left" @click="handleUpdate(-1)">
@@ -42,7 +48,8 @@ export default {
   data() {
     return {
       currentImageIndex: 0,
-      isLoading: false
+      isLoading: false,
+      mobileClose: true
     };
   },
   props: {
@@ -53,6 +60,7 @@ export default {
   },
   computed: {
     currentProject: function() {
+      this.getProject(this.currentProjectId);
       return projectData[this.currentProjectId];
     }
   },
@@ -67,6 +75,7 @@ export default {
     getProject(id) {
       if (!projectData[id]) return;
       this.isLoading = true;
+      this.mobileClose = false;
       this.currentImageIndex = null;
       this.currentProject = projectData[id];
       clearInterval(this.interval);
@@ -90,6 +99,7 @@ export default {
       }
       this.currentImageIndex = index;
     },
+    handleClose() {},
     hexToRGB(hex, opacity = 0.65) {
       hex = hex.replace("#", "");
       return `rgba(${parseInt(hex.substring(0, 2), 16)},${parseInt(
@@ -117,24 +127,55 @@ export default {
     padding: 0 1rem;
   }
 }
+.mobileClose {
+  display: none;
+  @media ($bp-ms) {
+    display: block;
+  }
+}
 
-.title {
-  white-space: nowrap;
+.project-header {
+  position: relative;
   width: 100%;
   overflow: hidden;
   text-overflow: ellipsis;
-  text-align: center;
-  margin: 0;
   display: inline-block;
   background-color: rgba($black-color, 0.95);
-  font-size: 1.4rem;
   padding: 1.5rem 1rem 1.5rem;
+  & .title {
+    text-align: left;
+    font-size: 1.2rem;
+    margin: 0;
+    padding: 0;
+    display: inline-block;
+    width: 90%;
+  }
   @media (min-width: $bp-ms) {
+    & .title {
+      white-space: nowrap;
+      width: 90%;
+      font-size: 2rem;
+      text-align: center;
+      margin: 0;
+      padding: 0;
+    }
+    background-color: transparent;
     max-width: calc(50vw - 2rem);
     padding: 3rem 0 0;
     margin: 0 0 35px;
-    font-size: 2rem;
-    background-color: transparent;
+  }
+}
+
+.close-btn {
+  position: relative;
+  background: none;
+  border: none;
+  width: 10%;
+  top: 50%;
+  color: white;
+  transform: translateY(-50%);
+  @media (min-width: $bp-ms) {
+    display: none;
   }
 }
 
