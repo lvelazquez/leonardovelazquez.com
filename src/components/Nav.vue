@@ -9,16 +9,16 @@
                 </Link>
                 <div :class="{'navbar-collapse': !isMenuOpen}" class="navbar-right">
                     <ul class="nav-list">
-                        <li>
+                        <li class="nav-list-item">
                             <Link to="/work" class="nav-item" :class="{active: currentSectionId === 'work' }">Work</Link>
                         </li>
-                        <li>
+                        <li class="nav-list-item">
                             <Link to="/about" class="nav-item" :class="{active: currentSectionId === 'about' }">About me</Link>
                         </li>
-                        <li>
+                        <li class="nav-list-item">
                             <Link to="/contact" class="nav-item" :class="{active: currentSectionId === 'contact' }">Contact</Link>
                         </li>
-                        <li>
+                        <li class="nav-list-item">
                             <a class="nav-item"  href="../src/assets/files/LeonardoVelazquezResume.pdf" download="LeonardoVelazquezResume">
                                 <i class="download-icon"></i>
                                 Resume
@@ -31,11 +31,11 @@
 </template>
 
 <script>
-import { Link, BrandLogo } from './.';
-import EventBus from '../EventBus';
+import { Link, BrandLogo } from "./.";
+import EventBus from "../EventBus";
 
 export default {
-  name: 'Nav',
+  name: "Nav",
   props: {
     currentSectionId: String
   },
@@ -50,11 +50,11 @@ export default {
     Link
   },
   mounted() {
-    EventBus.$on('routechange', this.openMenu);
-    window.addEventListener('scroll', this.updateNav);
+    EventBus.$on("routechange", this.openMenu);
+    window.addEventListener("scroll", this.updateNav);
   },
   destroyed() {
-    window.removeEventListener('scroll', this.updateNav);
+    window.removeEventListener("scroll", this.updateNav);
   },
   methods: {
     updateNav() {
@@ -69,15 +69,14 @@ export default {
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style lang="scss" scoped>
-@import '../styles/settings';
-@import '../styles/media-queries';
+@import "../styles/settings";
+@import "../styles/media-queries";
 
 .navbar {
   position: fixed;
   top: 0;
   width: 100%;
-  height: 5rem;
-  font-family: Montserrat, 'Helvetica Neue', Helvetica, Arial, sans-serif;
+  font-family: Montserrat, "Helvetica Neue", Helvetica, Arial, sans-serif;
   margin-bottom: 0;
   text-transform: uppercase;
   z-index: 1000;
@@ -93,10 +92,6 @@ export default {
   margin: 0;
 }
 
-.navbar-header {
-  background-color: $white-color;
-}
-
 .navbar-hide {
   top: -80px;
 }
@@ -105,16 +100,16 @@ export default {
   display: none;
 }
 
-.nav-list li {
+.nav-list-item {
+  padding: 0;
+  margin: 0;
+  display: flex;
   transition: background-color 0.15s ease-out;
   .nav-item {
-    height: 100%;
     cursor: pointer;
-    display: flex;
     font-weight: 500;
     align-items: center;
-    padding: 0 1rem 0;
-
+    padding: 2rem;
     &.active {
       color: $white-color;
       background-color: $black-color;
@@ -159,11 +154,11 @@ li:hover .download-icon {
 
 .navbar-logo {
   position: relative;
-  font-weight: 700;
   display: inline-flex;
   height: 100%;
   align-items: center;
-  padding-left: 1rem;
+  padding: 0.75rem;
+  font-weight: 700;
   .top-logo {
     min-width: 35px;
     position: relative;
