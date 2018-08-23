@@ -16,7 +16,7 @@
                 </ul>
                 <div class="page-scroll">
                     <a href="/work" class="btn-lv nav-item" data-target="#work">
-                        <i class="glyphicon glyphicon-chevron-down animated"></i>
+                        <i class="icon-down-open animated"></i>
                     </a>
                 </div>
             </div>
@@ -67,14 +67,15 @@ export default {
 }
 
 .intro-nav {
-  display: inline-flex;
+    text-align: center;
+  display: block;
   ul {
     display: none;
     @media screen and (min-width: $bp-sm) {
       display: flex !important;
     }
     padding: 0;
-    margin: 0 auto;
+    margin: 0;
     width: 90%;
     white-space: nowrap;
     text-align: center;

@@ -74,6 +74,15 @@ export default {
   }
   @media (min-width: $bp-sm) {
     .brand-title {
+      font-size: 1.5rem;
+    }
+    .logo {
+      width: 2.5rem;
+      height: 2.5rem;
+    }
+  }
+  @media (min-width: $bp-md) {
+    .brand-title {
       font-size: 1.6rem;
     }
     .logo {
@@ -81,7 +90,7 @@ export default {
       height: 2.6rem;
     }
   }
-  @media (min-width: $bp-md) {
+  @media (min-width: $bp-lg) {
     .logo {
       width: 3.3rem;
       height: 3.3rem;

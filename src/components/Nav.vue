@@ -1,9 +1,6 @@
 <template>
     <nav class="navbar" role="navigation" :class="{'navbar-hide': isNavHidden}" >
             <div class="navbar-header">
-                <button class="navbar-menu-btn" @click="isMenuOpen = !isMenuOpen">
-                    <i class="fa fa-bars"></i>
-                </button>
                 <Link class="navbar-logo nav-item" to="/">
                     <BrandLogo type="header" color="black" />
                 </Link>
@@ -20,12 +17,15 @@
                         </li>
                         <li class="nav-list-item">
                             <a class="nav-item"  href="../src/assets/files/LeonardoVelazquezResume.pdf" download="LeonardoVelazquezResume">
-                                <i class="download-icon"></i>
+                                <i class="icon-download-alt"></i>
                                 Resume
                             </a>
                         </li>
                     </ul>
                 </div>
+                <button class="navbar-menu-btn" @click="isMenuOpen = !isMenuOpen">
+                    <i class="icon-menu"></i>
+                </button>
             </div>
     </nav>
 </template>
@@ -109,10 +109,17 @@ export default {
     cursor: pointer;
     font-weight: 500;
     align-items: center;
-    padding: 2rem;
+    width: 100%;
+    padding: 1rem;
     &.active {
       color: $white-color;
       background-color: $black-color;
+    }
+    @media (min-width: $bp-ms) {
+      padding: 1.7rem 1rem 1.7rem;
+    }
+    @media (min-width: $bp-lg) {
+      padding: 2rem;
     }
   }
 
@@ -157,7 +164,7 @@ li:hover .download-icon {
   display: inline-flex;
   height: 100%;
   align-items: center;
-  padding: 0.75rem;
+  padding: 0.75rem 0 0.75rem 0.75rem;
   font-weight: 700;
   .top-logo {
     min-width: 35px;
@@ -174,16 +181,20 @@ li:hover .download-icon {
 }
 
 .navbar-menu-btn {
-  position: relative;
-  float: right;
+  position: absolute;
+  right: 0;
+  top: 0;
   border: none;
   z-index: 1;
   outline: none;
   font-size: 1.5rem;
-  height: 100%;
-  padding-right: 1rem;
   cursor: pointer;
   background-color: $white-color;
+  padding: 0.5rem;
+  @media (min-width: $bp-sm) {
+    padding: 0.75rem;
+    height: 4rem;
+  }
 }
 
 @media (min-width: $bp-ms) {

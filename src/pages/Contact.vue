@@ -65,15 +65,15 @@
         <ul class="banner-social-buttons">
           <li>
             <a href="https://www.linkedin.com/in/leovelazquez" class="btn"><i
-              class="fa fa-linkedin fa-fw"></i> <span class="network-name">Linked In</span></a>
+              class="icon-linkedin"></i> <span class="network-name">Linked In</span></a>
           </li>
           <li>
             <a href="https://github.com/lvelazquez" class="btn"><i
-              class="fa fa-github fa-fw"></i> <span class="network-name">Github</span></a>
+              class="icon-github-circled"></i> <span class="network-name">Github</span></a>
           </li>
           <li>
             <a href="https://plus.google.com/111568277509717571535" class="btn"><i
-              class="fa fa-google-plus fa-fw"></i> <span class="network-name">Google+</span></a>
+              class="icon-gplus-squared"></i> <span class="network-name">Google+</span></a>
           </li>
         </ul>
       </div>
