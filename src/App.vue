@@ -1,8 +1,8 @@
 <template>
   <div id="app">
-    <Nav :is-nav-hidden="`${isNavHidden}`"/>
+    <Nav :is-nav-hidden="`${isNavHidden}`" :nav-offset="scrollOffset"/>
     <Background :is-playing ="isVideoPlaying" @is-ready="onReady" />
-    <Intro :is-loaded="isLoaded"/>
+    <Intro :nav-offset="-navHeight" :is-loaded="isLoaded"/>
     <Work :is-loaded="isLoaded" :isProjectModalOpen="isProjectModalOpen" :currentProjectId="projectId"/>
     <About :is-loaded="isLoaded"/>
     <Contact :is-loaded="isLoaded"/>
@@ -14,25 +14,21 @@ import { find, map, get, isNumber, isEmpty, throttle } from "lodash";
 import { Intro, Work, About, Contact } from "./pages/";
 import { Nav, Background } from "./components/";
 import projectData from "./data";
+import EventBus from "./EventBus";
 
 import Vue from "vue";
-import VueScrollTo from "vue-scrollto";
-Vue.use(VueScrollTo, { offset: -80 });
+import VueScrollTo from "vue-scroll-to";
 
-const routes = {
-  "": {
-    sectionId: "intro"
-  },
-  work: {
-    sectionId: "work"
-  },
-  about: {
-    sectionId: "about"
-  },
-  contact: {
-    sectionId: "contact"
-  }
-};
+// You can also pass in the default options
+Vue.use(VueScrollTo, {
+  container: "body",
+  duration: 500,
+  easing: "ease-in-out",
+  offset: -80,
+  cancelable: true,
+  x: false,
+  y: true
+});
 
 export default {
   name: "app",
@@ -61,13 +57,29 @@ export default {
     window.addEventListener("scroll", this.handleScroll, { passive: true });
     window.addEventListener("popstate", this.handlePopstate);
   },
-  destroyed() {
+  created() {
+    window.addEventListener("resize", this.handleResize);
+    EventBus.$on("routechange", this.handleRouteChange);
+  },
+  beforeDestroy() {
+    window.removeEventListener("resize", this.handleResize);
     window.removeEventListener("scroll", this.handleScroll);
     window.removeEventListener("popstate", this.handlePopstate);
   },
   methods: {
     scrollTo(sectionId) {
       this.$scrollTo(`#${sectionId}`, 100);
+    },
+    handleRouteChange(sectionId) {
+      console.log('sectionId:', sectionId);
+      // history.replaceState(null, null, sectionId);
+      // this.$scrollTo(`#${sectionId}`, 200, {
+      //   easing: "ease-in-out",
+      //   offset: -this.navHeight
+      // });
+    },
+    handleResize() {
+      this.navHeight = document.querySelector(".navbar").offsetHeight;
     },
     handleScroll() {
       if (window.scrollY > 40) {
@@ -113,10 +125,6 @@ export default {
             this.updateRoute(currentId);
             this.updateNavItems(currentId);
           }
-
-          if (this.isProjectModalOpen && currentRoute !== "work") {
-            this.isProjectModalOpen = false;
-          }
         }
       });
     },
@@ -143,7 +151,6 @@ export default {
           this.isProjectModalOpen = false;
         }
         this.currentSectionId = currentSectionId;
-
         this.scrollTo(currentSectionId);
       });
     }

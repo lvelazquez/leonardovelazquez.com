@@ -1,5 +1,5 @@
 <template>
-    <nav class="navbar" role="navigation" :class="{'navbar-hide': isNavHidden}" >
+    <nav @routechange="isMenuOpen = false" class="navbar" role="navigation" :class="{'navbar-hide': isNavHidden}" >
             <div class="navbar-header">
                 <Link class="navbar-logo nav-item" to="/">
                     <BrandLogo type="header" color="black" />
@@ -7,13 +7,13 @@
                 <div :class="{'navbar-collapse': !isMenuOpen}" class="navbar-right">
                     <ul class="nav-list">
                         <li class="nav-list-item">
-                            <Link to="/work" class="nav-item" :class="{active: currentSectionId === 'work' }">Work</Link>
+                            <Link :nav-offset="navOffset" to="/work" class="nav-item" :class="{active: currentSectionId === 'work' }">Work</Link>
                         </li>
                         <li class="nav-list-item">
-                            <Link to="/about" class="nav-item" :class="{active: currentSectionId === 'about' }">About me</Link>
+                            <Link :nav-offset="navOffset" to="/about" class="nav-item" :class="{active: currentSectionId === 'about' }">About me</Link>
                         </li>
                         <li class="nav-list-item">
-                            <Link to="/contact" class="nav-item" :class="{active: currentSectionId === 'contact' }">Contact</Link>
+                            <Link :nav-offset="navOffset" to="/contact" class="nav-item" :class="{active: currentSectionId === 'contact' }">Contact</Link>
                         </li>
                         <li class="nav-list-item">
                             <a class="nav-item"  href="../src/assets/files/LeonardoVelazquezResume.pdf" download="LeonardoVelazquezResume">
@@ -37,7 +37,8 @@ import EventBus from "../EventBus";
 export default {
   name: "Nav",
   props: {
-    currentSectionId: String
+    currentSectionId: String,
+    navOffset: Number
   },
   data() {
     return {
@@ -56,6 +57,7 @@ export default {
   destroyed() {
     window.removeEventListener("scroll", this.updateNav);
   },
+  updated() {},
   methods: {
     updateNav() {
       this.isNavHidden = window.scrollY === 0;
@@ -183,7 +185,7 @@ li:hover .download-icon {
 .navbar-menu-btn {
   position: absolute;
   right: 0;
-  top: 0;
+  top: 50%;
   border: none;
   z-index: 1;
   outline: none;
@@ -191,6 +193,7 @@ li:hover .download-icon {
   cursor: pointer;
   background-color: $white-color;
   padding: 0.5rem;
+  transform: translateY(-50%);
   @media (min-width: $bp-sm) {
     padding: 0.75rem;
     height: 4rem;

@@ -5,13 +5,13 @@
             <div class="intro-nav">
                 <ul>
                     <li>
-                        <Link to="/work" class="nav-item">Work</Link>
+                        <Link :nav-offset="navOffset" to="/work" class="nav-item">Work</Link>
                     </li>
                     <li>
-                        <Link to="/about" class="nav-item">About me</Link>
+                        <Link :nav-offset="navOffset" to="/about" class="nav-item">About me</Link>
                     </li>
                     <li>
-                        <Link to="/contact" class="nav-item">Contact</Link>
+                        <Link :nav-offset="navOffset" to="/contact" class="nav-item">Contact</Link>
                     </li>
                 </ul>
                 <div class="page-scroll">
@@ -34,7 +34,8 @@ export default {
     Link
   },
   props: {
-    isLoaded: { type: Boolean, default: false }
+    isLoaded: { type: Boolean, default: false },
+    navOffset: Number
   }
 };
 </script>
@@ -67,7 +68,7 @@ export default {
 }
 
 .intro-nav {
-    text-align: center;
+  text-align: center;
   display: block;
   ul {
     display: none;

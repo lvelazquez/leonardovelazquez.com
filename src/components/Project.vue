@@ -16,10 +16,10 @@
         <div class="controls">
           <div @click="handleUpdate(1)" class="overlay-btn"></div>
           <button class="carousel-control carousel-left" @click="handleUpdate(-1)">
-            <span class="glyphicon glyphicon-chevron-left"> < </span>
+            <span class="icon-left-open"></span>
           </button>
           <button class="carousel-control carousel-right" @click="handleUpdate(1)">
-            <span class="glyphicon glyphicon-chevron-right"> > </span>
+            <span class="icon-right-open"></span>
           </button>
         </div>
       </div>
@@ -48,8 +48,9 @@ export default {
   data() {
     return {
       currentImageIndex: 0,
+      currentProject: projectData[this.currentProjectId],
       isLoading: false,
-      mobileClose: !this.isProjectModalOpen
+      mobileClose: true
     };
   },
   props: {
@@ -64,6 +65,7 @@ export default {
   },
   watch: {
     currentProject: function(newProject, oldProject) {
+      console.log(newProject, this.currentProjectId);
       this.getProject(this.currentProjectId);
       return projectData[this.currentProjectId];
     }

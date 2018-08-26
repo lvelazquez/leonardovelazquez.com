@@ -52,7 +52,7 @@ export default {
     line-height: 0.75;
     margin: 0;
     span:first-child {
-      margin-bottom: 0.15em;
+      margin-bottom: 0.1em;
     }
     span {
       display: block;
@@ -71,6 +71,7 @@ export default {
     font-size: 5vw;
     letter-spacing: 0.15px;
     transition: font-size 0.25s ease-out;
+    line-height: 0.8;
   }
   @media (min-width: $bp-sm) {
     .brand-title {
