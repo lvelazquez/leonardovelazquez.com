@@ -1,6 +1,6 @@
 <template>
   <div id="app">
-    <Nav :is-nav-hidden="`${isNavHidden}`" :nav-offset="scrollOffset"/>
+    <Nav :is-nav-hidden="`${isNavHidden}`" :nav-offset="-navHeight"/>
     <Background :is-playing ="isVideoPlaying" @is-ready="onReady" />
     <Intro :nav-offset="-navHeight" :is-loaded="isLoaded"/>
     <Work :is-loaded="isLoaded" :isProjectModalOpen="isProjectModalOpen" :currentProjectId="projectId"/>
@@ -17,7 +17,7 @@ import projectData from "./data";
 import EventBus from "./EventBus";
 
 import Vue from "vue";
-import VueScrollTo from "vue-scroll-to";
+import VueScrollTo from "vue-scrollto";
 
 // You can also pass in the default options
 Vue.use(VueScrollTo, {
@@ -42,18 +42,18 @@ export default {
   },
   data() {
     return {
-      currentSectionId: "intro",
+      currentSectionId: null,
       isLoaded: false,
       isVideoPlaying: false,
       isNavHidden: true,
+      navHeight: null,
       projectId: Object.keys(projectData)[0],
       isProjectModalOpen: false
     };
   },
   mounted() {
-    this.navHeight = document.querySelector(".navbar").offsetHeight;
+    this.navHeight = document.querySelector(".navbar").offsetHeight + 5;
     this.navItems = document.querySelectorAll(".nav-list .nav-item");
-
     window.addEventListener("scroll", this.handleScroll, { passive: true });
     window.addEventListener("popstate", this.handlePopstate);
   },
@@ -71,12 +71,12 @@ export default {
       this.$scrollTo(`#${sectionId}`, 100);
     },
     handleRouteChange(sectionId) {
-      console.log('sectionId:', sectionId);
-      // history.replaceState(null, null, sectionId);
-      // this.$scrollTo(`#${sectionId}`, 200, {
-      //   easing: "ease-in-out",
-      //   offset: -this.navHeight
-      // });
+      con
+      history.replaceState(null, null, sectionId);
+      this.$scrollTo(`#${sectionId}`, 200, {
+        easing: "ease-in-out",
+        offset: -this.navHeight
+      });
     },
     handleResize() {
       this.navHeight = document.querySelector(".navbar").offsetHeight;

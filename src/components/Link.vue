@@ -1,5 +1,5 @@
 <template>
-  <a :href="`${to}`" v-scroll-to="`#${this.sectionId}`" :data-id="`${this.sectionId}`" @click="handleClick">
+  <a :href="`${to}`" v-scroll-to="{offset: navOffset, el:`#${this.sectionId}`}" :data-id="`${this.sectionId}`" @click="handleClick">
     <slot></slot>
   </a>
 </template>
@@ -8,6 +8,7 @@
 import Vue from "vue";
 import VueScrollTo from "vue-scrollto";
 import { get } from "lodash";
+import EventBus from "../EventBus";
 
 // You can also pass in the default options
 Vue.use(VueScrollTo, {
@@ -26,7 +27,7 @@ export default {
   props: {
     to: String,
     navOffset: {
-      default: 80,
+      default: -80,
       type: Number
     }
   },
@@ -42,7 +43,7 @@ export default {
     handleClick(e) {
       e.preventDefault();
       if (this.to !== location.pathname) {
-        history.replaceState(null, null, this.to);
+        EventBus.$emit("routechange");
       }
     }
   }

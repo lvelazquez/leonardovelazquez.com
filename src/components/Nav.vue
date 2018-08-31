@@ -185,7 +185,7 @@ li:hover .download-icon {
 .navbar-menu-btn {
   position: absolute;
   right: 0;
-  top: 50%;
+  top: 2rem;
   border: none;
   z-index: 1;
   outline: none;
