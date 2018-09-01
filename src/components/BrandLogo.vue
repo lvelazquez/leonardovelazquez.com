@@ -27,9 +27,12 @@ export default {
 @import "../styles/settings";
 @import "../styles/media-queries";
 
+$title-drop-shadow: 2px 2px 50px rgba($gray-color, 0.25);
+
 .white-logo {
   svg {
     fill: $white-color;
+    filter: drop-shadow($title-drop-shadow);
   }
   color: $white-color;
 }
@@ -51,6 +54,7 @@ export default {
     width: 100%;
     line-height: 0.75;
     margin: 0;
+    text-shadow: $title-drop-shadow;
     span:first-child {
       margin-bottom: 0.1em;
     }
@@ -65,12 +69,12 @@ export default {
     width: 8vw;
     height: 8vw;
     max-width: 4rem;
-    transition: width, height 0.25s ease-out;
+    transition: width, height, filter 0.25s ease-out;
   }
   .brand-title {
     font-size: 5vw;
     letter-spacing: 0.15px;
-    transition: font-size 0.25s ease-out;
+    transition: font-size, text-shadow 0.25s ease-out;
     line-height: 0.8;
   }
   @media (min-width: $bp-sm) {
@@ -103,6 +107,10 @@ export default {
       font-size: 2rem;
     }
   }
+}
+
+.intro-header {
+  text-shadow: 2px 2px 100px rgba($gray-color, 0.2);
 }
 
 .intro-logo {
