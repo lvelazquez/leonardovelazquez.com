@@ -1,13 +1,13 @@
 <template>
-  <div class="project-wrapper" :class="{mobileClose: mobileClose}">
+  <div class="project-wrapper mobileModal" :class="{modalOpen: modalOpen}">
     <div class="project-header">
       <h2 class="title">{{currentProject.title}}</h2>
-      <button @click="isProjectModalOpen=false" class="close-btn">X</button>
+      <button @click="handleClose" class="close-btn">X</button>
     </div>
     <div class="carousel">
       <div class="carousel-wrapper" :style="`backgroundColor: ${hexToRGB(currentProject.backgroundColor)}`">
         <div class="item" v-for="(image, index) in currentProject.images"
-             :class="{active: currentImageIndex === index}">
+             :class="{active: currentImageIndex === index && !isLoading, past: previousImageIndex === index}">
           <img v-on:load="handleLoader" :src="loadImage(image.image_url)"/>
         </div>
         <div :class="{loading: isLoading, loader: true}">
@@ -26,11 +26,10 @@
       <div class="carousel-details">
         <ol class="carousel-indicators">
           <li v-for="(image, index) in currentProject.images" :class="{active: currentImageIndex === index}"
-              @click="currentImageIndex = index; isLoading = true"/>
+              @click="previousImageIndex = currentImageIndex; currentImageIndex = index; isLoading = true"/>
         </ol>
         <div class="carousel-caption">{{currentProject.description}}</div>
       </div>
-
     </div>
   </div>
 </template>
@@ -48,9 +47,8 @@ export default {
   data() {
     return {
       currentImageIndex: 0,
-      currentProject: projectData[this.currentProjectId],
-      isLoading: false,
-      mobileClose: true
+      previousImageIndex: null,
+      isLoading: true
     };
   },
   props: {
@@ -59,19 +57,27 @@ export default {
       default: Object.keys(projectData)[0]
     },
     isProjectModalOpen: {
-      type: Boolean,
-      default: false
+      default: false,
+      type: Boolean
     }
   },
-  watch: {
-    currentProject: function(newProject, oldProject) {
-      console.log(newProject, this.currentProjectId);
-      this.getProject(this.currentProjectId);
-      return projectData[this.currentProjectId];
+  computed: {
+    currentProject: {
+      get: function() {
+        return projectData[this.currentProjectId];
+      },
+      set: function(newValue) {
+        this.getProject(this.currentProjectId);
+        this.currentProject = newValue;
+      }
+    },
+    modalOpen: function() {
+      return this.isProjectModalOpen;
     }
   },
   mounted() {
     this.handleLoader = this.handleLoader.bind(this);
+    this.getProject = this.getProject.bind(this);
     EventBus.$on("project.changed", id => this.getProject(id));
   },
   methods: {
@@ -81,18 +87,11 @@ export default {
     getProject(id) {
       if (!projectData[id]) return;
       this.isLoading = true;
-      this.isProjectModalOpen = true;
-      this.currentImageIndex = null;
-      this.currentProject = projectData[id];
-      clearInterval(this.interval);
-      this.interval = setTimeout(() => {
-        this.currentImageIndex = 0;
-        this.isLoading = false;
-      }, 1000);
+      this.currentImageIndex = 0;
+      this.isLoading = false;
     },
     handleLoader() {
-      clearInterval(this.loadInterval);
-      this.loadInterval = setTimeout(() => (this.isLoading = false), 500);
+      this.isLoading = false;
     },
     handleUpdate(dir) {
       let index = this.currentImageIndex + dir;
@@ -103,9 +102,12 @@ export default {
       if (index < 0) {
         index = imagesLength - 1;
       }
+      this.previousImageIndex = this.currentImageIndex;
       this.currentImageIndex = index;
     },
-    handleClose() {},
+    handleClose() {
+      this.isProjectModalOpen = false;
+    },
     hexToRGB(hex, opacity = 0.65) {
       hex = hex.replace("#", "");
       return `rgba(${parseInt(hex.substring(0, 2), 16)},${parseInt(
@@ -133,11 +135,15 @@ export default {
     padding: 0 1rem;
   }
 }
-.mobileClose {
+.mobileModal {
   display: none;
-  @media ($bp-ms) {
+  @media (min-width: $bp-ms) {
     display: block;
   }
+}
+
+.modalOpen {
+  display: block !important;
 }
 
 .project-header {
@@ -208,11 +214,13 @@ export default {
 
 .carousel-wrapper {
   position: relative;
+  display: flex;
   width: 100%;
   height: 70vh;
   background-color: rgba($white-color, 0.6);
   transition: background-color 0.5s ease-out;
   overflow: hidden;
+  align-items: center;
 }
 
 .controls {
@@ -241,9 +249,15 @@ export default {
   left: 50%;
   transition: transform 0.45s ease-out;
   width: calc(100% - 3rem);
+  height: 100%;
   &.active {
     transform: translate(-50%, 0);
     opacity: 1;
+  }
+  &.past {
+    transform: translate(-50%, 0);
+    transition: opacity 0.45s ease-out;
+    opacity: 0;
   }
   img {
     display: inline-block;

@@ -1,6 +1,6 @@
 <template>
     <div :class="{loaded: isLoaded}" >
-        <video id="site-background" v-once :poster="`${cloudinaryUrl}video/upload/lakehi.jpg`" autoplay preload="auto" loop muted>
+        <video id="site-background" v-once :poster="`${cloudinaryUrl}video/upload/lakehi.jpg`" autoplay preload="auto" loop muted playsinline>
             <source v-once :src="`${cloudinaryUrl}video/upload/lakehi.mp4`" type="video/mp4"/>
         </video>
     </div>

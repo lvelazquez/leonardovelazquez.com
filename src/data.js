@@ -219,7 +219,7 @@ const projectsData = {
   holiday: {
     thumb: "santa1.jpg",
     thumbWidth: "200",
-    thumbHeight: "200",
+    thumbHeight: "400",
     backgroundColor: "#B50F10",
     title: "Macy's Holiday Gift Guide FB Tablet Site",
     description:

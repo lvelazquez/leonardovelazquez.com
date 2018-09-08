@@ -4,14 +4,14 @@
             <div id="thumb-container" class="work-column">
                 <h2>Work</h2>
                 <div class="thumbs-container">
-                    <div v-for="(project, index) in thumbs" class="thumb-item" @click="handleProject(index)">
+                    <div v-for="(project, index) in thumbs" class="thumb-item" :style="{padding: project.thumb.width }" @click="handleProject(index)">
                         <img :src="imageUrl(project.thumb)"/>
                         <div class="details"><span>{{project.title}}</span></div>
                     </div>
                 </div>
             </div>
             <div id="project-container" class="work-column">
-                <Project :currentProjectId="currentProjectId" :isProjectModalOpen="isProjectModalOpen"/>
+                <Project :currentProjectId="projectId" :isProjectModalOpen="isProjectModalOpen"/>
             </div>
         </div>
     </section>
@@ -29,8 +29,8 @@ export default {
   },
   data() {
     return {
-      thumbs: [],
-      cloudinaryUrl: config.cloudinaryUrl
+      cloudinaryUrl: config.cloudinaryUrl,
+      thumbs: []
     };
   },
   props: {
@@ -43,6 +43,7 @@ export default {
   },
   computed: {
     projectId: function() {
+      console.log("this.currentProjectId", this.currentProjectId);
       return this.currentProjectId;
     }
   },
@@ -141,7 +142,7 @@ export default {
   }
   @media (min-width: $bp-ms) {
     & .details {
-      display: block;
+      display: flex;
       font-size: 1rem;
     }
   }

@@ -30,7 +30,6 @@
                         <dd>Node.js</dd>
                         <dd>AngularJS</dd>
                         <dd>Meteor</dd>
-                        <dd>D3.js</dd>
                         <dd>Backbone</dd>
                         <dd>Javascript</dd>
                         <dd>HTML5</dd>

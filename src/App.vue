@@ -71,7 +71,6 @@ export default {
       this.$scrollTo(`#${sectionId}`, 100);
     },
     handleRouteChange(sectionId) {
-      con
       history.replaceState(null, null, sectionId);
       this.$scrollTo(`#${sectionId}`, 200, {
         easing: "ease-in-out",
@@ -98,6 +97,9 @@ export default {
       this.scrollTo(sectionId);
       if (sectionId === "work" && keys.length > 2) {
         this.projectId = keys[2];
+        this.isProjectModalOpen = true;
+      } else {
+        this.isProjectModalOpen = false;
       }
     },
     updateRoute(id) {
@@ -105,9 +107,11 @@ export default {
         this.currentSectionId = id;
         if (id === "work" && this.projectId) {
           id = `work/${this.projectId}`;
+          this.isProjectModalOpen = true;
         } else if (id === "intro") {
           id = "";
         }
+        this.isProjectModalOpen = false;
         history.replaceState(null, null, `/${id}`);
       }
     },
