@@ -98,6 +98,7 @@ export default {
 
 .thumb-item {
   position: relative;
+  cursor: pointer;
   .details {
     font-family: "Montserrat", Helvetica, sans-serif;
     pointer-events: none;
@@ -109,7 +110,6 @@ export default {
     text-transform: uppercase;
     font-weight: 600;
     background: $white-color;
-    color: $blue-color;
     transition: opacity 0.25s ease-out;
     opacity: 0;
     height: 100%;
@@ -119,10 +119,11 @@ export default {
     overflow: hidden;
     flex-direction: row;
     & span {
+      color: $white-color;
       padding: 5px;
       flex: 1;
       text-indent: 0;
-      transition: all 0.25s ease-out;
+      transition: all 0.5s ease-out;
       transform: translateX(-100%);
     }
   }
@@ -130,9 +131,9 @@ export default {
   &:hover {
     .details {
       opacity: 1;
-      background: transparentize($white-color, 0.3);
-      color: $black-color;
+      background: transparentize($white-color, 0.2);
       & span {
+        color: $gray-color;
         transform: translateX(0);
       }
     }

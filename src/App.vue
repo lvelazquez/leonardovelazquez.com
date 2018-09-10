@@ -92,9 +92,12 @@ export default {
     },
     handlePopstate(e) {
       e.preventDefault();
+
       const keys = window.location.pathname.split("/");
       const sectionId = keys[1];
-      this.scrollTo(sectionId);
+      if (window.innerWidth > 750) {
+        this.scrollTo(sectionId);
+      }
       if (sectionId === "work" && keys.length > 2) {
         this.projectId = keys[2];
         this.isProjectModalOpen = true;

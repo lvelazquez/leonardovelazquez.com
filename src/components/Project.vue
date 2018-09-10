@@ -6,7 +6,7 @@
     </div>
     <div class="carousel">
       <div class="carousel-wrapper" :style="`backgroundColor: ${hexToRGB(currentProject.backgroundColor)}`">
-        <div class="item" v-for="(image, index) in currentProject.images"
+        <div id={{index}} class="item" v-for="(image, index) in currentProject.images"
              :class="{active: currentImageIndex === index && !isLoading, past: previousImageIndex === index}">
           <img v-on:load="handleLoader" :src="loadImage(image.image_url)"/>
         </div>
@@ -218,14 +218,14 @@ export default {
   width: 100%;
   height: 70vh;
   background-color: rgba($white-color, 0.6);
-  transition: background-color 0.5s ease-out;
+  transition: background-color 0.75s ease-out;
   overflow: hidden;
   align-items: center;
 }
 
 .controls {
   width: 100%;
-  transition: opacity 0.25s ease-out;
+  transition: opacity 0.5s ease-out;
   opacity: 1;
   height: 100%;
   .overlay-btn {
