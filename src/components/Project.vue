@@ -6,7 +6,7 @@
     </div>
     <div class="carousel">
       <div class="carousel-wrapper" :style="`backgroundColor: ${hexToRGB(currentProject.backgroundColor)}`">
-        <div id={{index}} class="item" v-for="(image, index) in currentProject.images"
+        <div :id={index} class="item" v-for="(image, index) in currentProject.images"
              :class="{active: currentImageIndex === index && !isLoading, past: previousImageIndex === index}">
           <img v-on:load="handleLoader" :src="loadImage(image.image_url)"/>
         </div>
