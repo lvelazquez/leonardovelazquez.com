@@ -3,7 +3,7 @@
         <Logo class="logo" />
         <h1 class="brand-title">
             <span>Leonardo Vel&aacute;zquez</span>
-            <span class="sub-header">Software Engineer</span></h1>
+            <span class="sub-header">Software Developer</span></h1>
     </div>
 </template>
 

@@ -6,8 +6,7 @@
     </div>
     <div class="carousel">
       <div class="carousel-wrapper" :style="`backgroundColor: ${hexToRGB(currentProject.backgroundColor)}`">
-        <div :id={index} class="item" v-for="(image, index) in currentProject.images"
-             :class="{active: currentImageIndex === index && !isLoading, past: previousImageIndex === index}">
+        <div :id={index} class="item" :style="currentImageIndex !== index ? {transform: `translate(${200 * direction}%, 0)`} : ''" v-for="(image, index) in currentProject.images" :class="{active: currentImageIndex === index && !isLoading, past: previousImageIndex === index}">
           <img v-on:load="handleLoader" :src="loadImage(image.image_url)"/>
         </div>
         <div :class="{loading: isLoading, loader: true}">
@@ -15,7 +14,7 @@
         </div>
         <div class="controls">
           <div @click="handleUpdate(1)" class="overlay-btn"></div>
-          <button class="carousel-control carousel-left" @click="handleUpdate(-1)">
+          <button class="carousel-control carousel-left" @click="handleUpdate(-1);">
             <span class="icon-left-open"></span>
           </button>
           <button class="carousel-control carousel-right" @click="handleUpdate(1)">
@@ -46,6 +45,7 @@ export default {
   components: { Loader },
   data() {
     return {
+      direction: 1,
       currentImageIndex: 0,
       previousImageIndex: null,
       isLoading: true
@@ -94,16 +94,20 @@ export default {
       this.isLoading = false;
     },
     handleUpdate(dir) {
+      this.direction = dir;
       let index = this.currentImageIndex + dir;
+
       const imagesLength = get(this.currentProject, "images.length");
       if (index > imagesLength - 1) {
         index = 0;
-      }
-      if (index < 0) {
+      } else if (index < 0) {
         index = imagesLength - 1;
       }
       this.previousImageIndex = this.currentImageIndex;
-      this.currentImageIndex = index;
+
+      setTimeout(() => {
+        this.currentImageIndex = index;
+      }, 250);
     },
     handleClose() {
       this.isProjectModalOpen = false;

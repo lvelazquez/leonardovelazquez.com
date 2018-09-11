@@ -54,7 +54,10 @@ export default {
   mounted() {
     this.navHeight = document.querySelector(".navbar").offsetHeight + 5;
     this.navItems = document.querySelectorAll(".nav-list .nav-item");
-    window.addEventListener("scroll", this.handleScroll, { passive: true });
+
+    window.addEventListener("scroll", throttle(this.handleScroll, 100), {
+      passive: true
+    });
     window.addEventListener("popstate", this.handlePopstate);
   },
   created() {
