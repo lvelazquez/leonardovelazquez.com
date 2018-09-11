@@ -13,7 +13,8 @@
           <Loader/>
         </div>
         <div class="controls">
-          <div @click="handleUpdate(1)" class="overlay-btn"></div>
+          <div @click="handleUpdate(-1)" class="overlay-btn overlay-left"></div>
+          <div @click="handleUpdate(1)" class="overlay-btn overlay-right"></div>
           <button class="carousel-control carousel-left" @click="handleUpdate(-1);">
             <span class="icon-left-open"></span>
           </button>
@@ -129,7 +130,7 @@ export default {
 
 .project-wrapper {
   position: fixed;
-  top: 5rem;
+  top: 3rem;
   left: 0;
   width: 100%;
   @media (min-width: $bp-ms) {
@@ -233,9 +234,21 @@ export default {
   opacity: 1;
   height: 100%;
   .overlay-btn {
-    width: inherit;
+    position: absolute;
+    width: 50%;
     height: inherit;
     cursor: pointer;
+    outline: none;
+    &:focus {
+      outline: none;
+      border: none;
+    }
+  }
+  .overlay-left {
+    left: 0;
+  }
+  .overlay-right {
+    right: 0;
   }
   @media (min-width: $bp-ms) {
     opacity: 0;
@@ -260,7 +273,7 @@ export default {
   }
   &.past {
     transform: translate(-50%, 0);
-    transition: opacity 0.45s ease-out;
+    transition: opacity 0.35s ease-out;
     opacity: 0;
   }
   img {
