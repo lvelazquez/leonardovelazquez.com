@@ -2,7 +2,7 @@
   <div class="project-wrapper mobileModal" :class="{modalOpen: modalOpen}">
     <div class="project-header">
       <h2 class="title">{{currentProject.title}}</h2>
-      <button @click="handleClose" class="close-btn">X</button>
+      <button @click="handleClose" class="close-btn icon-close"></button>
     </div>
     <div class="carousel">
       <div class="carousel-wrapper" :style="`backgroundColor: ${hexToRGB(currentProject.backgroundColor)}`">
@@ -130,7 +130,7 @@ export default {
 
 .project-wrapper {
   position: fixed;
-  top: 3rem;
+  top: 3.75rem;
   left: 0;
   width: 100%;
   @media (min-width: $bp-ms) {
@@ -148,7 +148,8 @@ export default {
 }
 
 .modalOpen {
-  display: block !important;
+  display: flex !important;
+  flex-direction: column;
 }
 
 .project-header {
@@ -191,6 +192,8 @@ export default {
   top: 50%;
   color: white;
   transform: translateY(-50%);
+  right: 4%;
+  font-size: 1rem;
   @media (min-width: $bp-ms) {
     display: none;
   }
