@@ -185,14 +185,14 @@ export default {
 }
 
 .close-btn {
-  position: relative;
+  position: absolute;
   background: none;
   border: none;
   width: 10%;
   top: 50%;
   color: white;
   transform: translateY(-50%);
-  right: 4%;
+  right: 2em;
   font-size: 1rem;
   @media (min-width: $bp-ms) {
     display: none;
