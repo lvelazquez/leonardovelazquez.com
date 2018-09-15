@@ -5,7 +5,7 @@
                 <h2>About me</h2>
 
                 <div class="content-wrapper">
-                    <img class="leo lazy wht-frame" width="100%" height="auto" data-original="images/leo2.jpg"/>
+                    <img alt="me baby me" class="leo lazy wht-frame" width="100%" height="auto" data-original="images/leo2.jpg"/>
                     <p>
                         I'm a Senior Software Developer currently based in Seattle, Washington. With ample experience
                         in every facet of the web design and development process, I strive to meet the needs of every new

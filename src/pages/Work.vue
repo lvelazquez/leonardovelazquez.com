@@ -5,7 +5,7 @@
                 <h2>Work</h2>
                 <div class="thumbs-container">
                     <div v-for="(project, index) in thumbs" class="thumb-item" :style="{padding: project.thumb.width }" @click="handleProject(index)">
-                        <img :src="imageUrl(project.thumb)"/>
+                        <img :alt="project.title" :src="isLoaded ? imageUrl(project.thumb):fakeImage"/>
                         <div class="details"><span>{{project.title}}</span></div>
                     </div>
                 </div>
@@ -30,21 +30,28 @@ export default {
   data() {
     return {
       cloudinaryUrl: config.cloudinaryUrl,
-      thumbs: []
+      thumbs: [],
+      fakeImage: ""
     };
   },
   props: {
     isLoaded: Boolean,
+    isActive: Boolean,
     currentProjectId: String,
     isProjectModalOpen: Boolean
   },
   mounted() {
     this.thumbs = projectData;
+    this.fakeImage =
+      "data:image/png;base64,R0lGODlhAQABAAD/ACwAAAAAAQABAAACADs=";
   },
   computed: {
     projectId: function() {
       console.log("this.currentProjectId", this.currentProjectId);
       return this.currentProjectId;
+    },
+    canLoadImage: function() {
+      return this.isActive;
     }
   },
   methods: {

@@ -37,7 +37,7 @@
                           placeholder="Your Message" v-model="contact.message"></textarea>
               </div>
 
-              <button id="submit" :disabled="submitStatus === 'sending'" type="submit" :class="{btn:true, sending: submitStatus === 'sending'}">
+              <button id="submit" name="Submit Contact Form" :disabled="submitStatus === 'sending'" type="submit" :class="{btn:true, sending: submitStatus === 'sending'}">
                 <transition name="fade">
                   <div class="loader" v-if="submitStatus === 'sending'">
                     <div></div>

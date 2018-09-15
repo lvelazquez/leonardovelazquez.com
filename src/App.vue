@@ -3,7 +3,7 @@
     <Nav :is-nav-hidden="`${isNavHidden}`" :nav-offset="-navHeight"/>
     <Background :is-playing ="isVideoPlaying" @is-ready="onReady" />
     <Intro :nav-offset="-navHeight" :is-loaded="isLoaded"/>
-    <Work :is-loaded="isLoaded" :isProjectModalOpen="isProjectModalOpen" :currentProjectId="projectId"/>
+    <Work :is-active="currentSectionId === 'work'" :is-loaded="isLoaded" :isProjectModalOpen="isProjectModalOpen" :currentProjectId="projectId"/>
     <About :is-loaded="isLoaded"/>
     <Contact :is-loaded="isLoaded"/>
   </div>

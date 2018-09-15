@@ -23,7 +23,7 @@
                         </li>
                     </ul>
                 </div>
-                <button class="navbar-menu-btn" @click="isMenuOpen = !isMenuOpen">
+                <button name="Nav Menu Toggle" class="navbar-menu-btn" @click="isMenuOpen = !isMenuOpen">
                     <i class="icon-menu"></i>
                 </button>
             </div>
