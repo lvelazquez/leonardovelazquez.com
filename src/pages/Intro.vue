@@ -15,9 +15,9 @@
                     </li>
                 </ul>
                 <div class="page-scroll">
-                    <a href="/work" class="btn-lv nav-item" data-target="#work">
+                    <Link :nav-offset="navOffset"  to="/work" class="btn-lv nav-item" data-target="#work">
                         <i class="icon-down-open animated"></i>
-                    </a>
+                    </Link>
                 </div>
             </div>
         </div>
