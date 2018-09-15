@@ -185,15 +185,14 @@ li:hover .download-icon {
 .navbar-menu-btn {
   position: absolute;
   right: 0;
-  top: 2rem;
   border: none;
   z-index: 1;
   outline: none;
   font-size: 1.5rem;
   cursor: pointer;
   background-color: $white-color;
-  padding: 0.5rem;
-  transform: translateY(-50%);
+  padding: 3% 0.5rem;
+  top: 0;
   @media (min-width: $bp-sm) {
     padding: 0.75rem;
     height: 4rem;
