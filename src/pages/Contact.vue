@@ -271,22 +271,35 @@ export default {
   }
 }
 
-.input-group {
+
+.input-field {
   width: 100%;
   border: solid $light-gray-color 2px;
   border-radius: 5px;
   margin-bottom: 1rem;
   outline: none;
-}
-
-.input-field {
   font-family: "Open Sans", Helvetica, sans-serif;
-  width: 100%;
   padding: 0.5rem;
-  outline: none;
   box-shadow: none;
   background: none;
-  border: none;
+  &:-webkit-autofill {
+    background-color: transparent !important;
+    -webkit-box-shadow: 0 0 0 100px white inset;
+    z-index:-1;
+  }
+}
+
+
+input:-webkit-autofill,
+input:-webkit-autofill:hover,
+input:-webkit-autofill:focus
+textarea:-webkit-autofill,
+textarea:-webkit-autofill:hover
+textarea:-webkit-autofill:focus {
+  border: 2px solid $blue-color;
+  -webkit-text-fill-color: $gray-color;
+  -webkit-box-shadow: 0 0 0px 1000px lighten($light-gray-color, .5) inset;
+  transition: background-color 5000s ease-in-out 0s;
 }
 
 .warning {

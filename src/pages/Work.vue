@@ -5,7 +5,7 @@
                 <h2>Work</h2>
                 <div class="thumbs-container">
                     <div v-for="(project, index) in thumbs" class="thumb-item" :style="{padding: project.thumb.width }" @click="handleProject(index)">
-                        <img :alt="project.title" :src="isLoaded ? imageUrl(project.thumb):fakeImage"/>
+                        <v-lazy-image :alt="project.title" :src="isLoaded ? imageUrl(project.thumb):fakeImage"/>
                         <div class="details"><span>{{project.title}}</span></div>
                     </div>
                 </div>
@@ -21,11 +21,13 @@
 import projectData from "../data";
 import config from "../config";
 import { Project } from "../components/";
+import VLazyImage from "v-lazy-image";
 
 export default {
   name: "Work",
   components: {
-    Project
+    Project,
+    VLazyImage
   },
   data() {
     return {
@@ -101,6 +103,16 @@ export default {
   img {
     width: 100%;
   }
+}
+
+.v-lazy-image {
+  filter: blur(2px);
+  opacity: 0;
+  transition: filter, opacity 0.7s;
+}
+.v-lazy-image-loaded {
+  filter: blur(0);
+  opacity: 1;
 }
 
 .thumb-item {
