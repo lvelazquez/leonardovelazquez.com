@@ -4,8 +4,8 @@
             <div id="thumb-container" class="work-column">
                 <h2>Work</h2>
                 <div class="thumbs-container">
-                    <div v-for="(project, index) in thumbs" class="thumb-item" :style="{padding: project.thumb.width }" @click="handleProject(index)">
-                        <v-lazy-image :alt="project.title" :src="isLoaded ? imageUrl(project.thumb):fakeImage"/>
+                    <div v-for="(project, index) in thumbs" class="thumb-item" :style="{paddingTop: `${ project.thumbHeight/ project.thumbWidth * 100}%`}" @click="handleProject(index)">
+                        <v-lazy-image :alt="project.title" :src="imageUrl(project.thumb)"/>
                         <div class="details"><span>{{project.title}}</span></div>
                     </div>
                 </div>
@@ -118,6 +118,16 @@ export default {
 .thumb-item {
   position: relative;
   cursor: pointer;
+  height: 0;
+  overflow: hidden;
+  margin-bottom: 5px;
+  break-inside: avoid-column;
+  > img {
+    width: 100%;
+    position: absolute;
+    top: 0;
+    left: 0;
+  }
   .details {
     font-family: "Montserrat", Helvetica, sans-serif;
     pointer-events: none;
@@ -126,12 +136,12 @@ export default {
     left: 0;
     top: 0;
     width: 100%;
+    height: 100%;
     text-transform: uppercase;
     font-weight: 600;
     background: $white-color;
     transition: opacity 0.25s ease-out;
     opacity: 0;
-    height: 100%;
     line-height: 1;
     display: flex;
     align-items: center;

@@ -1,8 +1,8 @@
 const projectsData = {
   unwomen: {
     thumb: "th_uw.jpg",
-    thumbWidth: "200",
-    thumbHeight: "300",
+    thumbWidth: "1080",
+    thumbHeight: "660",
     backgroundColor: "#000000",
     title: "UN Women HeforShe.org",
     description:
@@ -23,8 +23,8 @@ const projectsData = {
   },
   wgl: {
     thumb: "wgl1.jpg",
-    thumbWidth: "200",
-    thumbHeight: "200",
+    thumbWidth: "1070",
+    thumbHeight: "684",
     backgroundColor: "#FFFFFF",
     title: "WGL Custom Google map app",
     description:
@@ -45,8 +45,8 @@ const projectsData = {
   },
   pp: {
     thumb: "pp1.jpg",
-    thumbWidth: "200",
-    thumbHeight: "200",
+    thumbWidth: "500",
+    thumbHeight: "725",
     backgroundColor: "#000000",
     title: "Planned Parenthood Global mobile site prototype",
     description:
@@ -73,8 +73,8 @@ const projectsData = {
   },
   droid: {
     thumb: "droid1.jpg",
-    thumbWidth: "200",
-    thumbHeight: "300",
+    thumbWidth: "436",
+    thumbHeight: "678",
     backgroundColor: "#D1D8E0",
     title: "Verizon/Droid Mobile & Tablet Site",
     description:
@@ -99,8 +99,8 @@ const projectsData = {
   believe: {
     id: "",
     thumb: "believe1.jpg",
-    thumbWidth: "200",
-    thumbHeight: "200",
+    thumbWidth: "700",
+    thumbHeight: "439",
     backgroundColor: "#D8C28D",
     title: "Macy's Believe Augmented Reality App",
     description:
@@ -119,8 +119,8 @@ const projectsData = {
   },
   finder: {
     thumb: "finder3.jpg",
-    thumbWidth: "200",
-    thumbHeight: "200",
+    thumbWidth: "700",
+    thumbHeight: "468",
     backgroundColor: "#FFFFFF",
     title: "Macy's Finder Sitelets",
     description:
@@ -156,8 +156,8 @@ const projectsData = {
   },
   parade: {
     thumb: "parade1.jpg",
-    thumbWidth: "200",
-    thumbHeight: "200",
+    thumbWidth: "700",
+    thumbHeight: "529",
     backgroundColor: "#763E0E",
     title: "Macy's Parade Tablet Site",
     description:
@@ -196,8 +196,8 @@ const projectsData = {
   },
   fireworks: {
     thumb: "fireworks1.jpg",
-    thumbWidth: "200",
-    thumbHeight: "200",
+    thumbWidth: "700",
+    thumbHeight: "524",
     backgroundColor: "#000000",
     title: "Macy's Fireworks Site",
     description:
@@ -218,8 +218,8 @@ const projectsData = {
   },
   holiday: {
     thumb: "santa1.jpg",
-    thumbWidth: "200",
-    thumbHeight: "400",
+    thumbWidth: "346",
+    thumbHeight: "612",
     backgroundColor: "#B50F10",
     title: "Macy's Holiday Gift Guide FB Tablet Site",
     description:
@@ -243,8 +243,8 @@ const projectsData = {
   },
   wim: {
     thumb: "wim1.jpg",
-    thumbWidth: "200",
-    thumbHeight: "200",
+    thumbWidth: "700",
+    thumbHeight: "418",
     backgroundColor: "#000000",
     title: "Maya Lin's What is Missing site",
     description: "",
@@ -261,8 +261,8 @@ const projectsData = {
   },
   newmoon: {
     thumb: "newmoon1.jpg",
-    thumbWidth: "200",
-    thumbHeight: "200",
+    thumbWidth: "700",
+    thumbHeight: "418",
     backgroundColor: "#000000",
     title: '"What\'s driving edward?" Puzzles',
     description: "",
