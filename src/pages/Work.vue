@@ -127,6 +127,7 @@ export default {
   overflow: hidden;
   margin-bottom: 5px;
   break-inside: avoid-column;
+  border-radius: 5px;
   > img {
     width: 100%;
     position: absolute;

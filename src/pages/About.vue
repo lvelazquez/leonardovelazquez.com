@@ -85,6 +85,7 @@ export default {
     @media (min-width: $bp-ms) {
       display: block;
       width: 100%;
+      border-radius: 5px;
     }
     @media (min-width: $bp-md) {
       width: 30vw;

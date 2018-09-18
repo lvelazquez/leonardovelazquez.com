@@ -230,6 +230,7 @@ export default {
   transition: background-color 0.75s ease-out;
   overflow: hidden;
   align-items: center;
+  border-radius: 5px;
 }
 
 .controls {
