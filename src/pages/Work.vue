@@ -31,7 +31,6 @@ export default {
   },
   data() {
     return {
-      cloudinaryUrl: config.cloudinaryUrl,
       thumbs: [],
       fakeImage: ""
     };
@@ -40,7 +39,11 @@ export default {
     isLoaded: Boolean,
     isActive: Boolean,
     currentProjectId: String,
-    isProjectModalOpen: Boolean
+    isProjectModalOpen: Boolean,
+    cloudinaryUrl: {
+      type: String,
+      default: config.cloudinaryUrl
+    }
   },
   mounted() {
     this.thumbs = projectData;
