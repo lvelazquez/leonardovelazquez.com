@@ -71,15 +71,17 @@ export default {
 <style lang="scss" scoped>
 @import "../styles/settings.scss";
 @import "../styles/media-queries.scss";
-
 .work-container {
-  display: flex;
-  column-count: 2;
-  column-width: 50vw;
-  column-gap: 0;
+  @media (min-width: $bp-ms) {
+    display: flex;
+    column-count: 2;
+    column-width: 50vw;
+    column-gap: 0;
+  }
 }
 .work-column {
   display: inline-block;
+  width: 100%;
   @media (min-width: $bp-ms) {
     flex: 1;
     max-width: 50vw;
