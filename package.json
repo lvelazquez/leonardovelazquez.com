@@ -3,11 +3,12 @@
   "version": "0.1.0",
   "private": true,
   "scripts": {
-    "dev": "concurrently \"vue-cli-service serve --open\" \"nodemon server/index.js\"",
     "build": "vue-cli-service build",
+    "test": "",
+    "dev": "concurrently \"vue-cli-service serve --open\" \"nodemon server/index.js\"",
     "heroku-postbuild": "vue-cli-service build",
     "start": "node server/index.js",
-    "test": ""
+    "test:unit": "vue-cli-service test:unit"
   },
   "dependencies": {
     "dns": "^0.2.2",
@@ -24,7 +25,11 @@
   },
   "devDependencies": {
     "@vue/cli-plugin-babel": "^3.0.0-rc.10",
+    "@vue/cli-plugin-unit-jest": "^3.4.1",
     "@vue/cli-service": "^3.0.0-rc.10",
+    "@vue/test-utils": "^1.0.0-beta.20",
+    "babel-core": "7.0.0-bridge.0",
+    "babel-jest": "^23.6.0",
     "concurrently": "^3.6.1",
     "node-sass": "^4.9.2",
     "sass-loader": "^6.0.7",
@@ -41,13 +46,13 @@
       "autoprefixer": {}
     }
   },
-  "engines": {
-    "node": "v8.8.1",
-    "npm": "6.1.0"
-  },
   "browserslist": [
     "> 1%",
     "last 2 versions",
     "not ie <= 8"
-  ]
+  ],
+  "engines": {
+    "node": "v8.8.1",
+    "npm": "6.1.0"
+  }
 }
