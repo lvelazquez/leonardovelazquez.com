@@ -4,13 +4,14 @@
   "private": true,
   "scripts": {
     "build": "vue-cli-service build",
-    "test": "",
+    "test": "jest",
     "dev": "concurrently \"vue-cli-service serve --open\" \"nodemon server/index.js\"",
     "heroku-postbuild": "vue-cli-service build",
     "start": "node server/index.js",
     "test:unit": "vue-cli-service test:unit"
   },
   "dependencies": {
+    "babel-preset-env": "^1.7.0",
     "dns": "^0.2.2",
     "dotenv": "^5.0.1",
     "express": "^4.16.3",
@@ -20,7 +21,8 @@
     "nodemailer": "^4.6.7",
     "nodemon": "^1.18.3",
     "v-lazy-image": "^1.2.2",
-    "vue": "^2.5.17",
+    "vue": "^2.6.6",
+    "vue-loader": "^15.6.4",
     "vue-scrollto": "^2.11.0"
   },
   "devDependencies": {
@@ -34,16 +36,23 @@
     "node-sass": "^4.9.2",
     "sass-loader": "^6.0.7",
     "style-loader": "^0.20.3",
+    "vue-jest": "^3.0.3",
     "vue-template-compiler": "^2.5.17"
-  },
-  "babel": {
-    "presets": [
-      "@vue/app"
-    ]
   },
   "postcss": {
     "plugins": {
       "autoprefixer": {}
+    }
+  },
+  "jest": {
+    "moduleFileExtensions": [
+      "js",
+      "json",
+      "vue"
+    ],
+    "transform": {
+      ".*\\.(vue)$": "vue-jest",
+      "^.+\\.js$": "<rootDir>/node_modules/babel-jest"
     }
   },
   "browserslist": [
