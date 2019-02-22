@@ -5,7 +5,7 @@
                 <h2>Contact</h2>
                 <div id="contact-container">
                     <div class="contact-form">
-                        <form id="contact_form" @submit.prevent="handleSubmit">
+                        <form id="contact_form" @submit.prevent="handleSubmit($event)">
                             <div class="input-group contact-name contact-info"
                                  :class="{warning: !contact.name && submitStatus === 'error' }">
                                 <input id="contact_name" type="text" class="input-field" name="name"
@@ -135,8 +135,10 @@
         const re = /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i;
         return re.test(String(email).toLowerCase());
       },
-      async handleSubmit() {
+      async handleSubmit(e) {
         console.log('handle submit');
+        if (event) event.preventDefault();
+        if (event) event.stopPropagation();
         this.errorMessage = "";
         this.submitStatus = "sending";
         this.isValid = this.validateForm();
