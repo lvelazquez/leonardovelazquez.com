@@ -136,6 +136,7 @@
         return re.test(String(email).toLowerCase());
       },
       async handleSubmit() {
+        console.log('handle submit');
         this.errorMessage = "";
         this.submitStatus = "sending";
         this.isValid = this.validateForm();
