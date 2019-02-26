@@ -7,6 +7,7 @@ const errorMessage = {
   general: 'All fields are required.',
   submit: 'Please try again later or reach me at <a href="mailto:leo@leonardovelazquez.com">leo@leonardovelazquez.com</a>'
 };
+
 const submitStatus = {sending: 'sending', success: 'success', serverError: 'serverError'};
 
 describe('Contact.vue', () => {
@@ -17,7 +18,7 @@ describe('Contact.vue', () => {
     expect(wrapper.contains('section#contact')).toBe(true)
   });
 
-  it('validateEmail method works', () => {
+  it('validate email method works', () => {
     const wrapper = mount(Contact, {
       attachToDocument: true
     });
@@ -40,7 +41,7 @@ describe('Contact.vue', () => {
 
   });
 
-  it('on submit throws error if fields are empty', done => {
+  it(`submit throws "${errorMessage.general}" error if fields are empty`, done => {
     const wrapper = mount(Contact);
     const form = wrapper.find('form');
     form.trigger('submit');
@@ -50,7 +51,7 @@ describe('Contact.vue', () => {
     })
   });
 
-  it('on submit throws error if email is invalid', function (done) {
+  it(`submit throws "${errorMessage.email}" error if email is invalid`, function (done) {
     const wrapper = mount(Contact);
     const formData = {
       name: 'Leo Velazquez',
@@ -78,7 +79,7 @@ describe('Contact.vue', () => {
     })
   });
 
-  it('successful submit', async function (done) {
+  it('submit successful', async function (done) {
 
     const wrapper = mount(Contact);
     const formData = {
