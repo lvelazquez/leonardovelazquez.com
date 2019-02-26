@@ -315,12 +315,6 @@
         -webkit-text-fill-color: #333;
     }
 
-    input:-webkit-autofill:focus {
-        -webkit-box-shadow: /*your box-shadow*/
-        , 0 0 0 50px white inset;
-        -webkit-text-fill-color: #333;
-    }
-
     .warning {
         border: solid $warning-color 2px;
     }
