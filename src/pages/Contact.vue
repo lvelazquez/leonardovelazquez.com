@@ -135,8 +135,7 @@
         const re = /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i;
         return re.test(String(email).toLowerCase());
       },
-      async handleSubmit(e) {
-        console.log('handle submit');
+      async handleSubmit(event) {
         if (event) event.preventDefault();
         if (event) event.stopPropagation();
         this.errorMessage = "";
@@ -144,17 +143,13 @@
         this.isValid = this.validateForm();
         if (this.isValid) {
           const response = await fetch("/contact", {
-            body: JSON.stringify(this.contact), // must match 'Content-Type' header
-            cache: "no-cache", // *default, no-cache, reload, force-cache, only-if-cached
-            // credentials: "same-origin", // include, same-origin, *omit
+            body: JSON.stringify(this.contact),
+            cache: "no-cache",
             headers: {
               Accept: "application/json",
               "Content-Type": "application/json"
             },
-            method: "POST" // *GET, POST, PUT, DELETE, etc.
-            //mode: "cors", // no-cors, cors, *same-origin
-            //redirect: "follow", // manual, *follow, error
-            //referrer: "no-referrer" // *client, no-referrer
+            method: "POST"
           });
           const res = JSON.parse(await response.json());
           if (res.ok) {
@@ -316,12 +311,13 @@
     }
 
     input:-webkit-autofill {
-        -webkit-box-shadow:0 0 0 50px white inset; /* Change the color to your own background color */
+        -webkit-box-shadow: 0 0 0 50px white inset; /* Change the color to your own background color */
         -webkit-text-fill-color: #333;
     }
 
     input:-webkit-autofill:focus {
-        -webkit-box-shadow: /*your box-shadow*/,0 0 0 50px white inset;
+        -webkit-box-shadow: /*your box-shadow*/
+        , 0 0 0 50px white inset;
         -webkit-text-fill-color: #333;
     }
 
