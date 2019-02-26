@@ -93,6 +93,7 @@
 <script>
   import {Map} from "../components/";
   import {every} from "lodash";
+  import 'whatwg-fetch'
 
   export default {
     name: "Contact",
@@ -142,7 +143,7 @@
         this.submitStatus = "sending";
         this.isValid = this.validateForm();
         if (this.isValid) {
-          const response = await fetch("/contact", {
+          const response = await window.fetch("/contact", {
             body: JSON.stringify(this.contact),
             cache: "no-cache",
             headers: {

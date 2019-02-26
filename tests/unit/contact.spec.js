@@ -78,7 +78,8 @@ describe('Contact.vue', () => {
     })
   });
 
-  it('successful submit', function (done) {
+  it('successful submit', async function (done) {
+
     const wrapper = mount(Contact);
     const formData = {
       name: 'Leonardo Velazquez',
@@ -98,14 +99,17 @@ describe('Contact.vue', () => {
     subjectInput.setValue(formData.subject);
     contactText.setValue(formData.content);
 
-    form.trigger('submit');
+    await form.trigger('submit');
 
-    Vue.nextTick(() => {
-       expect(wrapper.vm.errorMessage).toBe(false);
+
+    await Vue.nextTick(() => {
+       expect(wrapper.vm.errorMessage).toBe('');
        expect(wrapper.vm.submitStatus).toBe(submitStatus.sending);
+     });
 
-       done();
-     })
+
+
+    await done();
   });
 
 });
