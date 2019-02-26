@@ -30,7 +30,7 @@
     "@vue/cli-plugin-unit-jest": "^3.4.1",
     "@vue/cli-service": "^3.0.0-rc.10",
     "@vue/test-utils": "^1.0.0-beta.20",
-    "babel-core": "7.0.0-bridge.0",
+    "babel-core": "^6.26.3",
     "babel-jest": "^23.6.0",
     "concurrently": "^3.6.1",
     "node-sass": "^4.9.2",
@@ -53,6 +53,30 @@
     "transform": {
       ".*\\.(vue)$": "vue-jest",
       "^.+\\.js$": "<rootDir>/node_modules/babel-jest"
+    }
+  },
+  "babel": {
+    "presets": [
+      [
+        "env",
+        {
+          "modules": false
+        }
+      ]
+    ],
+    "env": {
+      "test": {
+        "presets": [
+          [
+            "env",
+            {
+              "targets": {
+                "node": "current"
+              }
+            }
+          ]
+        ]
+      }
     }
   },
   "browserslist": [
