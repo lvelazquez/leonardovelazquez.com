@@ -11,7 +11,7 @@
     "test:unit": "vue-cli-service test:unit"
   },
   "dependencies": {
-    "babel-preset-env": "^1.7.0",
+    "babel-polyfill": "^6.26.0",
     "dns": "^0.2.2",
     "dotenv": "^5.0.1",
     "express": "^4.16.3",
@@ -27,11 +27,12 @@
     "whatwg-fetch": "^3.0.0"
   },
   "devDependencies": {
+    "@babel/core": "^7.3.4",
+    "@babel/preset-env": "^7.3.4",
     "@vue/cli-plugin-babel": "^3.0.0-rc.10",
     "@vue/cli-plugin-unit-jest": "^3.4.1",
     "@vue/cli-service": "^3.0.0-rc.10",
     "@vue/test-utils": "^1.0.0-beta.20",
-    "babel-core": "^6.26.3",
     "babel-jest": "^23.6.0",
     "concurrently": "^3.6.1",
     "node-sass": "^4.9.2",
@@ -54,30 +55,6 @@
     "transform": {
       ".*\\.(vue)$": "vue-jest",
       "^.+\\.js$": "<rootDir>/node_modules/babel-jest"
-    }
-  },
-  "babel": {
-    "presets": [
-      [
-        "env",
-        {
-          "modules": false
-        }
-      ]
-    ],
-    "env": {
-      "test": {
-        "presets": [
-          [
-            "env",
-            {
-              "targets": {
-                "node": "current"
-              }
-            }
-          ]
-        ]
-      }
     }
   },
   "browserslist": [

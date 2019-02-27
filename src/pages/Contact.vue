@@ -143,7 +143,7 @@
         this.submitStatus = "sending";
         this.isValid = this.validateForm();
         if (this.isValid) {
-          const response = await window.fetch("/contact", {
+          const response = await fetch("/contact", {
             body: JSON.stringify(this.contact),
             cache: "no-cache",
             headers: {
