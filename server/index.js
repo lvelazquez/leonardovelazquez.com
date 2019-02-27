@@ -4,6 +4,7 @@ const express = require("express");
 const nodemailer = require("nodemailer");
 const bodyParser = require("body-parser");
 const config = require("./config");
+const compression = require("compression");
 
 const app = express();
 const port = process.env.PORT || 3000;
@@ -11,6 +12,7 @@ const port = process.env.PORT || 3000;
 app.use(bodyParser.urlencoded({extended: true}));
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({extended: true}));
+app.use(compression());
 
 app.use(express.static("dist", {root: '../'}));
 
