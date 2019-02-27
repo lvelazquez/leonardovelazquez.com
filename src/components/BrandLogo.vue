@@ -193,6 +193,13 @@ $title-drop-shadow: 2px 2px 50px rgba($gray-color, 0.25);
     .brand-title {
       animation: colorLoop 4s infinite ease-in-out;
     }
+
+     & .white-logo {
+          > svg {
+              fill: $blue-color;
+          }
+          color: $blue-color;
+      }
   }
 }
 </style>
