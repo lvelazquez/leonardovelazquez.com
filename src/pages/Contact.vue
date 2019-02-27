@@ -47,7 +47,8 @@
                           placeholder="Your Message" v-model="contact.message"></textarea>
                             </div>
 
-                            <button role="submit" id="submit" name="Submit Contact Form" :disabled="submitStatus === 'sending'"
+                            <button role="submit" id="submit" name="Submit Contact Form"
+                                    :disabled="submitStatus === 'sending'"
                                     type="submit" :class="{btn:true, sending: submitStatus === 'sending'}">
                                 <transition name="fade">
                                     <div class="loader" v-if="submitStatus === 'sending'">
@@ -59,7 +60,7 @@
                                 </transition>
                             </button>
                         </form>
-                        <div class="message-container">
+                        <div class="message-container" :class="{warning: (!isValid)&& submitStatus !== '' }">
                             <transition name="fade">
                                 <div class="warning-text form-text"
                                      v-if="errorMessage !== '' && submitStatus === 'error'">
@@ -192,8 +193,12 @@
         }
         @media (min-width: $bp-ms) {
             flex-direction: row;
-            padding: 0 20%;
+            padding: 0 30%;
             margin: 0 auto;
+        }
+
+        @media (min-width: $bp-lg) {
+            padding: 0 35%;
         }
     }
 
@@ -325,6 +330,10 @@
         border: solid $warning-color 2px !important;
     }
 
+    .message-container.warning {
+        padding: 2rem 0 2rem;
+    }
+
     .form-text {
         color: $blue-color;
         font-family: "Open Sans", Helvetica, sans-serif;
@@ -335,7 +344,6 @@
 
     .message-container {
         width: 100%;
-        padding: 2rem 0 2rem;
         min-height: 1.5rem;
     }
 
