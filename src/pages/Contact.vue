@@ -12,6 +12,7 @@
                                        v-model="contact.name"
                                        placeholder="Your Name"
                                        autocomplete="true"
+                                       aria-required="true"
                                 />
                             </div>
                             <div class="input-group contact-email contact-info has-feedback"
@@ -21,7 +22,10 @@
                                        name="email"
                                        v-model="contact.email"
                                        placeholder="Your Email"
-                                       autocomplete="true"/>
+                                       autocomplete="true"
+                                       aria-required="true"
+                                       ref="contactEmail"
+                                />
                             </div>
                             <div class="input-group contact-info"
                                  :class="{warning: !contact.title && submitStatus === 'error' }"
@@ -30,16 +34,20 @@
                                     type="text"
                                     class="input-field"
                                     name="subject"
-                                    placeholder="Subject" v-model="contact.title"/>
+                                    placeholder="Subject" v-model="contact.title"
+                                    aria-required="true"
+                                    ref="contactSubject"
+                            />
                             </div>
                             <div class="input-group contact-message contact-info has-feedback"
                                  :class="{warning: !contact.message && submitStatus === 'error' }">
                 <textarea id="contact_message" class="input-field"
                           name="message"
+                          aria-required="true"
                           placeholder="Your Message" v-model="contact.message"></textarea>
                             </div>
 
-                            <button id="submit" name="Submit Contact Form" :disabled="submitStatus === 'sending'"
+                            <button role="submit" id="submit" name="Submit Contact Form" :disabled="submitStatus === 'sending'"
                                     type="submit" :class="{btn:true, sending: submitStatus === 'sending'}">
                                 <transition name="fade">
                                     <div class="loader" v-if="submitStatus === 'sending'">
@@ -77,10 +85,6 @@
                     <li>
                         <a href="https://github.com/lvelazquez" class="btn"><i
                                 class="icon-github-circled"></i> <span class="network-name">Github</span></a>
-                    </li>
-                    <li>
-                        <a href="https://plus.google.com/111568277509717571535" class="btn"><i
-                                class="icon-gplus-squared"></i> <span class="network-name">Google+</span></a>
                     </li>
                 </ul>
             </div>
@@ -122,6 +126,7 @@
         let isValid = every(this.contact, value => value !== "");
         if (isValid) {
           isValid = this.validateEmail(this.contact.email);
+          this.$refs.contactEmail.setAttribute("aria-invalid", isValid);
           if (!isValid) {
             this.errorMessage = "Please enter a valid email";
             this.submitStatus = "error";
@@ -187,7 +192,7 @@
         }
         @media (min-width: $bp-ms) {
             flex-direction: row;
-            max-width: 30rem;
+            padding: 0 20%;
             margin: 0 auto;
         }
     }
@@ -316,8 +321,8 @@
         -webkit-text-fill-color: #333;
     }
 
-    .warning {
-        border: solid $warning-color 2px;
+    .warning .input-field {
+        border: solid $warning-color 2px !important;
     }
 
     .form-text {

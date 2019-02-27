@@ -3,7 +3,7 @@
         <div class="intro-container">
             <BrandLogo :class="{loader: !isLoaded}" type="intro" />
             <div class="intro-nav">
-                <ul>
+                <ul role="navigation">
                     <li>
                         <Link :nav-offset="navOffset" to="/work" class="nav-item">Work</Link>
                     </li>
@@ -15,7 +15,7 @@
                     </li>
                 </ul>
                 <div class="page-scroll">
-                    <Link :nav-offset="navOffset"  to="/work" class="btn-lv nav-item" data-target="#work">
+                    <Link aria-label="Go To Next Section" :nav-offset="navOffset"  to="/work" class="btn-lv nav-item" data-target="#work">
                         <i class="icon-down-open animated"></i>
                     </Link>
                 </div>

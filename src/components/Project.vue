@@ -2,7 +2,7 @@
   <div class="project-wrapper mobileModal" :class="{modalOpen: modalOpen}">
     <div class="project-header">
       <h2 class="title">{{currentProject.title}}</h2>
-      <button @click="handleClose" class="close-btn icon-close"></button>
+      <button @click="handleClose" class="close-btn icon-close" aria-label="Close"></button>
     </div>
     <div class="carousel">
       <div class="carousel-wrapper" :style="`backgroundColor: ${hexToRGB(currentProject.backgroundColor)}`">
@@ -15,10 +15,10 @@
         <div class="controls">
           <div @click="handleUpdate(-1)" class="overlay-btn overlay-left"></div>
           <div @click="handleUpdate(1)" class="overlay-btn overlay-right"></div>
-          <button class="carousel-control carousel-left" @click="handleUpdate(-1);">
+          <button aria-label="Left Carousel Control" class="carousel-control carousel-left" @click="handleUpdate(-1);">
             <span class="icon-left-open"></span>
           </button>
-          <button class="carousel-control carousel-right" @click="handleUpdate(1)">
+          <button aria-label="Left Carousel Control" class="carousel-control carousel-right" @click="handleUpdate(1)">
             <span class="icon-right-open"></span>
           </button>
         </div>
