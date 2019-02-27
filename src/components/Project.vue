@@ -6,7 +6,7 @@
     </div>
     <div class="carousel">
       <div class="carousel-wrapper" :style="`backgroundColor: ${hexToRGB(currentProject.backgroundColor)}`">
-        <div :id={index} class="item" :style="currentImageIndex !== index ? {transform: `translate(${200 * direction}%, 0)`} : ''" v-for="(image, index) in currentProject.images" :class="{active: currentImageIndex === index && !isLoading, past: previousImageIndex === index}">
+        <div class="item" :style="currentImageIndex !== index ? {transform: `translate(${200 * direction}%, 0)`} : ''" v-for="(image, index) in currentProject.images" :class="{active: currentImageIndex === index && !isLoading, past: previousImageIndex === index}">
           <v-lazy-image :alt="`${currentProject.title} ${index}`" v-on:load="handleLoader" :src="loadImage(image.image_url)"/>
         </div>
         <div :class="{loading: isLoading, loader: true}">
