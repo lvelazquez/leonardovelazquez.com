@@ -69,7 +69,6 @@ export default {
   },
   computed: {
     projectId: function() {
-      console.log("this.currentProjectId", this.currentProjectId);
       return this.currentProjectId;
     },
     canLoadImage: function() {
