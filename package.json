@@ -5,6 +5,7 @@
   "scripts": {
     "build": "vue-cli-service build",
     "test": "jest",
+    "lint": "vue-cli-service lint",
     "dev": "concurrently \"vue-cli-service serve --open\" \"nodemon server/index.js\"",
     "heroku-postbuild": "vue-cli-service build",
     "start": "node server/index.js",
@@ -31,11 +32,16 @@
     "@babel/core": "^7.3.4",
     "@babel/preset-env": "^7.3.4",
     "@vue/cli-plugin-babel": "^3.0.0-rc.10",
+    "@vue/cli-plugin-eslint": "^3.4.1",
     "@vue/cli-plugin-unit-jest": "^3.4.1",
     "@vue/cli-service": "^3.0.0-rc.10",
+    "@vue/eslint-config-prettier": "^4.0.1",
     "@vue/test-utils": "^1.0.0-beta.20",
+    "babel-eslint": "^10.0.1",
     "babel-jest": "^23.6.0",
     "concurrently": "^3.6.1",
+    "eslint": "^5.8.0",
+    "eslint-plugin-vue": "^5.0.0",
     "node-sass": "^4.9.2",
     "sass-loader": "^6.0.7",
     "style-loader": "^0.20.3",
@@ -47,6 +53,11 @@
       "autoprefixer": {}
     }
   },
+  "browserslist": [
+    "> 1%",
+    "last 2 versions",
+    "not ie <= 8"
+  ],
   "jest": {
     "moduleFileExtensions": [
       "js",
@@ -58,11 +69,6 @@
       "^.+\\.js$": "<rootDir>/node_modules/babel-jest"
     }
   },
-  "browserslist": [
-    "> 1%",
-    "last 2 versions",
-    "not ie <= 8"
-  ],
   "engines": {
     "node": "v8.8.1",
     "npm": "6.1.0"

@@ -1,10 +1,11 @@
 <template>
-    <div :id="`${type}-header`" :class="`brand-logo ${color}-logo ${type}-logo`">
-        <Logo class="logo" />
-        <h1 class="brand-title">
-            <span>Leonardo Vel&aacute;zquez</span>
-            <span class="sub-header">Software Developer</span></h1>
-    </div>
+  <div :id="`${type}-header`" :class="`brand-logo ${color}-logo ${type}-logo`">
+    <Logo class="logo" />
+    <h1 class="brand-title">
+      <span>Leonardo Vel&aacute;zquez</span>
+      <span class="sub-header">Software Developer</span>
+    </h1>
+  </div>
 </template>
 
 <script>
@@ -194,12 +195,12 @@ $title-drop-shadow: 2px 2px 50px rgba($gray-color, 0.25);
       animation: colorLoop 4s infinite ease-in-out;
     }
 
-     & .white-logo {
-          > svg {
-              fill: $blue-color;
-          }
-          color: $blue-color;
+    & .white-logo {
+      > svg {
+        fill: $blue-color;
       }
+      color: $blue-color;
+    }
   }
 }
 </style>

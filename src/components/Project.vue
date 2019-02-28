@@ -1,34 +1,74 @@
 <template>
-  <div class="project-wrapper mobileModal" :class="{modalOpen: modalOpen}">
+  <div class="project-wrapper mobileModal" :class="{ modalOpen: modalOpen }">
     <div class="project-header">
-      <h2 class="title">{{currentProject.title}}</h2>
-      <button @click="handleClose" class="close-btn icon-close" aria-label="Close"></button>
+      <h2 class="title">{{ currentProject.title }}</h2>
+      <button
+        @click="handleClose"
+        class="close-btn icon-close"
+        aria-label="Close"
+      ></button>
     </div>
     <div class="carousel">
-      <div class="carousel-wrapper" :style="`backgroundColor: ${hexToRGB(currentProject.backgroundColor)}`">
-        <div class="item" :style="currentImageIndex !== index ? {transform: `translate(${200 * direction}%, 0)`} : ''" v-for="(image, index) in currentProject.images" :class="{active: currentImageIndex === index && !isLoading, past: previousImageIndex === index}">
-          <v-lazy-image :alt="`${currentProject.title} ${index}`" v-on:load="handleLoader" :src="loadImage(image.image_url)"/>
+      <div
+        class="carousel-wrapper"
+        :style="`backgroundColor: ${hexToRGB(currentProject.backgroundColor)}`"
+      >
+        <div
+          class="item"
+          :style="
+            currentImageIndex !== index
+              ? { transform: `translate(${200 * direction}%, 0)` }
+              : ''
+          "
+          v-for="(image, index) in currentProject.images"
+          v-bind:key="index"
+          :class="{
+            active: currentImageIndex === index && !isLoading,
+            past: previousImageIndex === index
+          }"
+        >
+          <v-lazy-image
+            :alt="`${currentProject.title} ${index}`"
+            v-on:load="handleLoader"
+            :src="loadImage(image.image_url)"
+          />
         </div>
-        <div :class="{loading: isLoading, loader: true}">
-          <Loader/>
+        <div :class="{ loading: isLoading, loader: true }">
+          <Loader />
         </div>
         <div class="controls">
           <div @click="handleUpdate(-1)" class="overlay-btn overlay-left"></div>
           <div @click="handleUpdate(1)" class="overlay-btn overlay-right"></div>
-          <button aria-label="Left Carousel Control" class="carousel-control carousel-left" @click="handleUpdate(-1);">
+          <button
+            aria-label="Left Carousel Control"
+            class="carousel-control carousel-left"
+            @click="handleUpdate(-1)"
+          >
             <span class="icon-left-open"></span>
           </button>
-          <button aria-label="Left Carousel Control" class="carousel-control carousel-right" @click="handleUpdate(1)">
+          <button
+            aria-label="Left Carousel Control"
+            class="carousel-control carousel-right"
+            @click="handleUpdate(1)"
+          >
             <span class="icon-right-open"></span>
           </button>
         </div>
       </div>
       <div class="carousel-details">
         <ol class="carousel-indicators">
-          <li v-for="(image, index) in currentProject.images" :class="{active: currentImageIndex === index}"
-              @click="previousImageIndex = currentImageIndex; currentImageIndex = index; isLoading = true"/>
+          <li
+            v-for="(image, index) in currentProject.images"
+            v-bind:key="index"
+            :class="{ active: currentImageIndex === index }"
+            @click="
+              previousImageIndex = currentImageIndex;
+              currentImageIndex = index;
+              isLoading = true;
+            "
+          />
         </ol>
-        <div class="carousel-caption">{{currentProject.description}}</div>
+        <div class="carousel-caption">{{ currentProject.description }}</div>
       </div>
     </div>
   </div>
@@ -36,7 +76,7 @@
 
 <script>
 import projectData from "../data";
-import { find, get } from "lodash";
+import { get } from "lodash";
 import config from "../config";
 import EventBus from "../EventBus";
 import Loader from "./Loader";

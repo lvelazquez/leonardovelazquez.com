@@ -1,16 +1,29 @@
 <template>
-    <div :class="{loaded: isLoaded}" >
-        <video id="site-background" v-once :poster="`${cloudinaryUrl}video/upload/lakehi.jpg`" autoplay preload="auto" loop muted playsinline>
-            <source v-once :src="`${cloudinaryUrl}video/upload/lakehi.mp4`" type="video/mp4"/>
-        </video>
-    </div>
+  <div :class="{ loaded: isLoaded }">
+    <video
+      id="site-background"
+      v-once
+      :poster="`${cloudinaryUrl}video/upload/lakehi.jpg`"
+      autoplay
+      preload="auto"
+      loop
+      muted
+      playsinline
+    >
+      <source
+        v-once
+        :src="`${cloudinaryUrl}video/upload/lakehi.mp4`"
+        type="video/mp4"
+      />
+    </video>
+  </div>
 </template>
 
 <script>
-import config from '../config';
+import config from "../config";
 
 export default {
-  name: 'Background',
+  name: "Background",
   props: {
     isPlaying: {
       type: Boolean,
@@ -28,12 +41,12 @@ export default {
     };
   },
   mounted() {
-    this.video = document.getElementById('site-background');
+    this.video = document.getElementById("site-background");
     this.handlePlay = this.handlePlay.bind(this);
     if (this.video.readyState >= this.video.HAVE_FUTURE_DATA) {
       setTimeout(this.handlePlay, 10);
     } else {
-      this.video.addEventListener('canplay', this.handlePlay);
+      this.video.addEventListener("canplay", this.handlePlay);
     }
   },
   watch: {
@@ -46,13 +59,13 @@ export default {
     }
   },
   destroyed() {
-    this.video.removeEventListener('canplay', this.handlePlay);
+    this.video.removeEventListener("canplay", this.handlePlay);
   },
   methods: {
     handlePlay() {
-      this.video.removeEventListener('canplay', this.handlePlay);
+      this.video.removeEventListener("canplay", this.handlePlay);
       this.isLoaded = true;
-      this.$emit('is-ready');
+      this.$emit("is-ready");
     }
   }
 };

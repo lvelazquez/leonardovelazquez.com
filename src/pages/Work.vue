@@ -1,20 +1,37 @@
 <template>
-    <section id="work" class="container content-section" :class="{invisible: !isLoaded}">
-        <div class="work-container">
-            <div id="thumb-container" class="work-column">
-                <h2>Work</h2>
-                <div class="thumbs-container">
-                    <div v-for="(project, index) in thumbs" class="thumb-item" :style="{paddingTop: `${ project.thumbHeight/ project.thumbWidth * 100}%`}" @click="handleProject(index)">
-                        <v-lazy-image :alt="project.title" :src="imageUrl(project.thumb)"/>
-                        <div class="details"><span>{{project.title}}</span></div>
-                    </div>
-                </div>
+  <section
+    id="work"
+    class="container content-section"
+    :class="{ invisible: !isLoaded }"
+  >
+    <div class="work-container">
+      <div id="thumb-container" class="work-column">
+        <h2>Work</h2>
+        <div class="thumbs-container">
+          <div
+            v-for="(project, index) in thumbs"
+            v-bind:key="index"
+            class="thumb-item"
+            :style="{
+              paddingTop: `${(project.thumbHeight / project.thumbWidth) * 100}%`
+            }"
+            @click="handleProject(index)"
+          >
+            <v-lazy-image :alt="project.title" :src="imageUrl(project.thumb)" />
+            <div class="details">
+              <span>{{ project.title }}</span>
             </div>
-            <div id="project-container" class="work-column">
-                <Project :currentProjectId="projectId" :isProjectModalOpen="isProjectModalOpen"/>
-            </div>
+          </div>
         </div>
-    </section>
+      </div>
+      <div id="project-container" class="work-column">
+        <Project
+          :currentProjectId="projectId"
+          :isProjectModalOpen="isProjectModalOpen"
+        />
+      </div>
+    </div>
+  </section>
 </template>
 
 <script>

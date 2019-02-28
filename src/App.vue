@@ -1,18 +1,23 @@
 <template>
   <div id="app">
-    <Nav :is-nav-hidden="`${isNavHidden}`" :nav-offset="-navHeight"/>
-    <Background :is-playing ="isVideoPlaying" @is-ready="onReady" />
-    <Intro :nav-offset="-navHeight" :is-loaded="isLoaded"/>
-    <Work :is-active="currentSectionId === 'work'" :is-loaded="isLoaded" :isProjectModalOpen="isProjectModalOpen" :currentProjectId="projectId"/>
-    <About :is-loaded="isLoaded"/>
-    <Contact :is-loaded="isLoaded"/>
+    <MainNav :is-nav-hidden="`${isNavHidden}`" :nav-offset="-navHeight" />
+    <Background :is-playing="isVideoPlaying" @is-ready="onReady" />
+    <Intro :nav-offset="-navHeight" :is-loaded="isLoaded" />
+    <Work
+      :is-active="currentSectionId === 'work'"
+      :is-loaded="isLoaded"
+      :isProjectModalOpen="isProjectModalOpen"
+      :currentProjectId="projectId"
+    />
+    <About :is-loaded="isLoaded" />
+    <Contact :is-loaded="isLoaded" />
   </div>
 </template>
 
 <script>
-import { find, map, get, isNumber, isEmpty, throttle } from "lodash";
+import { throttle } from "lodash";
 import { Intro, Work, About, Contact } from "./pages/";
-import { Nav, Background } from "./components/";
+import { MainNav, Background } from "./components/";
 import projectData from "./data";
 import EventBus from "./EventBus";
 
@@ -34,7 +39,7 @@ export default {
   name: "app",
   components: {
     Background,
-    Nav,
+    MainNav,
     Intro,
     About,
     Work,

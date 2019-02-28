@@ -1,37 +1,69 @@
 <template>
-    <nav @routechange="isMenuOpen = false" class="navbar" role="navigation" :class="{'navbar-hide': isNavHidden}" >
-            <div class="navbar-header">
-                <Link class="navbar-logo nav-item" to="/">
-                    <BrandLogo type="header" color="black" />
-                </Link>
-                <div :class="{'navbar-collapse': !isMenuOpen}" class="navbar-right">
-                    <ul class="nav-list">
-                        <li class="nav-list-item">
-                            <Link :nav-offset="navOffset" to="/work" class="nav-item" :class="{active: currentSectionId === 'work' }">Work</Link>
-                        </li>
-                        <li class="nav-list-item">
-                            <Link :nav-offset="navOffset" to="/about" class="nav-item" :class="{active: currentSectionId === 'about' }">About me</Link>
-                        </li>
-                        <li class="nav-list-item">
-                            <Link :nav-offset="navOffset" to="/contact" class="nav-item" :class="{active: currentSectionId === 'contact' }">Contact</Link>
-                        </li>
-                        <li class="nav-list-item">
-                            <a class="nav-item"  href="../src/assets/files/LeonardoVelazquezResume.pdf" download="LeonardoVelazquezResume">
-                                <i class="icon-download-alt"></i>
-                                Resume
-                            </a>
-                        </li>
-                    </ul>
-                </div>
-                <button role="button" name="Nav Menu Toggle" class="navbar-menu-btn" @click="isMenuOpen = !isMenuOpen">
-                    <i class="icon-menu"></i>
-                </button>
-            </div>
-    </nav>
+  <nav
+    @routechange="isMenuOpen = false"
+    class="navbar"
+    role="navigation"
+    :class="{ 'navbar-hide': isNavHidden }"
+  >
+    <div class="navbar-header">
+      <NavLink class="navbar-logo nav-item" to="/">
+        <BrandLogo type="header" color="black" />
+      </NavLink>
+      <div :class="{ 'navbar-collapse': !isMenuOpen }" class="navbar-right">
+        <ul class="nav-list">
+          <li class="nav-list-item">
+            <NavLink
+              :nav-offset="navOffset"
+              to="/work"
+              class="nav-item"
+              :class="{ active: currentSectionId === 'work' }"
+              >Work</NavLink
+            >
+          </li>
+          <li class="nav-list-item">
+            <NavLink
+              :nav-offset="navOffset"
+              to="/about"
+              class="nav-item"
+              :class="{ active: currentSectionId === 'about' }"
+              >About me</NavLink
+            >
+          </li>
+          <li class="nav-list-item">
+            <NavLink
+              :nav-offset="navOffset"
+              to="/contact"
+              class="nav-item"
+              :class="{ active: currentSectionId === 'contact' }"
+              >Contact</NavLink
+            >
+          </li>
+          <li class="nav-list-item">
+            <a
+              class="nav-item"
+              href="../src/assets/files/LeonardoVelazquezResume.pdf"
+              download="LeonardoVelazquezResume"
+            >
+              <i class="icon-download-alt"></i>
+              Resume
+            </a>
+          </li>
+        </ul>
+      </div>
+      <button
+        role="button"
+        name="Nav Menu Toggle"
+        class="navbar-menu-btn"
+        @click="isMenuOpen = !isMenuOpen"
+      >
+        <i class="icon-menu"></i>
+      </button>
+    </div>
+  </nav>
 </template>
 
 <script>
-import { Link, BrandLogo } from "./.";
+import { NavLink, BrandLogo } from "./.";
 import EventBus from "../EventBus";
 
 export default {
@@ -48,7 +80,7 @@ export default {
   },
   components: {
     BrandLogo,
-    Link
+    NavLink
   },
   mounted() {
     EventBus.$on("routechange", this.openMenu);

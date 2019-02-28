@@ -1,25 +1,37 @@
 <template>
-  <section id="about" class="container content-section" :class="{invisible: !isLoaded}">
+  <section
+    id="about"
+    class="container content-section"
+    :class="{ invisible: !isLoaded }"
+  >
     <div class="row">
       <div class="">
         <h2>About me</h2>
 
         <div class="content-wrapper">
-          <v-lazy-image alt="me baby me" class="leo lazy wht-frame" :src="`${cloudinaryUrl}image/upload/q_auto:good/v1537243889/leo2.jpg`"/>
+          <v-lazy-image
+            alt="me baby me"
+            class="leo lazy wht-frame"
+            :src="
+              `${cloudinaryUrl}image/upload/q_auto:good/v1537243889/leo2.jpg`
+            "
+          />
           <p>
-            I'm a Senior Software Developer currently based in Seattle, Washington. With ample experience
-            in every facet of the web design and development process, I strive to meet the needs of every new
+            I'm a Senior Software Developer currently based in Seattle,
+            Washington. With ample experience in every facet of the web design
+            and development process, I strive to meet the needs of every new
             project while using the latest technology trends and standards.
           </p>
 
           <p>
-            Lately, I'm very excited to pursue work as a full stack Node.js / Vue.js, as well as to furthering my growth of Web
-            Application Architecture, patterns and best practices.
+            Lately, I'm very excited to pursue work as a full stack Node.js /
+            Vue.js, as well as to furthering my growth of Web Application
+            Architecture, patterns and best practices.
           </p>
 
           <p>
-            When I’m not programming, I like to listen to records, make vegan food &
-            treats, play music or go hiking.
+            When I’m not programming, I like to listen to records, make vegan
+            food & treats, play music or go hiking.
           </p>
 
           <dl>
@@ -48,7 +60,6 @@
         </div>
       </div>
     </div>
-
   </section>
 </template>
 
