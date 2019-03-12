@@ -1,9 +1,5 @@
 <template>
-  <section
-    id="contact"
-    class="container content-section"
-    :class="{ invisible: !isLoaded }"
-  >
+  <section id="contact" class="container content-section" :class="{ invisible: !isLoaded }">
     <div class="contact-wrapper">
       <div>
         <h2>Contact</h2>
@@ -23,7 +19,7 @@
                   placeholder="Your Name"
                   autocomplete="true"
                   aria-required="true"
-                />
+                >
               </div>
               <div
                 class="input-group contact-email contact-info has-feedback"
@@ -43,7 +39,7 @@
                   autocomplete="true"
                   aria-required="true"
                   ref="contactEmail"
-                />
+                >
               </div>
               <div
                 class="input-group contact-info"
@@ -58,7 +54,7 @@
                   v-model="contact.title"
                   aria-required="true"
                   ref="contactSubject"
-                />
+                >
               </div>
               <div
                 class="input-group contact-message contact-info has-feedback"
@@ -90,56 +86,51 @@
                     <div></div>
                     <div></div>
                   </div>
-                  <span v-if="submitStatus !== 'sending'">{{
+                  <span v-if="submitStatus !== 'sending'">
+                    {{
                     submitStatus !== "sending" ? "SUBMIT" : ""
-                  }}</span>
+                    }}
+                  </span>
                 </transition>
               </button>
             </form>
-            <div
-              class="message-container"
-              :class="{ warning: !isValid && submitStatus !== '' }"
-            >
+            <div class="message-container" :class="{ warning: !isValid && submitStatus !== '' }">
               <transition name="fade">
                 <div
                   class="warning-text form-text"
                   v-if="errorMessage !== '' && submitStatus === 'error'"
-                >
-                  {{ errorMessage }}
-                </div>
+                >{{ errorMessage }}</div>
                 <p class="email-text" v-if="submitStatus === 'serverError'">
                   Please try again later or reach me at
-                  <a href="mailto:leo@leonardovelazquez.com"
-                    >leo@leonardovelazquez.com</a
-                  >
+                  <a
+                    href="mailto:leo@leonardovelazquez.com"
+                  >leo@leonardovelazquez.com</a>
                 </p>
                 <div
                   class="form-text success-text"
                   v-if="submitStatus === 'success'"
-                >
-                  Successfully sent!
-                </div>
+                >Successfully sent!</div>
               </transition>
             </div>
           </div>
         </div>
         <ul class="banner-social-buttons">
           <li>
-            <a href="https://www.linkedin.com/in/leovelazquez" class="btn"
-              ><i class="icon-linkedin"></i>
-              <span class="network-name">Linked In</span></a
-            >
+            <a href="https://www.linkedin.com/in/leovelazquez" class="btn">
+              <i class="icon-linkedin"></i>
+              <span class="network-name">Linked In</span>
+            </a>
           </li>
           <li>
-            <a href="https://github.com/lvelazquez" class="btn"
-              ><i class="icon-github-circled"></i>
-              <span class="network-name">Github</span></a
-            >
+            <a href="https://github.com/lvelazquez" class="btn">
+              <i class="icon-github-circled"></i>
+              <span class="network-name">Github</span>
+            </a>
           </li>
         </ul>
       </div>
     </div>
-    <Map />
+    <Map v-if="renderMap"/>
   </section>
 </template>
 
@@ -151,7 +142,8 @@ import "whatwg-fetch";
 export default {
   name: "Contact",
   props: {
-    isLoaded: Boolean
+    isLoaded: Boolean,
+    renderMap: Boolean
   },
   components: {
     Map
