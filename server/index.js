@@ -14,10 +14,10 @@ app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({extended: true}));
 app.use(compression());
 
-app.use(express.static("dist", {root: '../'}));
+app.use(express.static("dist", {root: "../"}));
 
-app.get(/.*/, function (req, res) {
-  res.sendFile('./dist/index.html', {root: '../'});
+app.get('*', function (req, res) {
+  res.sendFile(path.resolve(__dirname,"dist/index.html", {root: "../"}));
 });
 
 app.post("/contact", function (req, res, next) {
