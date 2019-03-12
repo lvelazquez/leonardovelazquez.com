@@ -1,27 +1,21 @@
 <template>
   <section id="intro" class="intro">
     <div class="intro-container">
-      <BrandLogo :class="{ loader: !isLoaded }" type="intro" />
+      <BrandLogo :class="{ loader: !isLoaded }" type="intro"/>
       <div class="intro-nav">
         <ul role="navigation">
           <li>
-            <NavLink :nav-offset="navOffset" to="/work" class="nav-item">
-              Work</NavLink
-            >
+            <nav-link :nav-offset="navOffset" to="/work" class="nav-item">Work</nav-link>
           </li>
           <li>
-            <NavLink :nav-offset="navOffset" to="/about" class="nav-item">
-              About me</NavLink
-            >
+            <nav-link :nav-offset="navOffset" to="/about" class="nav-item">About me</nav-link>
           </li>
           <li>
-            <NavLink :nav-offset="navOffset" to="/contact" class="nav-item">
-              Contact</NavLink
-            >
+            <nav-link :nav-offset="navOffset" to="/contact" class="nav-item">Contact</nav-link>
           </li>
         </ul>
         <div class="page-scroll">
-          <NavLink
+          <nav-link
             aria-label="Go To Next Section"
             :nav-offset="navOffset"
             to="/work"
@@ -29,7 +23,7 @@
             data-target="#work"
           >
             <i class="icon-down-open animated"></i>
-          </NavLink>
+          </nav-link>
         </div>
       </div>
     </div>
@@ -43,7 +37,7 @@ export default {
   name: "Intro",
   components: {
     BrandLogo,
-    NavLink
+    "nav-link": NavLink
   },
   props: {
     isLoaded: { type: Boolean, default: false },

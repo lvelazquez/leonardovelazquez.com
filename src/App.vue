@@ -1,16 +1,16 @@
 <template>
   <div id="app">
-    <MainNav :is-nav-hidden="`${isNavHidden}`" :nav-offset="-navHeight" />
-    <Background :is-playing="isVideoPlaying" @is-ready="onReady" />
-    <Intro :nav-offset="-navHeight" :is-loaded="isLoaded" />
-    <Work
+    <main-nav :current-section-id="currentSectionId" :is-nav-hidden="`${isNavHidden}`" :nav-offset="-navHeight"/>
+    <background :is-playing="isVideoPlaying" @is-ready="onReady"/>
+    <intro :nav-offset="-navHeight" :is-loaded="isLoaded"/>
+    <work
       :is-active="currentSectionId === 'work'"
       :is-loaded="isLoaded"
       :isProjectModalOpen="isProjectModalOpen"
       :currentProjectId="projectId"
     />
-    <About :is-loaded="isLoaded" />
-    <Contact :is-loaded="isLoaded" />
+    <about :is-loaded="isLoaded"/>
+    <contact :is-loaded="isLoaded"/>
   </div>
 </template>
 
@@ -38,12 +38,12 @@ Vue.use(VueScrollTo, {
 export default {
   name: "app",
   components: {
-    Background,
-    MainNav,
-    Intro,
-    About,
-    Work,
-    Contact
+    background: Background,
+    "main-nav": MainNav,
+    intro: Intro,
+    about: About,
+    work: Work,
+    contact: Contact
   },
   data() {
     return {

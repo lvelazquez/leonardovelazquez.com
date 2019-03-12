@@ -6,42 +6,39 @@
     :class="{ 'navbar-hide': isNavHidden }"
   >
     <div class="navbar-header">
-      <NavLink class="navbar-logo nav-item" to="/">
-        <BrandLogo type="header" color="black" />
-      </NavLink>
+      <nav-link class="navbar-logo nav-item" to="/">
+        <BrandLogo type="header" color="black"/>
+      </nav-link>
       <div :class="{ 'navbar-collapse': !isMenuOpen }" class="navbar-right">
         <ul class="nav-list">
           <li class="nav-list-item">
-            <NavLink
+            <nav-link
               :nav-offset="navOffset"
               to="/work"
               class="nav-item"
               :class="{ active: currentSectionId === 'work' }"
-              >Work</NavLink
-            >
+            >Work</nav-link>
           </li>
           <li class="nav-list-item">
-            <NavLink
+            <nav-link
               :nav-offset="navOffset"
               to="/about"
               class="nav-item"
               :class="{ active: currentSectionId === 'about' }"
-              >About me</NavLink
-            >
+            >About me</nav-link>
           </li>
           <li class="nav-list-item">
-            <NavLink
+            <nav-link
               :nav-offset="navOffset"
               to="/contact"
               class="nav-item"
               :class="{ active: currentSectionId === 'contact' }"
-              >Contact</NavLink
-            >
+            >Contact</nav-link>
           </li>
           <li class="nav-list-item">
             <a
               class="nav-item"
-              href="../src/assets/files/LeonardoVelazquezResume.pdf"
+              href="/files/LeonardoVelazquezResume.pdf"
               download="LeonardoVelazquezResume"
             >
               <i class="icon-download-alt"></i>
@@ -63,11 +60,16 @@
 </template>
 
 <script>
-import { NavLink, BrandLogo } from "./.";
-import EventBus from "../EventBus";
+import NavLink from './NavLink';
+import BrandLogo from './BrandLogo';
+import EventBus from '../EventBus';
 
 export default {
-  name: "Nav",
+  name: "MainNav",
+  components: {
+    BrandLogo,
+    "nav-link": NavLink
+  },
   props: {
     currentSectionId: String,
     navOffset: Number
@@ -77,10 +79,6 @@ export default {
       isMenuOpen: false,
       isNavHidden: true
     };
-  },
-  components: {
-    BrandLogo,
-    NavLink
   },
   mounted() {
     EventBus.$on("routechange", this.openMenu);
