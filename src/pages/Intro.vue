@@ -1,17 +1,23 @@
 <template>
   <section id="intro" class="intro">
     <div class="intro-container">
-      <BrandLogo :class="{ loader: !isLoaded }" type="intro"/>
+      <BrandLogo :class="{ loader: !isLoaded }" type="intro" />
       <div class="intro-nav">
         <ul role="navigation">
           <li>
-            <nav-link :nav-offset="navOffset" to="/work" class="nav-item">Work</nav-link>
+            <nav-link :nav-offset="navOffset" to="/work" class="nav-item"
+              >Work</nav-link
+            >
           </li>
           <li>
-            <nav-link :nav-offset="navOffset" to="/about" class="nav-item">About me</nav-link>
+            <nav-link :nav-offset="navOffset" to="/about" class="nav-item"
+              >About me</nav-link
+            >
           </li>
           <li>
-            <nav-link :nav-offset="navOffset" to="/contact" class="nav-item">Contact</nav-link>
+            <nav-link :nav-offset="navOffset" to="/contact" class="nav-item"
+              >Contact</nav-link
+            >
           </li>
         </ul>
         <div class="page-scroll">

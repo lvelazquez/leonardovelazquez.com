@@ -1,16 +1,21 @@
 <template>
   <div id="app">
-    <main-nav :resume-link="resumeLink" :current-section-id="currentSectionId" :is-nav-hidden="`${isNavHidden}`" :nav-offset="-navHeight"/>
-    <background :is-playing="isVideoPlaying" @is-ready="onReady"/>
-    <intro :nav-offset="-navHeight" :is-loaded="isLoaded"/>
+    <main-nav
+      :resume-link="resumeLink"
+      :current-section-id="currentSectionId"
+      :is-nav-hidden="`${isNavHidden}`"
+      :nav-offset="-navHeight"
+    />
+    <background :is-playing="isVideoPlaying" @is-ready="onReady" />
+    <intro :nav-offset="-navHeight" :is-loaded="isLoaded" />
     <work
       :is-active="currentSectionId === 'work'"
       :is-loaded="isLoaded"
       :isProjectModalOpen="isProjectModalOpen"
       :currentProjectId="projectId"
     />
-    <about :is-loaded="isLoaded"/>
-    <contact :is-loaded="isLoaded"/>
+    <about :is-loaded="isLoaded" />
+    <contact :is-loaded="isLoaded" />
   </div>
 </template>
 

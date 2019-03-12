@@ -7,7 +7,7 @@
   >
     <div class="navbar-header">
       <nav-link class="navbar-logo nav-item" to="/">
-        <BrandLogo type="header" color="black"/>
+        <BrandLogo type="header" color="black" />
       </nav-link>
       <div :class="{ 'navbar-collapse': !isMenuOpen }" class="navbar-right">
         <ul class="nav-list">
@@ -17,7 +17,8 @@
               to="/work"
               class="nav-item"
               :class="{ active: currentSectionId === 'work' }"
-            >Work</nav-link>
+              >Work</nav-link
+            >
           </li>
           <li class="nav-list-item">
             <nav-link
@@ -25,7 +26,8 @@
               to="/about"
               class="nav-item"
               :class="{ active: currentSectionId === 'about' }"
-            >About me</nav-link>
+              >About me</nav-link
+            >
           </li>
           <li class="nav-list-item">
             <nav-link
@@ -33,7 +35,8 @@
               to="/contact"
               class="nav-item"
               :class="{ active: currentSectionId === 'contact' }"
-            >Contact</nav-link>
+              >Contact</nav-link
+            >
           </li>
           <li class="nav-list-item">
             <a
@@ -60,9 +63,9 @@
 </template>
 
 <script>
-import NavLink from './NavLink';
-import BrandLogo from './BrandLogo';
-import EventBus from '../EventBus';
+import NavLink from "./NavLink";
+import BrandLogo from "./BrandLogo";
+import EventBus from "../EventBus";
 
 export default {
   name: "MainNav",
