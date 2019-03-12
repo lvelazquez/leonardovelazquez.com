@@ -38,7 +38,7 @@
           <li class="nav-list-item">
             <a
               class="nav-item"
-              href="/files/LeonardoVelazquezResume.pdf"
+              :href="resumeLink"
               download="LeonardoVelazquezResume"
             >
               <i class="icon-download-alt"></i>
@@ -71,6 +71,7 @@ export default {
     "nav-link": NavLink
   },
   props: {
+    resumeLink: String,
     currentSectionId: String,
     navOffset: Number
   },

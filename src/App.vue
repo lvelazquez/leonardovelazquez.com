@@ -1,6 +1,6 @@
 <template>
   <div id="app">
-    <main-nav :current-section-id="currentSectionId" :is-nav-hidden="`${isNavHidden}`" :nav-offset="-navHeight"/>
+    <main-nav :resume-link="resumeLink" :current-section-id="currentSectionId" :is-nav-hidden="`${isNavHidden}`" :nav-offset="-navHeight"/>
     <background :is-playing="isVideoPlaying" @is-ready="onReady"/>
     <intro :nav-offset="-navHeight" :is-loaded="isLoaded"/>
     <work
@@ -23,6 +23,8 @@ import EventBus from "./EventBus";
 
 import Vue from "vue";
 import VueScrollTo from "vue-scrollto";
+
+const RESUME_LINK = `https://docs.google.com/document/d/1JaojBFdGMaM_Hm5qHArmPrXSBguRnJSmCM-q7t6ruBc/export?format=pdf`;
 
 // You can also pass in the default options
 Vue.use(VueScrollTo, {
@@ -52,6 +54,7 @@ export default {
       isVideoPlaying: false,
       isNavHidden: true,
       navHeight: null,
+      resumeLink: RESUME_LINK,
       projectId: Object.keys(projectData)[0],
       isProjectModalOpen: false
     };
