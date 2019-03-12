@@ -1,0 +1,21 @@
+{
+  "short_name": "LV :: SD",
+  "name": "Leonardo Velázquez :: Software Developer",
+  "icons": [
+    {
+      "src": "https://res.cloudinary.com/dv7ollzw5/image/upload/q_auto,c_fit,h_192,w_192/v1524936309/icon-192.png",
+      "type": "image/png",
+      "sizes": "192x192"
+    },
+    {
+      "src": "https://res.cloudinary.com/dv7ollzw5/image/upload/q_auto,c_fit,h_512,w_512/v1524936309/icon-512.png",
+      "type": "image/png",
+      "sizes": "512x512"
+    }
+  ],
+  "start_url": "/",
+  "background_color": "#FFFFFF",
+  "display": "standalone",
+  "scope": "/",
+  "theme_color": "#FFFFFF"
+}
