@@ -17,7 +17,7 @@ app.use(compression());
 app.use(express.static("dist", {root: '../'}));
 
 app.get(/.*/, function (req, res) {
-  res.sendFile('dist/index.html', {root: '../'});
+  res.sendFile('./dist/index.html', {root: '../'});
 });
 
 app.post("/contact", function (req, res, next) {

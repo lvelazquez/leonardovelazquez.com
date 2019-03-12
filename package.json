@@ -7,7 +7,7 @@
     "test": "jest",
     "lint": "vue-cli-service lint",
     "dev": "concurrently \"vue-cli-service serve --open\" \"nodemon server/index.js\"",
-    "heroku-postbuild": "vue-cli-service build",
+    "heroku-postbuild": "npm install --only=dev --no-shrinkwrap && npm run build",
     "start": "node server/index.js",
     "test:unit": "vue-cli-service test:unit"
   },
