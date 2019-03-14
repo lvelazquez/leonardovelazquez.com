@@ -125,7 +125,7 @@ export default {
   },
   methods: {
     loadImage(item) {
-      const imgURL = `${config.cloudinaryUrl}q_auto/${item}`;
+      const imgURL = `${config.cloudinaryUrl}f_auto/${item}`;
       return imgURL;
     },
     getProject(id) {

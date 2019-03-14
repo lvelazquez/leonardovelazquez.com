@@ -3,7 +3,7 @@
     <video
       id="site-background"
       v-once
-      :poster="`${cloudinaryUrl}video/upload/lakehi.jpg`"
+      :poster="`${cloudinaryUrl}video/upload/f_auto/lakehi.jpg`"
       autoplay
       preload="auto"
       loop
@@ -12,7 +12,7 @@
     >
       <source
         v-once
-        :src="`${cloudinaryUrl}video/upload/lakehi.mp4`"
+        :src="`${cloudinaryUrl}video/upload/f_auto/lakehi.mp4`"
         type="video/mp4"
       />
     </video>

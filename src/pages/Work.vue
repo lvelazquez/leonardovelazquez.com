@@ -68,7 +68,7 @@ export default {
   },
   methods: {
     imageUrl(thumb) {
-      return `${this.cloudinaryUrl}image/upload/${thumb}`;
+      return `${this.cloudinaryUrl}image/upload/f_auto/${thumb}`;
     },
     handleProject(id) {
       history.pushState(null, null, `/work/${id}`);
