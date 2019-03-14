@@ -27,10 +27,10 @@ import projectData from "./data";
 import EventBus from "./EventBus";
 
 import Vue from "vue";
-import VueScrollTo from "vue-scrollto";
 
+// global vue plugins
+import VueScrollTo from "vue-scrollto";
 import VueTinyLazyloadImg from "vue-tiny-lazyload-img";
-Vue.use(VueTinyLazyloadImg);
 
 const RESUME_LINK = `https://docs.google.com/document/d/1JaojBFdGMaM_Hm5qHArmPrXSBguRnJSmCM-q7t6ruBc/export?format=pdf`;
 
@@ -44,6 +44,8 @@ Vue.use(VueScrollTo, {
   x: false,
   y: true
 });
+
+Vue.use(VueTinyLazyloadImg);
 
 export default {
   name: "app",

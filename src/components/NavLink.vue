@@ -41,7 +41,7 @@ export default {
     };
   },
   mounted() {
-    this.sectionId = this.to.replace("/", "");
+    this.sectionId = this.to === "/" ? "intro" : this.to.replace("/", "");
   },
   methods: {
     handleClick(e) {
