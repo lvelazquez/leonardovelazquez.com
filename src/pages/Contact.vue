@@ -293,7 +293,13 @@ export default {
 }
 
 .contact-wrapper {
-  padding-bottom: 3rem;
+  padding-bottom: 6rem;
+  @media (min-width: $bp-sm) {
+    padding-bottom: 7rem;
+  }
+  @media (min-width: $bp-md) {
+    padding-bottom: 6rem;
+  }
 }
 
 #submit {
