@@ -2,11 +2,7 @@
   <div class="project-wrapper mobileModal" :class="{ modalOpen: modalOpen }">
     <div class="project-header">
       <h2 class="title">{{ currentProject.title }}</h2>
-      <button
-        @click="handleClose"
-        class="close-btn icon-close"
-        aria-label="Close"
-      ></button>
+      <button @click="handleClose" class="close-btn icon-close" aria-label="Close"></button>
     </div>
     <div class="carousel">
       <div
@@ -27,14 +23,15 @@
             past: previousImageIndex === index
           }"
         >
-          <v-lazy-image
+          <img
+            v-lazyload
             :alt="`${currentProject.title} ${index}`"
-            v-on:load="handleLoader"
+            @load="handleLoader"
             :src="loadImage(image.image_url)"
-          />
+          >
         </div>
         <div :class="{ loading: isLoading, loader: true }">
-          <Loader />
+          <Loader/>
         </div>
         <div class="controls">
           <div @click="handleUpdate(-1)" class="overlay-btn overlay-left"></div>
@@ -80,11 +77,11 @@ import { get } from "lodash";
 import config from "../config";
 import EventBus from "../EventBus";
 import Loader from "./Loader";
-import VLazyImage from "v-lazy-image";
+import { clearTimeout } from "timers";
 
 export default {
   name: "Project",
-  components: { Loader, VLazyImage },
+  components: { Loader },
   data() {
     return {
       direction: 1,
@@ -101,6 +98,10 @@ export default {
     isProjectModalOpen: {
       default: false,
       type: Boolean
+    },
+    cloudinaryUrl: {
+      default: config.cloudinaryUrl,
+      type: String
     }
   },
   computed: {
@@ -124,13 +125,14 @@ export default {
   },
   methods: {
     loadImage(item) {
-      return `${config.cloudinaryUrl}q_auto/${item}`;
+      const imgURL = `${config.cloudinaryUrl}q_auto/${item}`;
+      return imgURL;
     },
     getProject(id) {
       if (!projectData[id]) return;
       this.isLoading = true;
       this.currentImageIndex = 0;
-      this.isLoading = false;
+      // this.isLoading = false;
     },
     handleLoader() {
       this.isLoading = false;
@@ -147,8 +149,9 @@ export default {
       }
       this.previousImageIndex = this.currentImageIndex;
 
-      setTimeout(() => {
+      const interval = setTimeout(() => {
         this.currentImageIndex = index;
+        clearTimeout(interval);
       }, 250);
     },
     handleClose() {

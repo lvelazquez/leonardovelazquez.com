@@ -6,16 +6,16 @@
       :is-nav-hidden="`${isNavHidden}`"
       :nav-offset="-navHeight"
     />
-    <background :is-playing="isVideoPlaying" @is-ready="onReady" />
-    <intro :nav-offset="-navHeight" :is-loaded="isLoaded" />
+    <background :is-playing="isVideoPlaying" @is-ready="onReady"/>
+    <intro :nav-offset="-navHeight" :is-loaded="isLoaded"/>
     <work
       :is-active="currentSectionId === 'work'"
       :is-loaded="isLoaded"
       :isProjectModalOpen="isProjectModalOpen"
       :currentProjectId="projectId"
     />
-    <about :is-loaded="isLoaded" />
-    <contact :is-loaded="isLoaded" />
+    <about :is-loaded="isLoaded"/>
+    <contact :is-loaded="isLoaded"/>
   </div>
 </template>
 
@@ -28,6 +28,9 @@ import EventBus from "./EventBus";
 
 import Vue from "vue";
 import VueScrollTo from "vue-scrollto";
+
+import VueTinyLazyloadImg from "vue-tiny-lazyload-img";
+Vue.use(VueTinyLazyloadImg);
 
 const RESUME_LINK = `https://docs.google.com/document/d/1JaojBFdGMaM_Hm5qHArmPrXSBguRnJSmCM-q7t6ruBc/export?format=pdf`;
 

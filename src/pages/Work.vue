@@ -1,9 +1,5 @@
 <template>
-  <section
-    id="work"
-    class="container content-section"
-    :class="{ invisible: !isLoaded }"
-  >
+  <section id="work" class="container content-section" :class="{ invisible: !isLoaded }">
     <div class="work-container">
       <div id="thumb-container" class="work-column">
         <h2>Work</h2>
@@ -17,7 +13,7 @@
             }"
             @click="handleProject(index)"
           >
-            <v-lazy-image :alt="project.title" :src="imageUrl(project.thumb)" />
+            <img v-lazyload :alt="project.title" :src="imageUrl(project.thumb)">
             <div class="details">
               <span>{{ project.title }}</span>
             </div>
@@ -25,10 +21,7 @@
         </div>
       </div>
       <div id="project-container" class="work-column">
-        <Project
-          :currentProjectId="projectId"
-          :isProjectModalOpen="isProjectModalOpen"
-        />
+        <Project :currentProjectId="projectId" :isProjectModalOpen="isProjectModalOpen"/>
       </div>
     </div>
   </section>
@@ -38,13 +31,11 @@
 import projectData from "../data";
 import config from "../config";
 import { Project } from "../components/";
-import VLazyImage from "v-lazy-image";
 
 export default {
   name: "Work",
   components: {
-    Project,
-    VLazyImage
+    Project
   },
   data() {
     return {

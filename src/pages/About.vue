@@ -1,21 +1,18 @@
 <template>
-  <section
-    id="about"
-    class="container content-section"
-    :class="{ invisible: !isLoaded }"
-  >
+  <section id="about" class="container content-section" :class="{ invisible: !isLoaded }">
     <div class="row">
-      <div class="">
+      <div class>
         <h2>About me</h2>
 
         <div class="content-wrapper">
-          <v-lazy-image
+          <img
+            v-lazyload
             alt="me baby me"
             class="leo lazy wht-frame"
             :src="
               `${cloudinaryUrl}image/upload/q_auto:good/v1537243889/leo2.jpg`
             "
-          />
+          >
           <p>
             I'm a Senior Software Developer currently based in Seattle,
             Washington. With ample experience in every facet of the web design
@@ -65,7 +62,6 @@
 
 <script>
 import config from "../config";
-import VLazyImage from "v-lazy-image";
 
 export default {
   name: "About",
@@ -75,9 +71,6 @@ export default {
       type: String,
       default: config.cloudinaryUrl
     }
-  },
-  components: {
-    VLazyImage
   }
 };
 </script>
