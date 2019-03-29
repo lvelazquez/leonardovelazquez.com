@@ -10,11 +10,7 @@
       muted
       playsinline
     >
-      <source
-        v-once
-        :src="`${cloudinaryUrl}video/upload/f_auto/lakehi.mp4`"
-        type="video/mp4"
-      />
+      <source v-once :src="`${cloudinaryUrl}video/upload/f_auto/lakehi.mp4`" type="video/mp4">
     </video>
   </div>
 </template>
@@ -50,11 +46,17 @@ export default {
     }
   },
   watch: {
-    isPlaying: function(newVal) {
-      if (newVal) {
-        this.video.play();
-      } else {
-        this.video.pause();
+    isPlaying(newVal) {
+      try {
+        if (newVal) {
+          this.video.play();
+        } else {
+          this.video.pause();
+        }
+      } catch (err) {
+        console.log(
+          `error auto playing, good job if you have this blocked in your browser :P ${err}`
+        );
       }
     }
   },

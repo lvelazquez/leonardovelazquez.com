@@ -40,6 +40,7 @@ app.post("/contact", function(req, res) {
   };
   smtpTrans.sendMail(mailOpts, function(error) {
     if (error) {
+      console.log(error)
       res.status(500);
       res.json(JSON.stringify({ ok: false, error: error }));
     } else {
