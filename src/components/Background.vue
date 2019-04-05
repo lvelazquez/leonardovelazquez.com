@@ -44,6 +44,12 @@ export default {
     } else {
       this.video.addEventListener("canplay", this.handlePlay);
     }
+
+    setTimeout(() => {
+      if (!this.isLoaded) {
+        this.handlePlay();
+      }
+    }, 4000);
   },
   watch: {
     isPlaying(newVal) {
