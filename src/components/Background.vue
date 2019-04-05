@@ -54,9 +54,9 @@ export default {
           this.video.pause();
         }
       } catch (err) {
-        console.log(
-          `error auto playing, good job if you have this blocked in your browser :P ${err}`
-        );
+        // console.error(
+        //   `error auto playing, good job if you have this blocked in your browser :P ${err}`
+        // );
       }
     }
   },
