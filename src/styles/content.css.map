@@ -1,0 +1,10 @@
+{
+    "version": 3,
+    "mappings": "AAEA,AAAA,gBAAgB,CAAC;EACf,OAAO,EAAE,WAAW;CAOrB;;AANC,MAAM,EAAE,SAAS,EAAE,KAAK;EAF1B,AAAA,gBAAgB,CAAC;IAGb,OAAO,EAAE,WAAW;GAKvB;;;AAHC,MAAM,EAAE,SAAS,EAAE,KAAK;EAL1B,AAAA,gBAAgB,CAAC;IAMb,OAAO,EAAE,YAAY;GAExB",
+    "sources": [
+        "content.scss",
+        "media-queries.scss"
+    ],
+    "names": [],
+    "file": "content.css"
+}
