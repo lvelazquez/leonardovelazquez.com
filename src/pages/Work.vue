@@ -9,11 +9,11 @@
             v-bind:key="index"
             class="thumb-item"
             :style="{
-              paddingTop: `${(project.thumbHeight / project.thumbWidth) * 100}%`
+              paddingTop: `${(project.thumbHeight / project.thumbWidth) * 100}%`,
             }"
             @click="handleProject(index)"
           >
-            <img v-lazyload :alt="project.title" :src="imageUrl(project.thumb)">
+            <img v-lazyload :alt="project.title" :src="imageUrl(project.thumb)" />
             <div class="details">
               <span>{{ project.title }}</span>
             </div>
@@ -21,27 +21,27 @@
         </div>
       </div>
       <div id="project-container" class="work-column">
-        <Project :currentProjectId="projectId" :isProjectModalOpen="isProjectModalOpen"/>
+        <Project :currentProjectId="projectId" :isProjectModalOpen="isProjectModalOpen" />
       </div>
     </div>
   </section>
 </template>
 
 <script>
-import projectData from "../data";
-import config from "../config";
-import { Project } from "../components/";
+import projectData from '../data'
+import config from '../config'
+import { Project } from '../components/'
 
 export default {
-  name: "Work",
+  name: 'WorkView',
   components: {
-    Project
+    Project,
   },
   data() {
     return {
       thumbs: [],
-      fakeImage: ""
-    };
+      fakeImage: '',
+    }
   },
   props: {
     isLoaded: Boolean,
@@ -50,39 +50,40 @@ export default {
     isProjectModalOpen: Boolean,
     cloudinaryUrl: {
       type: String,
-      default: config.cloudinaryUrl
-    }
+      default: config.cloudinaryUrl,
+    },
   },
   mounted() {
-    this.thumbs = projectData;
-    this.fakeImage =
-      "data:image/png;base64,R0lGODlhAQABAAD/ACwAAAAAAQABAAACADs=";
+    this.thumbs = projectData
+    this.fakeImage = 'data:image/png;base64,R0lGODlhAQABAAD/ACwAAAAAAQABAAACADs='
   },
   computed: {
-    projectId: function() {
-      return this.currentProjectId;
+    projectId: function () {
+      return this.currentProjectId
     },
-    canLoadImage: function() {
-      return this.isActive;
-    }
+    canLoadImage: function () {
+      return this.isActive
+    },
   },
   methods: {
     imageUrl(thumb) {
-      return `${this.cloudinaryUrl}image/upload/f_auto/${thumb}`;
+      return `${this.cloudinaryUrl}image/upload/f_auto/${thumb}`
     },
     handleProject(id) {
-      history.pushState(null, null, `/work/${id}`);
-      dispatchEvent(new PopStateEvent("popstate"));
-    }
-  }
-};
+      history.pushState(null, null, `/work/${id}`)
+      dispatchEvent(new PopStateEvent('popstate'))
+    },
+  },
+}
 </script>
 
 <style lang="scss" scoped>
-@import "../styles/settings.scss";
-@import "../styles/media-queries.scss";
+@use 'sass:color';
+@use '../styles/settings.scss' as *;
+@use '../styles/media-queries.scss' as media;
+
 .work-container {
-  @media (min-width: $bp-ms) {
+  @media (min-width: media.$bp-ms) {
     display: flex;
     column-count: 2;
     column-width: 50vw;
@@ -92,15 +93,16 @@ export default {
 .work-column {
   display: inline-block;
   width: 100%;
-  @media (min-width: $bp-ms) {
+  @media (min-width: media.$bp-ms) {
     flex: 1;
     max-width: 50vw;
   }
 }
 
 #thumb-container {
+  cursor: pointer;
   .thumbs-container {
-    @media (min-width: $bp-ms) {
+    @media (min-width: media.$bp-ms) {
       column-count: 3;
       column-gap: 5px;
       box-sizing: border-box;
@@ -108,10 +110,9 @@ export default {
     }
   }
 
-  @media (min-width: $bp-ms) {
+  @media (min-width: media.$bp-ms) {
     margin-bottom: 5px;
   }
-  cursor: pointer;
   img {
     width: 100%;
   }
@@ -120,7 +121,9 @@ export default {
 .v-lazy-image {
   filter: blur(2px);
   opacity: 0;
-  transition: filter, opacity 0.7s;
+  transition:
+    filter,
+    opacity 0.7s;
 }
 .v-lazy-image-loaded {
   filter: blur(0);
@@ -142,7 +145,7 @@ export default {
     left: 0;
   }
   .details {
-    font-family: "Montserrat", Helvetica, sans-serif;
+    font-family: 'Montserrat', Helvetica, sans-serif;
     pointer-events: none;
     font-size: 1.5rem;
     position: absolute;
@@ -173,7 +176,7 @@ export default {
   &:hover {
     .details {
       opacity: 1;
-      background: transparentize($white-color, 0.2);
+      background: color.adjust($white-color, $alpha: -0.2);
       & span {
         color: $gray-color;
         transform: translateX(0);
@@ -183,25 +186,47 @@ export default {
   .details {
     display: none;
   }
-  @media (min-width: $bp-ms) {
+  @media (min-width: media.$bp-ms) {
     & .details {
       display: flex;
       font-size: 1rem;
     }
   }
 
-  @media (min-width: $bp-md) {
+  @media (min-width: media.$bp-md) {
     & .details {
       font-size: 1rem;
     }
   }
 
-  @media (min-width: $bp-lg) {
+  @media (min-width: media.$bp-lg) {
     & .details {
       font-size: 1.25rem;
     }
   }
 }
 #project-container {
+}
+
+.banner-social-buttons {
+  display: flex;
+  text-align: center;
+  margin: 0 auto;
+  flex-direction: column;
+  padding: 0;
+  li {
+    flex: 1;
+    display: inline-block;
+    margin-bottom: 1rem;
+  }
+  @media (min-width: media.$bp-ms) {
+    flex-direction: row;
+    padding: 0 30%;
+    margin: 0 auto;
+  }
+
+  @media (min-width: media.$bp-lg) {
+    padding: 0 35%;
+  }
 }
 </style>

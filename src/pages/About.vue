@@ -5,55 +5,26 @@
         <h2>About me</h2>
 
         <div class="content-wrapper">
-          <img
-            v-lazyload
-            alt="me baby me"
-            class="leo lazy wht-frame"
-            :src="
-              `${cloudinaryUrl}image/upload/q_auto:good/v1537243889/leo2.jpg`
-            "
-          >
           <p>
-            I'm a Senior Software Developer currently based in Seattle,
-            Washington. With ample experience in every facet of the web design
-            and development process, I strive to meet the needs of every new
-            project while using the latest technology trends and standards.
+            As a platform agnostic UX engineer and creative developer, I focus on building
+            high-impact user interfaces that blend technical precision with visual sophistication.
+            My work spans across platforms and frameworks — from React, Angular, and Vue to Web
+            Components, custom rendering engines and/or physical spaces — always driven by the goal
+            of creating thoughtful, fluid, and expressive user experiences.
           </p>
-
           <p>
-            Lately, I'm very excited to pursue work as a full stack Node.js /
-            Vue.js, as well as to furthering my growth of Web Application
-            Architecture, patterns and best practices.
+            I specialize in advanced UI/UX patterns, motion design, and browser-based visualization,
+            often working at the intersection of design systems, WebGL, and programmatic animation.
+            Whether crafting scroll-based storytelling, shader-driven interactions, or data-rich
+            prototypes, I thrive in spaces where detail and performance matter just as much as
+            clarity and accessibility.
           </p>
-
           <p>
-            When I’m not programming, I like to listen to records, make vegan
-            food & treats, play music or go hiking.
+            With a foundation in illustration and animation, I bring a visual designer's intuition
+            to my engineering practice — shaping not just how things work, but how they feel. My
+            approach is platform-agnostic, but my goal is always the same: deliver elegant,
+            responsive, and memorable user experiences that stand apart.
           </p>
-
-          <dl>
-            <dt>Skills:</dt>
-            <dd>React/Redux</dd>
-            <dd>Vue.js</dd>
-            <dd>Node.js</dd>
-            <dd>AngularJS</dd>
-            <dd>Meteor</dd>
-            <dd>Backbone</dd>
-            <dd>Javascript</dd>
-            <dd>HTML5</dd>
-            <dd>CSS3</dd>
-            <dd>NPM</dd>
-            <dd>Gulp/Grunt</dd>
-            <dd>Bootstrap</dd>
-            <dd>Git</dd>
-            <dd>SASS/LESS</dd>
-            <dd>SVN</dd>
-            <dd>Actionscript</dd>
-            <dd>PHP</dd>
-            <dd>Web & App Development for iOS/iPad/iPhone or Mobile/Tablet</dd>
-            <dd>Motion Graphics in After Effects</dd>
-            <dd>Analog and digital 2D illustration & animation techniques</dd>
-          </dl>
         </div>
       </div>
     </div>
@@ -61,37 +32,39 @@
 </template>
 
 <script>
-import config from "../config";
+import config from '../config'
 
 export default {
-  name: "About",
+  name: 'AboutView',
   props: {
     isLoaded: Boolean,
     cloudinaryUrl: {
       type: String,
-      default: config.cloudinaryUrl
-    }
-  }
-};
+      default: config.cloudinaryUrl,
+    },
+  },
+}
 </script>
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
-<style scoped lang="scss">
-@import "../styles/content";
+<style lang="scss" scoped>
+@use '../styles/settings.scss' as *;
+@use '../styles/content.scss' as content;
+@use '../styles/media-queries.scss' as media;
 
 #about {
   dd:after {
-    content: ", ";
+    content: ', ';
   }
 
   .leo {
     display: none;
-    @media (min-width: $bp-ms) {
+    @media (min-width: media.$bp-ms) {
       display: block;
       width: 100%;
       border-radius: 5px;
     }
-    @media (min-width: $bp-md) {
+    @media (min-width: media.$bp-md) {
       width: 30vw;
       float: left;
       margin-right: 16px;

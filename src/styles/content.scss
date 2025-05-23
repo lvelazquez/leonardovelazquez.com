@@ -1,11 +1,12 @@
-@import "./media-queries.scss";
+@use './media-queries.scss' as media;
+@use './settings.scss' as *;
 
 .content-section {
   padding: 0 2rem 4rem;
-  @media (min-width: $bp-sm) {
+  @media (min-width: media.$bp-sm) {
     padding: 0 5rem 5rem;
   }
-  @media (min-width: $bp-ms) {
+  @media (min-width: media.$bp-ms) {
     padding: 0 10rem 6rem;
   }
 }

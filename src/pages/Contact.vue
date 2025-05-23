@@ -19,14 +19,13 @@
                   placeholder="Your Name"
                   autocomplete="true"
                   aria-required="true"
-                >
+                />
               </div>
               <div
                 class="input-group contact-email contact-info has-feedback"
                 :class="{
                   warning:
-                    (!contact.email || !validateEmail(contact.email)) &&
-                    submitStatus === 'error'
+                    (!contact.email || !validateEmail(contact.email)) && submitStatus === 'error',
                 }"
               >
                 <input
@@ -39,7 +38,7 @@
                   autocomplete="true"
                   aria-required="true"
                   ref="contactEmail"
-                >
+                />
               </div>
               <div
                 class="input-group contact-info"
@@ -54,12 +53,12 @@
                   v-model="contact.title"
                   aria-required="true"
                   ref="contactSubject"
-                >
+                />
               </div>
               <div
                 class="input-group contact-message contact-info has-feedback"
                 :class="{
-                  warning: !contact.message && submitStatus === 'error'
+                  warning: !contact.message && submitStatus === 'error',
                 }"
               >
                 <textarea
@@ -82,34 +81,37 @@
               >
                 <transition name="fade">
                   <div class="loader" v-if="submitStatus === 'sending'">
-                    <div></div>
-                    <div></div>
-                    <div></div>
+                    <div class="loader-container">
+                      <div></div>
+                      <div></div>
+                      <div></div>
+                    </div>
                   </div>
-                  <span v-if="submitStatus !== 'sending'">
-                    {{
-                    submitStatus !== "sending" ? "SUBMIT" : ""
-                    }}
-                  </span>
                 </transition>
+                <span v-if="submitStatus !== 'sending'">
+                  {{ submitStatus !== 'sending' ? 'SUBMIT' : '' }}
+                </span>
               </button>
             </form>
             <div class="message-container" :class="{ warning: !isValid && submitStatus !== '' }">
               <transition name="fade">
                 <div
-                  class="warning-text form-text"
                   v-if="errorMessage !== '' && submitStatus === 'error'"
-                >{{ errorMessage }}</div>
-                <p class="email-text" v-if="submitStatus === 'serverError'">
+                  class="warning-text form-text"
+                >
+                  {{ errorMessage }}
+                </div>
+              </transition>
+              <transition name="fade">
+                <p v-if="submitStatus === 'serverError'" class="email-text">
                   Please try again later or reach me at
-                  <a
-                    href="mailto:leo@leonardovelazquez.com"
-                  >leo@leonardovelazquez.com</a>
+                  <a href="mailto:leo@leonardovelazquez.com">leo@leonardovelazquez.com</a>
                 </p>
-                <div
-                  class="form-text success-text"
-                  v-if="submitStatus === 'success'"
-                >Successfully sent!</div>
+              </transition>
+              <transition name="fade">
+                <div v-if="submitStatus === 'success'" class="form-text success-text">
+                  Successfully sent!
+                </div>
               </transition>
             </div>
           </div>
@@ -130,95 +132,96 @@
         </ul>
       </div>
     </div>
-    <Map v-if="renderMap"/>
+    <MapComponent v-if="renderMap" />
   </section>
 </template>
 
 <script>
-import { Map } from "../components/";
-import { every } from "lodash";
-import "whatwg-fetch";
+import { Map as MapComponent } from '../components/'
+import { every } from 'lodash'
+import 'whatwg-fetch'
 
 export default {
-  name: "Contact",
+  name: 'ContactPage',
   props: {
     isLoaded: Boolean,
-    renderMap: Boolean
+    renderMap: Boolean,
   },
   components: {
-    Map
+    MapComponent,
   },
   data() {
     return {
       isValid: false,
-      submitStatus: "",
-      errorMessage: "",
+      submitStatus: '',
+      errorMessage: '',
       contact: {
-        name: "",
-        email: "",
-        title: "",
-        message: ""
-      }
-    };
+        name: '',
+        email: '',
+        title: '',
+        message: '',
+      },
+    }
   },
 
   methods: {
     validateForm() {
-      let isValid = every(this.contact, value => value !== "");
+      let isValid = every(this.contact, value => value !== '')
       if (isValid) {
-        isValid = this.validateEmail(this.contact.email);
-        this.$refs.contactEmail.setAttribute("aria-invalid", isValid);
+        isValid = this.validateEmail(this.contact.email)
+        this.$refs.contactEmail.setAttribute('aria-invalid', isValid)
         if (!isValid) {
-          this.errorMessage = "Please enter a valid email";
-          this.submitStatus = "error";
+          this.errorMessage = 'Please enter a valid email'
+          this.submitStatus = 'error'
         }
       } else {
-        this.errorMessage = "All fields are required.";
-        this.submitStatus = "error";
+        this.errorMessage = 'All fields are required.'
+        this.submitStatus = 'error'
       }
-      return isValid;
+      return isValid
     },
     validateEmail(email) {
-      const re = /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i;
-      return re.test(String(email).toLowerCase());
+      const re = /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i
+      return re.test(String(email).toLowerCase())
     },
     async handleSubmit(event) {
-      if (event) event.preventDefault();
-      if (event) event.stopPropagation();
-      this.errorMessage = "";
-      this.submitStatus = "sending";
-      this.isValid = this.validateForm();
+      if (event) event.preventDefault()
+      if (event) event.stopPropagation()
+      this.errorMessage = ''
+      this.submitStatus = 'sending'
+      this.isValid = this.validateForm()
       if (this.isValid) {
-        const response = await fetch("/contact", {
+        const response = await fetch('/contact', {
           body: JSON.stringify(this.contact),
-          cache: "no-cache",
+          cache: 'no-cache',
           headers: {
-            Accept: "application/json",
-            "Content-Type": "application/json"
+            Accept: 'application/json',
+            'Content-Type': 'application/json',
           },
-          method: "POST"
-        });
-        const res = JSON.parse(await response.json());
+          method: 'POST',
+        })
+        const res = JSON.parse(await response.json())
         if (res.ok) {
-          this.submitStatus = "success";
-          setTimeout(() => (this.submitStatus = ""), 2000);
+          this.submitStatus = 'success'
+          setTimeout(() => (this.submitStatus = ''), 2000)
         } else {
-          this.submitStatus = "serverError";
-          this.errorMessage = "There's been a server side error.";
+          this.submitStatus = 'serverError'
+          this.errorMessage = "There's been a server side error."
         }
       } else {
-        this.submitStatus = "error";
+        this.submitStatus = 'error'
       }
-    }
-  }
-};
+    },
+  },
+}
 </script>
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped lang="scss">
-@import "../styles/settings";
-@import "../styles/content";
-@import "../styles/media-queries";
+@use 'sass:color';
+@use '../styles/settings.scss' as *;
+@use '../styles/content.scss' as content;
+@use '../styles/media-queries.scss' as media;
 
 .banner-social-buttons {
   display: flex;
@@ -231,19 +234,19 @@ export default {
     display: inline-block;
     margin-bottom: 1rem;
   }
-  @media (min-width: $bp-ms) {
+  @media (min-width: media.$bp-ms) {
     flex-direction: row;
     padding: 0 30%;
     margin: 0 auto;
   }
 
-  @media (min-width: $bp-lg) {
+  @media (min-width: media.$bp-lg) {
     padding: 0 35%;
   }
 }
 
 .btn {
-  font-family: "Montserrat", Arial, sans-serif;
+  font-family: 'Montserrat', Arial, sans-serif;
   max-width: 10rem;
   text-align: center;
   display: inline-block;
@@ -264,7 +267,7 @@ export default {
 
 .btn:hover {
   color: $white-color;
-  background-color: $black-color;
+  background-color: color.adjust($blue-color, $lightness: -25%);
   i {
     color: $white-color;
   }
@@ -284,20 +287,20 @@ export default {
   margin: 0 auto 0;
   text-align: center;
   padding: 0 2rem 0;
-  @media (min-width: $bp-sm) {
+  @media (min-width: media.$bp-sm) {
     padding: 0 3rem 0;
   }
-  @media (min-width: $bp-md) {
+  @media (min-width: media.$bp-md) {
     padding: 0 10rem 0;
   }
 }
 
 .contact-wrapper {
   padding-bottom: 6rem;
-  @media (min-width: $bp-sm) {
+  @media (min-width: media.$bp-sm) {
     padding-bottom: 7rem;
   }
-  @media (min-width: $bp-md) {
+  @media (min-width: media.$bp-md) {
     padding-bottom: 6rem;
   }
 }
@@ -316,7 +319,7 @@ export default {
     background-color: $white-color;
   }
   &:hover {
-    background-color: darken($blue-color, 25%);
+    background-color: color.adjust($blue-color, $lightness: -25%);
     color: $white-color;
   }
   &[disabled]:hover {
@@ -339,7 +342,7 @@ export default {
   border-radius: 5px;
   margin-bottom: 1rem;
   outline: none;
-  font-family: "Open Sans", Helvetica, sans-serif;
+  font-family: 'Open Sans', Helvetica, sans-serif;
   padding: 0.5rem;
   box-shadow: none;
   background: none;
@@ -356,7 +359,7 @@ input:-webkit-autofill:focus textarea:-webkit-autofill,
 textarea:-webkit-autofill:hover textarea:-webkit-autofill:focus {
   border: 2px solid $blue-color;
   -webkit-text-fill-color: $gray-color;
-  -webkit-box-shadow: 0 0 0px 1000px lighten($light-gray-color, 0.5) inset;
+  -webkit-box-shadow: 0 0 0px 1000px color.adjust($light-gray-color, $lightness: 0.5%) inset;
   transition: background-color 5000s ease-in-out 0s;
   input:-webkit-autofill {
     -webkit-text-fill-color: transparent !important;
@@ -379,7 +382,7 @@ input:-webkit-autofill {
 
 .form-text {
   color: $blue-color;
-  font-family: "Open Sans", Helvetica, sans-serif;
+  font-family: 'Open Sans', Helvetica, sans-serif;
   font-weight: 700;
   font-size: 1.2rem;
   white-space: nowrap;
@@ -531,8 +534,7 @@ input:-webkit-autofill {
   transition: opacity 0.5s;
 }
 
-.fade-enter, .fade-leave-to /* .fade-leave-active below version 2.1.8 */
- {
+.fade-enter, .fade-leave-to /* .fade-leave-active below version 2.1.8 */ {
   opacity: 0;
 }
 </style>

@@ -10,48 +10,35 @@
 </template>
 
 <script>
-import Vue from "vue";
-import VueScrollTo from "vue-scrollto";
-import EventBus from "../EventBus";
-
-// You can also pass in the default options
-Vue.use(VueScrollTo, {
-  container: "body",
-  duration: 500,
-  easing: "ease-in-out",
-  offset: -80,
-  cancelable: true,
-  x: false,
-  y: true
-});
+import { useScrollTo } from 'vue-scrollto'
+import EventBus from '../EventBus'
 
 export default {
-  name: "NavLink",
-  mixins: { VueScrollTo },
+  name: 'NavLink',
   props: {
     to: String,
     navOffset: {
       default: -80,
-      type: Number
-    }
+      type: Number,
+    },
   },
   data() {
     return {
-      sectionId: ""
-    };
+      sectionId: '',
+    }
   },
   mounted() {
-    this.sectionId = this.to === "/" ? "intro" : this.to.replace("/", "");
+    this.sectionId = this.to === '/' ? 'intro' : this.to.replace('/', '')
   },
   methods: {
     handleClick(e) {
-      e.preventDefault();
+      e.preventDefault()
       if (this.to !== location.pathname) {
-        EventBus.$emit("routechange");
+        EventBus.emit('routechange')
       }
-    }
-  }
-};
+    },
+  },
+}
 </script>
 
 <style>

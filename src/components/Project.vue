@@ -12,26 +12,29 @@
         <div
           class="item"
           :style="
-            currentImageIndex !== index
-              ? { transform: `translate(${200 * direction}%, 0)` }
-              : ''
+            currentImageIndex !== index ? { transform: `translate(${200 * direction}%, 0)` } : ''
           "
           v-for="(image, index) in currentProject.images"
           v-bind:key="index"
           :class="{
-            active: currentImageIndex === index && !isLoading,
-            past: previousImageIndex === index
+            active: currentImageIndex === index,
+            past: previousImageIndex === index,
           }"
         >
           <img
-            v-lazyload
+            :key="`${currentProjectId}-${index}`"
+            loading="lazy"
             :alt="`${currentProject.title} ${index}`"
             @load="handleLoader"
             :src="loadImage(image.image_url)"
-          >
+            @error="console.log('Image failed to load:', loadImage(image.image_url))"
+          />
+          <div v-if="currentImageIndex === index && isLoading" class="loader">
+            <Loader />
+          </div>
         </div>
         <div :class="{ loading: isLoading, loader: true }">
-          <Loader/>
+          <Loader />
         </div>
         <div class="controls">
           <div @click="handleUpdate(-1)" class="overlay-btn overlay-left"></div>
@@ -58,11 +61,7 @@
             v-for="(image, index) in currentProject.images"
             v-bind:key="index"
             :class="{ active: currentImageIndex === index }"
-            @click="
-              previousImageIndex = currentImageIndex;
-              currentImageIndex = index;
-              isLoading = true;
-            "
+            @click="handleImageClick(index)"
           />
         </ol>
         <div class="carousel-caption">{{ currentProject.description }}</div>
@@ -72,112 +71,119 @@
 </template>
 
 <script>
-import projectData from "../data";
-import { get } from "lodash";
-import config from "../config";
-import EventBus from "../EventBus";
-import Loader from "./Loader";
-import { clearTimeout } from "timers";
+import projectData from '../data'
+import { get } from 'lodash'
+import config from '../config'
+import EventBus from '../EventBus'
+import Loader from './Loader.vue'
 
 export default {
-  name: "Project",
+  name: 'ProjectView',
   components: { Loader },
   data() {
     return {
       direction: 1,
       currentImageIndex: 0,
       previousImageIndex: null,
-      isLoading: true
-    };
+      isLoading: true,
+    }
   },
   props: {
     currentProjectId: {
       type: String,
-      default: Object.keys(projectData)[0]
+      default: Object.keys(projectData)[0],
     },
     isProjectModalOpen: {
       default: false,
-      type: Boolean
+      type: Boolean,
     },
     cloudinaryUrl: {
       default: config.cloudinaryUrl,
-      type: String
-    }
+      type: String,
+    },
   },
   computed: {
     currentProject: {
-      get: function() {
-        return projectData[this.currentProjectId];
+      get: function () {
+        return projectData[this.currentProjectId]
       },
-      set: function(newValue) {
-        this.getProject(this.currentProjectId);
-        this.currentProject = newValue;
-      }
+      set: function (newValue) {
+        this.getProject(this.currentProjectId)
+        this.currentProject = newValue
+      },
     },
-    modalOpen: function() {
-      return this.isProjectModalOpen;
-    }
+    modalOpen: function () {
+      return this.isProjectModalOpen
+    },
   },
   mounted() {
-    this.handleLoader = this.handleLoader.bind(this);
-    this.getProject = this.getProject.bind(this);
-    EventBus.$on("project.changed", id => this.getProject(id));
+    this.handleLoader = this.handleLoader.bind(this)
+    this.getProject = this.getProject.bind(this)
+    EventBus.on('project.changed', id => this.getProject(id))
+  },
+  unmounted() {
+    EventBus.off('project.changed')
   },
   methods: {
     loadImage(item) {
-      const imgURL = `${config.cloudinaryUrl}f_auto/${item}`;
-      return imgURL;
+      const imgURL = `${config.cloudinaryUrl}f_auto/${item}`
+      return imgURL
     },
     getProject(id) {
-      if (!projectData[id]) return;
-      this.isLoading = true;
-      this.currentImageIndex = 0;
-      // this.isLoading = false;
+      if (!projectData[id]) return
+      this.isLoading = true
+      this.currentImageIndex = 0
+      this.previousImageIndex = null
     },
     handleLoader() {
-      this.isLoading = false;
+      this.isLoading = false
     },
     handleUpdate(dir) {
-      this.direction = dir;
-      let index = this.currentImageIndex + dir;
+      this.direction = dir
+      let index = this.currentImageIndex + dir
 
-      const imagesLength = get(this.currentProject, "images.length");
+      const imagesLength = get(this.currentProject, 'images.length')
       if (index > imagesLength - 1) {
-        index = 0;
+        index = 0
       } else if (index < 0) {
-        index = imagesLength - 1;
+        index = imagesLength - 1
       }
-      this.previousImageIndex = this.currentImageIndex;
+      this.previousImageIndex = this.currentImageIndex
 
       const interval = setTimeout(() => {
-        this.currentImageIndex = index;
-        clearTimeout(interval);
-      }, 250);
+        this.currentImageIndex = index
+        clearTimeout(interval)
+      }, 250)
     },
     handleClose() {
-      this.isProjectModalOpen = false;
+      this.$emit('update:isProjectModalOpen', false)
     },
     hexToRGB(hex, opacity = 0.65) {
-      hex = hex.replace("#", "");
+      hex = hex.replace('#', '')
       return `rgba(${parseInt(hex.substring(0, 2), 16)},${parseInt(
         hex.substring(2, 4),
         16
-      )},${parseInt(hex.substring(4, 6), 16)}, ${opacity})`;
-    }
-  }
-};
+      )},${parseInt(hex.substring(4, 6), 16)}, ${opacity})`
+    },
+    handleImageClick(index) {
+      this.previousImageIndex = this.currentImageIndex
+      this.currentImageIndex = index
+      this.isLoading = true
+    },
+  },
+}
 </script>
 
 <style lang="scss" scoped>
-@import "../styles/settings";
-@import "../styles/media-queries";
+@use '../styles/settings.scss' as *;
+@use '../styles/media-queries.scss' as media;
 
 .project-wrapper {
   position: fixed;
   top: 3.75rem;
   left: 0;
   width: 100%;
-  @media (min-width: $bp-ms) {
+  @media (min-width: media.$bp-ms) {
     position: relative;
     top: 0;
     box-sizing: border-box;
@@ -186,7 +192,7 @@ export default {
 }
 .mobileModal {
   display: none;
-  @media (min-width: $bp-ms) {
+  @media (min-width: media.$bp-ms) {
     display: block;
   }
 }
@@ -199,8 +205,7 @@ export default {
 .project-header {
   position: relative;
   width: 100%;
-  overflow: hidden;
-  text-overflow: ellipsis;
+  overflow: ellipsis;
   display: inline-block;
   background-color: rgba($black-color, 0.95);
   padding: 1.5rem 1rem 1.5rem;
@@ -212,7 +217,7 @@ export default {
     display: inline-block;
     width: 90%;
   }
-  @media (min-width: $bp-ms) {
+  @media (min-width: media.$bp-ms) {
     & .title {
       white-space: nowrap;
       width: 90%;
@@ -238,7 +243,7 @@ export default {
   transform: translateY(-50%);
   right: 2em;
   font-size: 1rem;
-  @media (min-width: $bp-ms) {
+  @media (min-width: media.$bp-ms) {
     display: none;
   }
 }
@@ -254,7 +259,7 @@ export default {
   left: 50%;
   transform: translate(-50%, -50%);
   opacity: 0;
-  transition: opacity 0.25s ease-out;
+  transition: opacity 0.5s ease-out;
   &.loading {
     opacity: 1;
   }
@@ -298,7 +303,7 @@ export default {
   .overlay-right {
     right: 0;
   }
-  @media (min-width: $bp-ms) {
+  @media (min-width: media.$bp-ms) {
     opacity: 0;
     &:hover {
       opacity: 1;
@@ -336,7 +341,7 @@ export default {
 .carousel-right,
 .carousel-left {
   opacity: 1;
-  @media (min-width: $bp-ms) {
+  @media (min-width: media.$bp-ms) {
     opacity: 0.8;
     &:hover {
       opacity: 1;
@@ -395,7 +400,7 @@ export default {
 }
 
 .link {
-  font-family: "Montserrat", Helvetica, sans-serif;
+  font-family: 'Montserrat', Helvetica, sans-serif;
 }
 
 .project h2 {
@@ -404,5 +409,18 @@ export default {
   text-align: left;
   position: absolute;
   top: -9rem;
+}
+
+.fade-enter-active,
+.fade-leave-active {
+  transition: opacity 1s;
+}
+.fade-enter-from,
+.fade-leave-to {
+  opacity: 0;
+}
+.fade-enter-to,
+.fade-leave-from {
+  opacity: 1;
 }
 </style>

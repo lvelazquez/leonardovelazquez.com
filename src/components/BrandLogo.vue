@@ -9,24 +9,24 @@
 </template>
 
 <script>
-import Logo from "./Logo";
+import Logo from './Logo.vue'
 
 export default {
-  name: "BrandLogo",
+  name: 'BrandLogo',
   components: {
-    Logo
+    Logo,
   },
   props: {
-    color: { type: String, default: "white" },
+    color: { type: String, default: 'white' },
     fontSize: { type: String },
-    type: { type: String, default: "header" }
-  }
-};
+    type: { type: String, default: 'header' },
+  },
+}
 </script>
 
 <style lang="scss" scoped>
-@import "../styles/settings";
-@import "../styles/media-queries";
+@use '../styles/settings.scss' as *;
+@use '../styles/media-queries.scss' as media;
 
 $title-drop-shadow: 2px 2px 50px rgba($gray-color, 0.25);
 
@@ -47,8 +47,9 @@ $title-drop-shadow: 2px 2px 50px rgba($gray-color, 0.25);
 .brand-logo {
   display: flex;
   text-transform: uppercase;
+
   .brand-title {
-    font-family: "Montserrat";
+    font-family: Montserrat, 'Helvetica Neue', Helvetica, Arial, sans-serif;
     font-weight: 700;
     font-size: 2.6rem;
     white-space: nowrap;
@@ -70,15 +71,20 @@ $title-drop-shadow: 2px 2px 50px rgba($gray-color, 0.25);
     width: 8vw;
     height: 8vw;
     max-width: 4rem;
-    transition: width, height, filter 0.25s ease-out;
+    transition:
+      width,
+      height,
+      filter 0.25s ease-out;
   }
   .brand-title {
     font-size: 5vw;
     letter-spacing: 0.15px;
-    transition: font-size, text-shadow 0.25s ease-out;
+    transition:
+      font-size,
+      text-shadow 0.25s ease-out;
     line-height: 0.8;
   }
-  @media (min-width: $bp-sm) {
+  @media (min-width: media.$bp-sm) {
     .brand-title {
       font-size: 1.5rem;
     }
@@ -87,7 +93,7 @@ $title-drop-shadow: 2px 2px 50px rgba($gray-color, 0.25);
       height: 2.5rem;
     }
   }
-  @media (min-width: $bp-md) {
+  @media (min-width: media.$bp-md) {
     .brand-title {
       font-size: 1.6rem;
     }
@@ -96,7 +102,7 @@ $title-drop-shadow: 2px 2px 50px rgba($gray-color, 0.25);
       height: 2.6rem;
     }
   }
-  @media (min-width: $bp-lg) {
+  @media (min-width: media.$bp-lg) {
     .logo {
       width: 3.3rem;
       height: 3.3rem;
@@ -115,7 +121,8 @@ $title-drop-shadow: 2px 2px 50px rgba($gray-color, 0.25);
 }
 
 .intro-logo {
-  @media (min-width: $bp-ms) {
+  flex-direction: column;
+  @media (min-width: media.$bp-ms) {
     flex-direction: row;
   }
   .logo {
@@ -123,7 +130,6 @@ $title-drop-shadow: 2px 2px 50px rgba($gray-color, 0.25);
     width: 5rem;
     height: 4.2rem;
   }
-  flex-direction: column;
   .brand-title {
     text-align: center;
     line-height: 1;
@@ -132,10 +138,10 @@ $title-drop-shadow: 2px 2px 50px rgba($gray-color, 0.25);
       margin: 0 auto;
       width: 100%;
       white-space: normal;
-      @media (min-width: $bp-sm) {
+      @media (min-width: media.$bp-sm) {
         width: 80%;
       }
-      @media (min-width: $bp-ms) {
+      @media (min-width: media.$bp-ms) {
         white-space: nowrap;
         text-align: left;
         line-height: 0.75;

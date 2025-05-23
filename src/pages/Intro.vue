@@ -5,19 +5,13 @@
       <div class="intro-nav">
         <ul role="navigation">
           <li>
-            <nav-link :nav-offset="navOffset" to="/work" class="nav-item"
-              >Work</nav-link
-            >
+            <nav-link :nav-offset="navOffset" to="/work" class="nav-item">Work</nav-link>
           </li>
           <li>
-            <nav-link :nav-offset="navOffset" to="/about" class="nav-item"
-              >About me</nav-link
-            >
+            <nav-link :nav-offset="navOffset" to="/about" class="nav-item">About me</nav-link>
           </li>
           <li>
-            <nav-link :nav-offset="navOffset" to="/contact" class="nav-item"
-              >Contact</nav-link
-            >
+            <nav-link :nav-offset="navOffset" to="/contact" class="nav-item">Contact</nav-link>
           </li>
         </ul>
         <div class="page-scroll">
@@ -37,26 +31,25 @@
 </template>
 
 <script>
-import { BrandLogo, NavLink } from "../components/";
+import { BrandLogo, NavLink } from '../components/'
 
 export default {
-  name: "Intro",
+  name: 'IntroView',
   components: {
     BrandLogo,
-    "nav-link": NavLink
+    'nav-link': NavLink,
   },
   props: {
     isLoaded: { type: Boolean, default: false },
-    navOffset: Number
-  }
-};
+    navOffset: Number,
+  },
+}
 </script>
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style lang="scss" scoped>
-@import "../styles/settings";
-@import "../styles/media-queries";
-@import "../styles/settings";
+@use '../styles/settings.scss' as *;
+@use '../styles/media-queries.scss' as media;
 
 .intro {
   color: $white-color;
@@ -83,15 +76,15 @@ export default {
   text-align: center;
   display: block;
   ul {
-    display: none;
-    @media screen and (min-width: $bp-sm) {
-      display: flex !important;
-    }
     padding: 0;
     margin: 0;
     width: 90%;
     white-space: nowrap;
     text-align: center;
+    display: none;
+    @media (min-width: media.$bp-ms) {
+      display: flex !important;
+    }
     li {
       display: inline-block;
       flex: 1;
