@@ -1,0 +1,119 @@
+/*
+ * Design tokens. Components read these custom properties; nothing outside this
+ * file should contain a raw color, spacing, type or motion literal.
+ * Breakpoints live in media-queries.scss because custom properties cannot be
+ * used inside @media conditions.
+ */
+:root {
+  color-scheme: light dark;
+
+  /* ---- Color: palette ---- */
+  --palette-white: #fff;
+  --palette-black: #000;
+  --palette-ink: #222;
+  --palette-ink-soft: #333;
+  --palette-blue: #86afd7;
+  --palette-blue-strong: #356fa8; /* white text on it: 5.1:1 */
+  --palette-blue-text-on-dark: #9cc2e6;
+  --palette-gray-muted: #767676; /* 4.5:1 on white */
+  --palette-gray-muted-on-dark: #a6a6a6;
+  --palette-red: #c00000; /* 6.0:1 on white */
+  --palette-red-on-dark: #ff8080;
+  --palette-loader-blue: #86a4ce;
+  --palette-loader-dark: #3c444b;
+  --palette-night: #14171a;
+
+  /* ---- Color: roles (light) ---- */
+  --color-surface: var(--palette-white);
+  --color-on-surface: var(--palette-ink);
+  --color-surface-inverse: var(--palette-ink);
+  --color-on-surface-inverse: var(--palette-white);
+  --color-hover-surface: var(--palette-ink-soft);
+  --color-on-hover-surface: var(--palette-white);
+  --color-accent: var(--palette-blue);
+  --color-accent-strong: var(--palette-blue-strong);
+  --color-accent-text: var(--palette-blue-strong);
+  --color-muted: var(--palette-gray-muted);
+  --color-danger: var(--palette-red);
+  --color-focus: #1a5fb4;
+  --color-focus-halo: var(--palette-white);
+  --color-on-media: var(--palette-white);
+  --color-media-fallback: var(--palette-night);
+  --color-scrim: rgb(0 0 0 / 0.4);
+  --color-scrim-strong: rgb(34 34 34 / 0.95);
+  --color-hover-wash: rgb(255 255 255 / 0.15);
+  --color-caption-wash: rgb(255 255 255 / 0.8);
+  --color-control-surface: rgb(255 255 255 / 0.85);
+  --color-loader-from: var(--palette-loader-blue);
+  --color-loader-to: var(--palette-loader-dark);
+  --color-shadow: rgb(51 51 51 / 0.25);
+
+  /* ---- Space ---- */
+  --space-1: 0.25rem;
+  --space-2: 0.5rem;
+  --space-3: 0.75rem;
+  --space-4: 1rem;
+  --space-5: 1.5rem;
+  --space-6: 2rem;
+  --space-7: 3rem;
+  --space-8: 4rem;
+  --space-9: 5rem;
+  --space-10: 6rem;
+  --space-gutter: 2px;
+  --space-hairline: 1px;
+  --size-touch: 2.75rem;
+  --size-navbar: 4rem;
+  --radius-sm: 5px;
+  --radius-md: 6px;
+  --radius-pill: 999px;
+
+  /* ---- Type ---- */
+  --font-display: Montserrat, 'Helvetica Neue', Helvetica, Arial, sans-serif;
+  --font-body: Roboto, Helvetica, Arial, sans-serif;
+  --font-icon: fontello;
+  --text-xs: 0.8rem;
+  --text-sm: 1rem;
+  --text-md: 1.125rem;
+  --text-lg: 1.25rem;
+  --text-xl: 1.5rem;
+  --text-2xl: 2rem;
+  --text-3xl: 2.6rem;
+  --weight-regular: 400;
+  --weight-medium: 500;
+  --weight-semibold: 600;
+  --weight-bold: 700;
+  --weight-black: 800;
+  --tracking-wide: 1px;
+
+  /* ---- Motion: durations ---- */
+  --duration-fast: 120ms;
+  --duration-medium-fast: 250ms;
+  --duration-medium: 450ms;
+  --duration-slow: 700ms;
+  --duration-extra-slow: 1000ms;
+  --duration-loop: 1000ms;
+  --duration-loop-slow: 4000ms;
+  /* ---- Motion: easings ---- */
+  --ease-smooth-out: cubic-bezier(0, 0, 0.2, 1);
+  --ease-smooth-in: cubic-bezier(0.4, 0, 1, 1);
+  --ease-smooth-in-out: cubic-bezier(0.4, 0, 0.2, 1);
+  --ease-linear: linear;
+  /* Pairs: entries use the longer duration, exits the shorter one. */
+  --motion-enter: var(--duration-medium-fast) var(--ease-smooth-out);
+  --motion-exit: var(--duration-fast) var(--ease-smooth-in);
+}
+
+@media (prefers-color-scheme: dark) {
+  :root {
+    --color-surface: var(--palette-night);
+    --color-on-surface: #f1f1f1;
+    --color-surface-inverse: #f1f1f1;
+    --color-on-surface-inverse: var(--palette-night);
+    --color-hover-surface: #2a2f35;
+    --color-accent-text: var(--palette-blue-text-on-dark);
+    --color-muted: var(--palette-gray-muted-on-dark);
+    --color-danger: var(--palette-red-on-dark);
+    --color-focus: #8ab4f8;
+    --color-focus-halo: var(--palette-night);
+  }
+}

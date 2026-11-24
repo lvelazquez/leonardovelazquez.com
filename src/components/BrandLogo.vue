@@ -1,47 +1,37 @@
 <template>
-  <div :id="`${type}-header`" :class="`brand-logo ${color}-logo ${type}-logo`">
+  <div :class="['brand-logo', `${color}-logo`, `${type}-logo`]">
     <Logo class="logo" />
-    <h1 class="brand-title">
+    <component :is="heading ? 'h1' : 'p'" class="brand-title">
       <span>Leonardo Vel&aacute;zquez</span>
       <span class="sub-header">Software Developer</span>
-    </h1>
+    </component>
   </div>
 </template>
 
-<script>
+<script setup lang="ts">
 import Logo from './Logo.vue'
 
-export default {
-  name: 'BrandLogo',
-  components: {
-    Logo,
-  },
-  props: {
-    color: { type: String, default: 'white' },
-    fontSize: { type: String },
-    type: { type: String, default: 'header' },
-  },
-}
+withDefaults(
+  defineProps<{ color?: 'white' | 'black'; type?: 'header' | 'intro'; heading?: boolean }>(),
+  { color: 'white', type: 'header', heading: false }
+)
 </script>
 
 <style lang="scss" scoped>
-@use '../styles/settings.scss' as *;
 @use '../styles/media-queries.scss' as media;
 
-$title-drop-shadow: 2px 2px 50px rgba($gray-color, 0.25);
-
 .white-logo {
+  color: var(--color-on-media);
   svg {
-    fill: $white-color;
-    filter: drop-shadow($title-drop-shadow);
+    fill: var(--color-on-media);
+    filter: drop-shadow(2px 2px 50px var(--color-shadow));
   }
-  color: $white-color;
 }
 .black-logo {
+  color: var(--color-on-surface);
   svg {
-    fill: $black-color;
+    fill: var(--color-on-surface);
   }
-  color: $black-color;
 }
 
 .brand-logo {
@@ -49,14 +39,15 @@ $title-drop-shadow: 2px 2px 50px rgba($gray-color, 0.25);
   text-transform: uppercase;
 
   .brand-title {
-    font-family: Montserrat, 'Helvetica Neue', Helvetica, Arial, sans-serif;
-    font-weight: 700;
-    font-size: 2.6rem;
+    font-family: var(--font-display);
+    font-weight: var(--weight-bold);
+    font-size: var(--text-3xl);
     white-space: nowrap;
     width: 100%;
     line-height: 0.75;
     margin: 0;
-    text-shadow: $title-drop-shadow;
+    letter-spacing: var(--tracking-wide);
+    text-shadow: 2px 2px 50px var(--color-shadow);
     span:first-child {
       margin-bottom: 0.1em;
     }
@@ -70,23 +61,17 @@ $title-drop-shadow: 2px 2px 50px rgba($gray-color, 0.25);
   .logo {
     width: 8vw;
     height: 8vw;
-    max-width: 4rem;
-    transition:
-      width,
-      height,
-      filter 0.25s ease-out;
+    max-width: var(--space-8);
   }
   .brand-title {
     font-size: 5vw;
     letter-spacing: 0.15px;
-    transition:
-      font-size,
-      text-shadow 0.25s ease-out;
     line-height: 0.8;
+    text-shadow: none;
   }
   @media (min-width: media.$bp-sm) {
     .brand-title {
-      font-size: 1.5rem;
+      font-size: var(--text-xl);
     }
     .logo {
       width: 2.5rem;
@@ -107,17 +92,10 @@ $title-drop-shadow: 2px 2px 50px rgba($gray-color, 0.25);
       width: 3.3rem;
       height: 3.3rem;
     }
-    .brand-logo {
-      padding: 0.25rem 0.25rem 0;
-    }
     .brand-title {
-      font-size: 2rem;
+      font-size: var(--text-2xl);
     }
   }
-}
-
-.intro-header {
-  text-shadow: 2px 2px 100px rgba($gray-color, 0.2);
 }
 
 .intro-logo {
@@ -133,7 +111,7 @@ $title-drop-shadow: 2px 2px 50px rgba($gray-color, 0.25);
   .brand-title {
     text-align: center;
     line-height: 1;
-    margin-bottom: 1rem;
+    margin-bottom: var(--space-4);
     span {
       margin: 0 auto;
       width: 100%;
@@ -149,64 +127,35 @@ $title-drop-shadow: 2px 2px 50px rgba($gray-color, 0.25);
       }
     }
   }
+}
 
-  @keyframes pulse {
-    0% {
-      transform: scale(1);
-    }
-
-    50% {
-      transform: scale(1.2);
-    }
-
-    100% {
-      transform: scale(1);
-    }
+/* While the background video buffers, the intro logo breathes between two loader colors. */
+@keyframes fillLoop {
+  0%,
+  100% {
+    fill: var(--color-loader-from);
   }
-
-  @keyframes fillLoop {
-    0% {
-      fill: $blue-loader-color;
-    }
-
-    50% {
-      fill: $black-loader-color;
-    }
-
-    100% {
-      fill: $blue-loader-color;
-    }
+  50% {
+    fill: var(--color-loader-to);
   }
+}
 
-  @keyframes colorLoop {
-    0% {
-      color: $blue-loader-color;
-    }
-
-    50% {
-      color: $black-loader-color;
-    }
-
-    100% {
-      color: $blue-loader-color;
-    }
+@keyframes colorLoop {
+  0%,
+  100% {
+    color: var(--color-loader-from);
   }
+  50% {
+    color: var(--color-loader-to);
+  }
+}
 
-  &.loader {
-    .logo {
-      animation: fillLoop 4s infinite ease-in-out;
-    }
-
-    .brand-title {
-      animation: colorLoop 4s infinite ease-in-out;
-    }
-
-    & .white-logo {
-      > svg {
-        fill: $blue-color;
-      }
-      color: $blue-color;
-    }
+.loader.intro-logo {
+  .logo {
+    animation: fillLoop var(--duration-loop-slow) var(--ease-linear) infinite;
+  }
+  .brand-title {
+    animation: colorLoop var(--duration-loop-slow) var(--ease-linear) infinite;
   }
 }
 </style>

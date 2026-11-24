@@ -1,107 +1,53 @@
 <template>
   <svg
     class="lds-blocks"
-    width="92px"
-    height="92px"
-    xmlns="http://www.w3.org/2000/svg"
-    xmlns:xlink="http://www.w3.org/1999/xlink"
+    width="92"
+    height="92"
     viewBox="0 0 100 100"
-    preserveAspectRatio="xMidYMid"
-    style="background: rgb(255, 255, 255, 0);"
+    role="img"
+    aria-label="Loading"
   >
-    <rect x="19" y="19" width="20" height="20" fill="#ffffff">
-      <animate
-        attributeName="fill"
-        values="#a5ceff;#ffffff;#ffffff"
-        keyTimes="0;0.125;1"
-        dur="1s"
-        repeatCount="indefinite"
-        begin="0s"
-        calcMode="discrete"
-      ></animate>
-    </rect>
-    <rect x="40" y="19" width="20" height="20" fill="#ffffff">
-      <animate
-        attributeName="fill"
-        values="#a5ceff;#ffffff;#ffffff"
-        keyTimes="0;0.125;1"
-        dur="1s"
-        repeatCount="indefinite"
-        begin="0.125s"
-        calcMode="discrete"
-      ></animate>
-    </rect>
-    <rect x="61" y="19" width="20" height="20" fill="#ffffff">
-      <animate
-        attributeName="fill"
-        values="#a5ceff;#ffffff;#ffffff"
-        keyTimes="0;0.125;1"
-        dur="1s"
-        repeatCount="indefinite"
-        begin="0.25s"
-        calcMode="discrete"
-      ></animate>
-    </rect>
-    <rect x="19" y="40" width="20" height="20" fill="#ffffff">
-      <animate
-        attributeName="fill"
-        values="#a5ceff;#ffffff;#ffffff"
-        keyTimes="0;0.125;1"
-        dur="1s"
-        repeatCount="indefinite"
-        begin="0.875s"
-        calcMode="discrete"
-      ></animate>
-    </rect>
-    <rect x="61" y="40" width="20" height="20" fill="#ffffff">
-      <animate
-        attributeName="fill"
-        values="#a5ceff;#ffffff;#ffffff"
-        keyTimes="0;0.125;1"
-        dur="1s"
-        repeatCount="indefinite"
-        begin="0.375s"
-        calcMode="discrete"
-      ></animate>
-    </rect>
-    <rect x="19" y="61" width="20" height="20" fill="#ffffff">
-      <animate
-        attributeName="fill"
-        values="#a5ceff;#ffffff;#ffffff"
-        keyTimes="0;0.125;1"
-        dur="1s"
-        repeatCount="indefinite"
-        begin="0.75s"
-        calcMode="discrete"
-      ></animate>
-    </rect>
-    <rect x="40" y="61" width="20" height="20" fill="#ffffff">
-      <animate
-        attributeName="fill"
-        values="#a5ceff;#ffffff;#ffffff"
-        keyTimes="0;0.125;1"
-        dur="1s"
-        repeatCount="indefinite"
-        begin="0.625s"
-        calcMode="discrete"
-      ></animate>
-    </rect>
-    <rect x="61" y="61" width="20" height="20" fill="#ffffff">
-      <animate
-        attributeName="fill"
-        values="#a5ceff;#ffffff;#ffffff"
-        keyTimes="0;0.125;1"
-        dur="1s"
-        repeatCount="indefinite"
-        begin="0.5s"
-        calcMode="discrete"
-      ></animate>
-    </rect>
+    <rect
+      v-for="cell in cells"
+      :key="`${cell.x}-${cell.y}`"
+      class="cell"
+      :x="cell.x"
+      :y="cell.y"
+      width="20"
+      height="20"
+      :style="{ '--step': cell.step }"
+    />
   </svg>
 </template>
 
-<script>
-export default {
-  name: "Loader"
-};
+<script setup lang="ts">
+// Eight blocks lighting up in sequence around a ring. `step` is the order the block lights up.
+const cells = [
+  { x: 19, y: 19, step: 0 },
+  { x: 40, y: 19, step: 1 },
+  { x: 61, y: 19, step: 2 },
+  { x: 61, y: 40, step: 3 },
+  { x: 61, y: 61, step: 4 },
+  { x: 40, y: 61, step: 5 },
+  { x: 19, y: 61, step: 6 },
+  { x: 19, y: 40, step: 7 },
+]
 </script>
+
+<style scoped>
+.cell {
+  fill: var(--palette-white);
+  animation: blink var(--duration-loop) var(--ease-linear) infinite;
+  animation-delay: calc(var(--duration-loop) * var(--step) / 8);
+}
+
+@keyframes blink {
+  0% {
+    fill: var(--palette-blue);
+  }
+  12.5%,
+  100% {
+    fill: var(--palette-white);
+  }
+}
+</style>

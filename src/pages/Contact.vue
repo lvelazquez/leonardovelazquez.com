@@ -1,540 +1,328 @@
 <template>
-  <section id="contact" class="container content-section" :class="{ invisible: !isLoaded }">
-    <div class="contact-wrapper">
-      <div>
-        <h2>Contact</h2>
-        <div id="contact-container">
-          <div class="contact-form">
-            <form id="contact_form" @submit.prevent="handleSubmit($event)">
-              <div
-                class="input-group contact-name contact-info"
-                :class="{ warning: !contact.name && submitStatus === 'error' }"
-              >
-                <input
-                  id="contact_name"
-                  type="text"
-                  class="input-field"
-                  name="name"
-                  v-model="contact.name"
-                  placeholder="Your Name"
-                  autocomplete="true"
-                  aria-required="true"
-                />
-              </div>
-              <div
-                class="input-group contact-email contact-info has-feedback"
-                :class="{
-                  warning:
-                    (!contact.email || !validateEmail(contact.email)) && submitStatus === 'error',
-                }"
-              >
-                <input
-                  id="contact_email"
-                  type="text"
-                  class="input-field"
-                  name="email"
-                  v-model="contact.email"
-                  placeholder="Your Email"
-                  autocomplete="true"
-                  aria-required="true"
-                  ref="contactEmail"
-                />
-              </div>
-              <div
-                class="input-group contact-info"
-                :class="{ warning: !contact.title && submitStatus === 'error' }"
-              >
-                <input
-                  id="contact_subject"
-                  type="text"
-                  class="input-field"
-                  name="subject"
-                  placeholder="Subject"
-                  v-model="contact.title"
-                  aria-required="true"
-                  ref="contactSubject"
-                />
-              </div>
-              <div
-                class="input-group contact-message contact-info has-feedback"
-                :class="{
-                  warning: !contact.message && submitStatus === 'error',
-                }"
-              >
-                <textarea
-                  id="contact_message"
-                  class="input-field"
-                  name="message"
-                  aria-required="true"
-                  placeholder="Your Message"
-                  v-model="contact.message"
-                ></textarea>
-              </div>
-
-              <button
-                role="button"
-                id="submit"
-                name="Submit Contact Form"
-                :disabled="submitStatus === 'sending'"
-                type="submit"
-                :class="{ btn: true, sending: submitStatus === 'sending' }"
-              >
-                <transition name="fade">
-                  <div class="loader" v-if="submitStatus === 'sending'">
-                    <div class="loader-container">
-                      <div></div>
-                      <div></div>
-                      <div></div>
-                    </div>
-                  </div>
-                </transition>
-                <span v-if="submitStatus !== 'sending'">
-                  {{ submitStatus !== 'sending' ? 'SUBMIT' : '' }}
-                </span>
-              </button>
-            </form>
-            <div class="message-container" :class="{ warning: !isValid && submitStatus !== '' }">
-              <transition name="fade">
-                <div
-                  v-if="errorMessage !== '' && submitStatus === 'error'"
-                  class="warning-text form-text"
-                >
-                  {{ errorMessage }}
-                </div>
-              </transition>
-              <transition name="fade">
-                <p v-if="submitStatus === 'serverError'" class="email-text">
-                  Please try again later or reach me at
-                  <a href="mailto:leo@leonardovelazquez.com">leo@leonardovelazquez.com</a>
-                </p>
-              </transition>
-              <transition name="fade">
-                <div v-if="submitStatus === 'success'" class="form-text success-text">
-                  Successfully sent!
-                </div>
-              </transition>
-            </div>
-          </div>
+  <section id="contact" class="content-section" aria-labelledby="contact-heading">
+    <h2 id="contact-heading">Contact</h2>
+    <div class="contact-form">
+      <form id="contact_form" novalidate @submit.prevent="handleSubmit">
+        <div
+          v-for="field in fields"
+          :key="field.key"
+          class="input-group"
+          :class="{ warning: hasError(field.key) }"
+        >
+          <label :for="field.id" class="sr-only">{{ field.label }}</label>
+          <textarea
+            v-if="field.multiline"
+            :id="field.id"
+            v-model="contact[field.key]"
+            class="input-field"
+            :name="field.name"
+            :placeholder="field.label"
+            required
+            :aria-invalid="hasError(field.key)"
+            :aria-describedby="hasError(field.key) ? 'contact_status' : undefined"
+          ></textarea>
+          <input
+            v-else
+            :id="field.id"
+            v-model="contact[field.key]"
+            class="input-field"
+            :type="field.type"
+            :name="field.name"
+            :autocomplete="field.autocomplete"
+            :placeholder="field.label"
+            required
+            :aria-invalid="hasError(field.key)"
+            :aria-describedby="hasError(field.key) ? 'contact_status' : undefined"
+          />
         </div>
-        <ul class="banner-social-buttons">
-          <li>
-            <a href="https://www.linkedin.com/in/leovelazquez" class="btn">
-              <i class="icon-linkedin"></i>
-              <span class="network-name">Linked In</span>
-            </a>
-          </li>
-          <li>
-            <a href="https://github.com/lvelazquez" class="btn">
-              <i class="icon-github-circled"></i>
-              <span class="network-name">Github</span>
-            </a>
-          </li>
-        </ul>
+
+        <button id="submit" type="submit" class="submit" :disabled="submitStatus === 'sending'">
+          <span v-if="submitStatus === 'sending'" class="bars" aria-hidden="true">
+            <span></span><span></span><span></span>
+          </span>
+          <span :class="{ 'sr-only': submitStatus === 'sending' }">{{
+            submitStatus === 'sending' ? 'Sending' : 'Submit'
+          }}</span>
+        </button>
+      </form>
+
+      <div id="contact_status" class="message-container" role="status" aria-live="polite">
+        <p v-if="errorMessage" class="form-text warning-text">{{ errorMessage }}</p>
+        <p v-if="submitStatus === 'serverError'" class="email-text">
+          Please try again later or reach me at
+          <a href="mailto:leo@leonardovelazquez.com">leo@leonardovelazquez.com</a>
+        </p>
+        <p v-if="submitStatus === 'success'" class="form-text success-text">Successfully sent!</p>
       </div>
     </div>
-    <MapComponent v-if="renderMap" />
+
+    <ul class="banner-social-buttons">
+      <li>
+        <a href="https://www.linkedin.com/in/leovelazquez" class="btn" rel="noopener">
+          <i class="icon-linkedin" aria-hidden="true"></i>
+          <span class="network-name">Linked In</span>
+        </a>
+      </li>
+      <li>
+        <a href="https://github.com/lvelazquez" class="btn" rel="noopener">
+          <i class="icon-github-circled" aria-hidden="true"></i>
+          <span class="network-name">Github</span>
+        </a>
+      </li>
+    </ul>
   </section>
 </template>
 
-<script>
-import { Map as MapComponent } from '../components/'
-import { every } from 'lodash'
-import 'whatwg-fetch'
+<script setup lang="ts">
+import { reactive, ref } from 'vue'
+import {
+  validateContact,
+  CONTACT_ERROR_TEXT,
+  validateEmail,
+  type ContactForm,
+} from '../lib/validate'
 
-export default {
-  name: 'ContactPage',
-  props: {
-    isLoaded: Boolean,
-    renderMap: Boolean,
-  },
-  components: {
-    MapComponent,
-  },
-  data() {
-    return {
-      isValid: false,
-      submitStatus: '',
-      errorMessage: '',
-      contact: {
-        name: '',
-        email: '',
-        title: '',
-        message: '',
-      },
-    }
-  },
+type Status = '' | 'sending' | 'error' | 'serverError' | 'success'
 
-  methods: {
-    validateForm() {
-      let isValid = every(this.contact, value => value !== '')
-      if (isValid) {
-        isValid = this.validateEmail(this.contact.email)
-        this.$refs.contactEmail.setAttribute('aria-invalid', isValid)
-        if (!isValid) {
-          this.errorMessage = 'Please enter a valid email'
-          this.submitStatus = 'error'
-        }
-      } else {
-        this.errorMessage = 'All fields are required.'
-        this.submitStatus = 'error'
-      }
-      return isValid
-    },
-    validateEmail(email) {
-      const re = /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i
-      return re.test(String(email).toLowerCase())
-    },
-    async handleSubmit(event) {
-      if (event) event.preventDefault()
-      if (event) event.stopPropagation()
-      this.errorMessage = ''
-      this.submitStatus = 'sending'
-      this.isValid = this.validateForm()
-      if (this.isValid) {
-        const response = await fetch('/contact', {
-          body: JSON.stringify(this.contact),
-          cache: 'no-cache',
-          headers: {
-            Accept: 'application/json',
-            'Content-Type': 'application/json',
-          },
-          method: 'POST',
-        })
-        const res = JSON.parse(await response.json())
-        if (res.ok) {
-          this.submitStatus = 'success'
-          setTimeout(() => (this.submitStatus = ''), 2000)
-        } else {
-          this.submitStatus = 'serverError'
-          this.errorMessage = "There's been a server side error."
-        }
-      } else {
-        this.submitStatus = 'error'
-      }
-    },
+const fields: {
+  key: keyof ContactForm
+  id: string
+  name: string
+  label: string
+  type?: string
+  autocomplete?: string
+  multiline?: boolean
+}[] = [
+  {
+    key: 'name',
+    id: 'contact_name',
+    name: 'name',
+    label: 'Your Name',
+    type: 'text',
+    autocomplete: 'name',
   },
+  {
+    key: 'email',
+    id: 'contact_email',
+    name: 'email',
+    label: 'Your Email',
+    type: 'email',
+    autocomplete: 'email',
+  },
+  { key: 'title', id: 'contact_subject', name: 'subject', label: 'Subject', type: 'text' },
+  {
+    key: 'message',
+    id: 'contact_message',
+    name: 'message',
+    label: 'Your Message',
+    multiline: true,
+  },
+]
+
+const contact = reactive<ContactForm>({ name: '', email: '', title: '', message: '' })
+const submitStatus = ref<Status>('')
+const errorMessage = ref('')
+
+function hasError(key: keyof ContactForm) {
+  if (submitStatus.value !== 'error') return false
+  return key === 'email' ? !validateEmail(contact.email) : contact[key].trim() === ''
+}
+
+async function handleSubmit() {
+  errorMessage.value = ''
+  const problem = validateContact(contact)
+  if (problem) {
+    submitStatus.value = 'error'
+    errorMessage.value = CONTACT_ERROR_TEXT[problem]
+    return
+  }
+  submitStatus.value = 'sending'
+  try {
+    const response = await fetch(`${import.meta.env.BASE_URL}api/contact`, {
+      method: 'POST',
+      cache: 'no-cache',
+      headers: { Accept: 'application/json', 'Content-Type': 'application/json' },
+      body: JSON.stringify(contact),
+    })
+    const res = (await response.json()) as { ok?: boolean }
+    if (!response.ok || !res.ok) throw new Error('send failed')
+    submitStatus.value = 'success'
+    Object.assign(contact, { name: '', email: '', title: '', message: '' })
+    setTimeout(() => {
+      if (submitStatus.value === 'success') submitStatus.value = ''
+    }, 5000)
+  } catch {
+    submitStatus.value = 'serverError'
+    errorMessage.value = "There's been a server side error."
+  }
 }
 </script>
 
-<!-- Add "scoped" attribute to limit CSS to this component only -->
-<style scoped lang="scss">
-@use 'sass:color';
-@use '../styles/settings.scss' as *;
-@use '../styles/content.scss' as content;
+<style lang="scss" scoped>
 @use '../styles/media-queries.scss' as media;
 
-.banner-social-buttons {
-  display: flex;
-  text-align: center;
-  margin: 0 auto;
-  flex-direction: column;
-  padding: 0;
-  li {
-    flex: 1;
-    display: inline-block;
-    margin-bottom: 1rem;
-  }
-  @media (min-width: media.$bp-ms) {
-    flex-direction: row;
-    padding: 0 30%;
-    margin: 0 auto;
-  }
-
-  @media (min-width: media.$bp-lg) {
-    padding: 0 35%;
-  }
-}
-
-.btn {
-  font-family: 'Montserrat', Arial, sans-serif;
-  max-width: 10rem;
-  text-align: center;
-  display: inline-block;
-  text-transform: uppercase;
-  border: solid $black-color 1px;
-  border-radius: 6px;
-  color: $black-color;
-  background-color: transparent;
-  transition: all 0.1s ease-in-out;
-  padding: 10px 16px;
-  font-size: 18px;
-  line-height: 1.33;
-  font-weight: 500;
-  i {
-    color: $black-color;
-  }
-}
-
-.btn:hover {
-  color: $white-color;
-  background-color: color.adjust($blue-color, $lightness: -25%);
-  i {
-    color: $white-color;
-  }
-}
-
 #contact {
-  color: $black-color;
-  background-color: $white-color;
-  padding: 0;
-  form {
-    margin-bottom: 0;
-  }
+  color: var(--color-on-surface);
+  background-color: var(--color-surface);
+  padding-bottom: var(--space-10);
 }
 
 .contact-form {
-  max-width: 15rem;
-  margin: 0 auto 0;
+  max-width: 20rem;
+  margin: 0 auto;
   text-align: center;
-  padding: 0 2rem 0;
-  @media (min-width: media.$bp-sm) {
-    padding: 0 3rem 0;
-  }
-  @media (min-width: media.$bp-md) {
-    padding: 0 10rem 0;
-  }
-}
-
-.contact-wrapper {
-  padding-bottom: 6rem;
-  @media (min-width: media.$bp-sm) {
-    padding-bottom: 7rem;
-  }
-  @media (min-width: media.$bp-md) {
-    padding-bottom: 6rem;
-  }
-}
-
-#submit {
-  position: relative;
-  width: 7rem;
-  height: 3rem;
-  font-weight: 600;
-  background-color: $gray-color;
-  border: solid $gray-color 2px;
-  color: $white-color;
-  cursor: pointer;
-  transition: background-color 0.15s ease-out;
-  &.sending {
-    background-color: $white-color;
-  }
-  &:hover {
-    background-color: color.adjust($blue-color, $lightness: -25%);
-    color: $white-color;
-  }
-  &[disabled]:hover {
-    cursor: auto;
-    background-color: $white-color !important;
-    color: $black-color !important;
-  }
-
-  span {
-    position: absolute;
-    transform: translate(-50%, -50%);
-    top: 50%;
-    left: 50%;
-  }
 }
 
 .input-field {
+  display: block;
   width: 100%;
-  border: solid $light-gray-color 2px;
-  border-radius: 5px;
-  margin-bottom: 1rem;
-  outline: none;
-  font-family: 'Open Sans', Helvetica, sans-serif;
-  padding: 0.5rem;
-  box-shadow: none;
-  background: none;
-  &:-webkit-autofill {
-    background-color: transparent !important;
-    -webkit-box-shadow: 0 0 0 100px white inset;
-    z-index: -1;
+  margin-bottom: var(--space-4);
+  padding: var(--space-2);
+  border: 2px solid var(--color-muted);
+  border-radius: var(--radius-sm);
+  color: var(--color-on-surface);
+  background: transparent;
+  font: inherit;
+  font-size: var(--text-sm);
+  resize: none;
+  height: auto;
+
+  &::placeholder {
+    color: var(--color-muted);
+    opacity: 1;
   }
 }
 
-input:-webkit-autofill,
-input:-webkit-autofill:hover,
-input:-webkit-autofill:focus textarea:-webkit-autofill,
-textarea:-webkit-autofill:hover textarea:-webkit-autofill:focus {
-  border: 2px solid $blue-color;
-  -webkit-text-fill-color: $gray-color;
-  -webkit-box-shadow: 0 0 0px 1000px color.adjust($light-gray-color, $lightness: 0.5%) inset;
-  transition: background-color 5000s ease-in-out 0s;
-  input:-webkit-autofill {
-    -webkit-text-fill-color: transparent !important;
-    background-color: transparent;
-  }
-}
-
-input:-webkit-autofill {
-  -webkit-box-shadow: 0 0 0 50px white inset; /* Change the color to your own background color */
-  -webkit-text-fill-color: #333;
+textarea.input-field {
+  height: 7rem;
 }
 
 .warning .input-field {
-  border: solid $warning-color 2px !important;
+  border-color: var(--color-danger);
 }
 
-.message-container.warning {
-  padding: 2rem 0 2rem;
+.btn,
+.submit {
+  font-family: var(--font-display);
+  text-transform: uppercase;
+  font-weight: var(--weight-medium);
+  border-radius: var(--radius-md);
+  cursor: pointer;
+  transition:
+    background-color var(--motion-exit),
+    color var(--motion-exit);
 }
 
-.form-text {
-  color: $blue-color;
-  font-family: 'Open Sans', Helvetica, sans-serif;
-  font-weight: 700;
-  font-size: 1.2rem;
-  white-space: nowrap;
+.btn {
+  display: inline-block;
+  max-width: 10rem;
+  padding: 10px var(--space-4);
+  border: var(--space-hairline) solid var(--color-on-surface);
+  color: var(--color-on-surface);
+  background-color: transparent;
+  font-size: var(--text-md);
+  line-height: 1.33;
+}
+
+.submit {
+  position: relative;
+  width: 7rem;
+  height: 3rem;
+  border: 2px solid var(--color-surface-inverse);
+  color: var(--color-on-surface-inverse);
+  background-color: var(--color-surface-inverse);
+  font-weight: var(--weight-semibold);
+  font-size: var(--text-md);
+}
+
+.btn:hover,
+.submit:hover:not(:disabled) {
+  color: var(--palette-white);
+  background-color: var(--color-accent-strong);
+  border-color: var(--color-accent-strong);
+  transition-duration: var(--duration-medium-fast);
+  transition-timing-function: var(--ease-smooth-out);
+}
+
+.submit:disabled {
+  cursor: progress;
+  color: var(--color-on-surface);
+  background-color: transparent;
 }
 
 .message-container {
-  width: 100%;
   min-height: 1.5rem;
+  margin-top: var(--space-4);
+  p {
+    margin: 0;
+  }
+}
+
+.form-text,
+.email-text {
+  font-weight: var(--weight-bold);
+  font-size: var(--text-lg);
+}
+
+.success-text {
+  color: var(--color-accent-text);
 }
 
 .warning-text {
-  color: $warning-color;
+  color: var(--color-danger);
 }
 
 .email-text {
-  font-family: Montserrat;
-  font-weight: 700;
-  font-size: 1.1rem;
-  margin-bottom: 0;
+  font-family: var(--font-display);
+  font-size: var(--text-md);
+  margin-top: var(--space-2);
+  a {
+    text-decoration: underline;
+  }
 }
 
-@keyframes loader_1 {
-  0% {
-    top: 36px;
-    height: 128px;
+.bars {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-1);
+  height: 1.5rem;
+  span {
+    width: 0.4rem;
+    height: 100%;
+    background: var(--color-accent-strong);
+    transform-origin: center;
+    animation: bar var(--duration-loop) var(--ease-linear) infinite;
+    &:nth-child(2) {
+      animation-delay: calc(var(--duration-loop) * -0.2);
+    }
+    &:nth-child(3) {
+      animation-delay: calc(var(--duration-loop) * -0.4);
+    }
+  }
+}
+
+@keyframes bar {
+  0%,
+  100% {
+    transform: scaleY(1);
   }
   50% {
-    top: 60px;
-    height: 80px;
-  }
-  100% {
-    top: 60px;
-    height: 80px;
+    transform: scaleY(0.4);
   }
 }
 
-@-webkit-keyframes loader_1 {
-  0% {
-    top: 36px;
-    height: 128px;
+.banner-social-buttons {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin: var(--space-6) auto 0;
+  li {
+    margin-bottom: var(--space-4);
   }
-  50% {
-    top: 60px;
-    height: 80px;
+  @media (min-width: media.$bp-ms) {
+    flex-direction: row;
+    justify-content: center;
+    gap: var(--space-5);
   }
-  100% {
-    top: 60px;
-    height: 80px;
-  }
-}
-
-@keyframes loader_2 {
-  0% {
-    top: 41.99999999999999px;
-    height: 116.00000000000001px;
-  }
-  50% {
-    top: 60px;
-    height: 80px;
-  }
-  100% {
-    top: 60px;
-    height: 80px;
-  }
-}
-
-@-webkit-keyframes loader_2 {
-  0% {
-    top: 41.99999999999999px;
-    height: 116.00000000000001px;
-  }
-  50% {
-    top: 60px;
-    height: 80px;
-  }
-  100% {
-    top: 60px;
-    height: 80px;
-  }
-}
-
-@keyframes loader_3 {
-  0% {
-    top: 48px;
-    height: 104px;
-  }
-  50% {
-    top: 60px;
-    height: 80px;
-  }
-  100% {
-    top: 60px;
-    height: 80px;
-  }
-}
-
-@-webkit-keyframes loader_3 {
-  0% {
-    top: 48px;
-    height: 104px;
-  }
-  50% {
-    top: 60px;
-    height: 80px;
-  }
-  100% {
-    top: 60px;
-    height: 80px;
-  }
-}
-
-.loader {
-  position: relative;
-  margin-top: -10px;
-  pointer-events: none;
-}
-
-.loader div {
-  position: absolute;
-  width: 30px;
-}
-
-.loader div:nth-child(1) {
-  left: 35px;
-  background: #dce4eb;
-  animation: loader_1 1s cubic-bezier(0, 0.5, 0.5, 1) infinite;
-  animation-delay: -0.2s;
-}
-
-.loader div:nth-child(2) {
-  left: 85px;
-  background: #bbcedd;
-  animation: loader_2 1s cubic-bezier(0, 0.5, 0.5, 1) infinite;
-  animation-delay: -0.1s;
-}
-
-.loader div:nth-child(3) {
-  left: 135px;
-  background: #85a2b6;
-  animation: loader_3 1s cubic-bezier(0, 0.5, 0.5, 1) infinite;
-}
-
-.loader {
-  transform: translate(-31px, -31px) scale(0.31) translate(31px, 31px);
-}
-
-.fade-enter-active,
-.fade-leave-active {
-  transition: opacity 0.5s;
-}
-
-.fade-enter, .fade-leave-to /* .fade-leave-active below version 2.1.8 */ {
-  opacity: 0;
 }
 </style>

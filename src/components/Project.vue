@@ -1,256 +1,226 @@
 <template>
-  <div class="project-wrapper mobileModal" :class="{ modalOpen: modalOpen }">
+  <div
+    class="project-wrapper mobile-modal"
+    :class="{ 'modal-open': isProjectModalOpen }"
+    role="region"
+    :aria-label="`Project: ${project.title}`"
+    @keydown.esc="emit('close')"
+  >
     <div class="project-header">
-      <h2 class="title">{{ currentProject.title }}</h2>
-      <button @click="handleClose" class="close-btn icon-close" aria-label="Close"></button>
+      <h3 class="title">{{ project.title }}</h3>
+      <button
+        ref="closeBtn"
+        type="button"
+        class="close-btn"
+        aria-label="Close project"
+        @click="emit('close')"
+      >
+        <i class="icon-close" aria-hidden="true"></i>
+      </button>
     </div>
-    <div class="carousel">
+    <div class="carousel" role="group" aria-roledescription="carousel" aria-label="Project images">
       <div
         class="carousel-wrapper"
-        :style="`backgroundColor: ${hexToRGB(currentProject.backgroundColor)}`"
+        :style="{ backgroundColor: hexToRgba(project.backgroundColor) }"
       >
         <div
+          v-for="(image, index) in project.images"
+          :key="`${currentProjectId}-${index}`"
           class="item"
+          role="group"
+          aria-roledescription="slide"
+          :aria-label="`Image ${index + 1} of ${project.images.length}`"
+          :aria-hidden="currentImageIndex !== index"
+          :inert="currentImageIndex !== index"
           :style="
-            currentImageIndex !== index ? { transform: `translate(${200 * direction}%, 0)` } : ''
+            currentImageIndex !== index
+              ? { transform: `translate(${200 * direction}%, 0)` }
+              : undefined
           "
-          v-for="(image, index) in currentProject.images"
-          v-bind:key="index"
-          :class="{
-            active: currentImageIndex === index,
-            past: previousImageIndex === index,
-          }"
+          :class="{ active: currentImageIndex === index, past: previousImageIndex === index }"
         >
           <img
-            :key="`${currentProjectId}-${index}`"
             loading="lazy"
-            :alt="`${currentProject.title} ${index}`"
-            @load="handleLoader"
-            :src="loadImage(image.image_url)"
-            @error="console.log('Image failed to load:', loadImage(image.image_url))"
+            decoding="async"
+            :alt="`${project.title}, screenshot ${index + 1}`"
+            :src="imageUrl(image.image_url)"
+            @load="isLoading = false"
+            @error="isLoading = false"
           />
-          <div v-if="currentImageIndex === index && isLoading" class="loader">
-            <Loader />
-          </div>
         </div>
-        <div :class="{ loading: isLoading, loader: true }">
-          <Loader />
+        <div class="loader" :class="{ loading: isLoading }" aria-hidden="true">
+          <Loader v-if="isLoading" />
         </div>
         <div class="controls">
-          <div @click="handleUpdate(-1)" class="overlay-btn overlay-left"></div>
-          <div @click="handleUpdate(1)" class="overlay-btn overlay-right"></div>
+          <div class="overlay-btn overlay-left" aria-hidden="true" @click="step(-1)"></div>
+          <div class="overlay-btn overlay-right" aria-hidden="true" @click="step(1)"></div>
           <button
-            aria-label="Left Carousel Control"
+            type="button"
+            aria-label="Previous image"
             class="carousel-control carousel-left"
-            @click="handleUpdate(-1)"
+            @click="step(-1)"
           >
-            <span class="icon-left-open"></span>
+            <span class="icon-left-open" aria-hidden="true"></span>
           </button>
           <button
-            aria-label="Left Carousel Control"
+            type="button"
+            aria-label="Next image"
             class="carousel-control carousel-right"
-            @click="handleUpdate(1)"
+            @click="step(1)"
           >
-            <span class="icon-right-open"></span>
+            <span class="icon-right-open" aria-hidden="true"></span>
           </button>
         </div>
       </div>
       <div class="carousel-details">
         <ol class="carousel-indicators">
-          <li
-            v-for="(image, index) in currentProject.images"
-            v-bind:key="index"
-            :class="{ active: currentImageIndex === index }"
-            @click="handleImageClick(index)"
-          />
+          <li v-for="(_, index) in project.images" :key="index">
+            <button
+              type="button"
+              class="indicator"
+              :class="{ active: currentImageIndex === index }"
+              :aria-label="`Show image ${index + 1}`"
+              :aria-current="currentImageIndex === index"
+              @click="goTo(index)"
+            ></button>
+          </li>
         </ol>
-        <div class="carousel-caption">{{ currentProject.description }}</div>
+        <p class="carousel-caption" aria-live="polite">{{ project.description }}</p>
       </div>
     </div>
   </div>
 </template>
 
-<script>
+<script setup lang="ts">
+import { ref, computed, watch, nextTick, onBeforeUnmount } from 'vue'
 import projectData from '../data'
-import { get } from 'lodash'
 import config from '../config'
-import EventBus from '../EventBus'
 import Loader from './Loader.vue'
+import { hexToRgba } from '../lib/color'
 
-export default {
-  name: 'ProjectView',
-  components: { Loader },
-  data() {
-    return {
-      direction: 1,
-      currentImageIndex: 0,
-      previousImageIndex: null,
-      isLoading: true,
-    }
-  },
-  props: {
-    currentProjectId: {
-      type: String,
-      default: Object.keys(projectData)[0],
-    },
-    isProjectModalOpen: {
-      default: false,
-      type: Boolean,
-    },
-    cloudinaryUrl: {
-      default: config.cloudinaryUrl,
-      type: String,
-    },
-  },
-  computed: {
-    currentProject: {
-      get: function () {
-        return projectData[this.currentProjectId]
-      },
-      set: function (newValue) {
-        this.getProject(this.currentProjectId)
-        this.currentProject = newValue
-      },
-    },
-    modalOpen: function () {
-      return this.isProjectModalOpen
-    },
-  },
-  mounted() {
-    this.handleLoader = this.handleLoader.bind(this)
-    this.getProject = this.getProject.bind(this)
-    EventBus.on('project.changed', id => this.getProject(id))
-  },
-  unmounted() {
-    EventBus.off('project.changed')
-  },
-  methods: {
-    loadImage(item) {
-      const imgURL = `${config.cloudinaryUrl}f_auto/${item}`
-      return imgURL
-    },
-    getProject(id) {
-      if (!projectData[id]) return
-      this.isLoading = true
-      this.currentImageIndex = 0
-      this.previousImageIndex = null
-    },
-    handleLoader() {
-      this.isLoading = false
-    },
-    handleUpdate(dir) {
-      this.direction = dir
-      let index = this.currentImageIndex + dir
+const props = defineProps<{ currentProjectId: string; isProjectModalOpen: boolean }>()
+const emit = defineEmits<{ close: [] }>()
 
-      const imagesLength = get(this.currentProject, 'images.length')
-      if (index > imagesLength - 1) {
-        index = 0
-      } else if (index < 0) {
-        index = imagesLength - 1
-      }
-      this.previousImageIndex = this.currentImageIndex
+const direction = ref(1)
+const currentImageIndex = ref(0)
+const previousImageIndex = ref<number | null>(null)
+const isLoading = ref(true)
+const closeBtn = ref<HTMLButtonElement | null>(null)
+let stepTimer: ReturnType<typeof setTimeout> | undefined
 
-      const interval = setTimeout(() => {
-        this.currentImageIndex = index
-        clearTimeout(interval)
-      }, 250)
-    },
-    handleClose() {
-      this.$emit('update:isProjectModalOpen', false)
-    },
-    hexToRGB(hex, opacity = 0.65) {
-      hex = hex.replace('#', '')
-      return `rgba(${parseInt(hex.substring(0, 2), 16)},${parseInt(
-        hex.substring(2, 4),
-        16
-      )},${parseInt(hex.substring(4, 6), 16)}, ${opacity})`
-    },
-    handleImageClick(index) {
-      this.previousImageIndex = this.currentImageIndex
-      this.currentImageIndex = index
-      this.isLoading = true
-    },
-  },
+const project = computed(() => projectData[props.currentProjectId] ?? Object.values(projectData)[0])
+
+const imageUrl = (file: string) =>
+  `${config.cloudinaryUrl}image/upload/f_auto,q_auto,c_limit,w_1200/${file}`
+
+watch(
+  () => props.currentProjectId,
+  () => {
+    isLoading.value = true
+    currentImageIndex.value = 0
+    previousImageIndex.value = null
+  }
+)
+
+// On phones the project opens as a full-width panel: move focus into it.
+watch(
+  () => props.isProjectModalOpen,
+  open => {
+    if (open) nextTick(() => closeBtn.value?.focus())
+  }
+)
+
+function goTo(index: number) {
+  previousImageIndex.value = currentImageIndex.value
+  currentImageIndex.value = index
+  isLoading.value = true
 }
+
+function step(dir: number) {
+  direction.value = dir
+  const count = project.value.images.length
+  const next = (currentImageIndex.value + dir + count) % count
+  previousImageIndex.value = currentImageIndex.value
+  clearTimeout(stepTimer)
+  stepTimer = setTimeout(() => (currentImageIndex.value = next), 250)
+}
+
+onBeforeUnmount(() => clearTimeout(stepTimer))
 </script>
 
 <style lang="scss" scoped>
-@use '../styles/settings.scss' as *;
 @use '../styles/media-queries.scss' as media;
 
 .project-wrapper {
   position: fixed;
-  top: 3.75rem;
+  top: var(--navbar-height, var(--size-navbar));
   left: 0;
   width: 100%;
+  z-index: 900;
   @media (min-width: media.$bp-ms) {
     position: relative;
     top: 0;
-    box-sizing: border-box;
-    padding: 0 1rem;
+    z-index: auto;
+    padding: 0 var(--space-4);
   }
 }
-.mobileModal {
+
+.mobile-modal {
   display: none;
   @media (min-width: media.$bp-ms) {
     display: block;
   }
 }
 
-.modalOpen {
-  display: flex !important;
+.modal-open {
+  display: flex;
   flex-direction: column;
+  @media (min-width: media.$bp-ms) {
+    display: block;
+  }
 }
 
 .project-header {
   position: relative;
   width: 100%;
-  overflow: ellipsis;
-  display: inline-block;
-  background-color: rgba($black-color, 0.95);
-  padding: 1.5rem 1rem 1.5rem;
-  & .title {
-    text-align: left;
-    font-size: 1.2rem;
-    margin: 0;
-    padding: 0;
-    display: inline-block;
-    width: 90%;
-  }
+  background-color: var(--color-scrim-strong);
+  padding: var(--space-5) var(--space-4);
   @media (min-width: media.$bp-ms) {
-    & .title {
-      white-space: nowrap;
-      width: 90%;
-      font-size: 2rem;
-      text-align: center;
-      margin: 0;
-      padding: 0;
-    }
     background-color: transparent;
     max-width: calc(50vw - 2rem);
-    padding: 3rem 0 0;
-    margin: 0 0 35px;
+    padding: var(--space-7) 0 0;
+    margin: 0 0 2.2rem;
+  }
+}
+
+.title {
+  display: inline-block;
+  width: 85%;
+  margin: 0;
+  font-size: 1.2rem;
+  text-align: left;
+  @media (min-width: media.$bp-ms) {
+    width: 100%;
+    font-size: var(--text-2xl);
+    text-align: center;
   }
 }
 
 .close-btn {
   position: absolute;
+  top: 50%;
+  right: var(--space-2);
+  min-width: var(--size-touch);
+  min-height: var(--size-touch);
+  transform: translateY(-50%);
   background: none;
   border: none;
-  width: 10%;
-  top: 50%;
-  color: white;
-  transform: translateY(-50%);
-  right: 2em;
-  font-size: 1rem;
+  color: var(--color-on-media);
+  font-size: var(--text-sm);
+  cursor: pointer;
   @media (min-width: media.$bp-ms) {
     display: none;
   }
-}
-
-.project-container a,
-.project-container a:hover {
-  text-decoration: underline;
 }
 
 .loader {
@@ -259,9 +229,11 @@ export default {
   left: 50%;
   transform: translate(-50%, -50%);
   opacity: 0;
-  transition: opacity 0.5s ease-out;
+  pointer-events: none;
+  transition: opacity var(--motion-exit);
   &.loading {
     opacity: 1;
+    transition: opacity var(--motion-enter);
   }
 }
 
@@ -272,30 +244,23 @@ export default {
 .carousel-wrapper {
   position: relative;
   display: flex;
+  align-items: center;
   width: 100%;
   height: 70vh;
-  background-color: rgba($white-color, 0.6);
-  transition: background-color 0.75s ease-out;
   overflow: hidden;
-  align-items: center;
-  border-radius: 5px;
+  border-radius: var(--radius-sm);
+  background-color: var(--color-control-surface);
+  transition: background-color var(--duration-slow) var(--ease-smooth-out);
 }
 
 .controls {
   width: 100%;
-  transition: opacity 0.5s ease-out;
-  opacity: 1;
   height: 100%;
   .overlay-btn {
     position: absolute;
     width: 50%;
     height: inherit;
     cursor: pointer;
-    outline: none;
-    &:focus {
-      outline: none;
-      border: none;
-    }
   }
   .overlay-left {
     left: 0;
@@ -305,122 +270,92 @@ export default {
   }
   @media (min-width: media.$bp-ms) {
     opacity: 0;
-    &:hover {
+    transition: opacity var(--motion-exit);
+    &:hover,
+    &:focus-within {
       opacity: 1;
+      transition: opacity var(--motion-enter);
     }
   }
 }
 
 .item {
   position: absolute;
+  left: 50%;
+  width: calc(100% - 3rem);
+  height: 100%;
   opacity: 0;
   pointer-events: none;
   transform: translate(200%, 0);
-  left: 50%;
-  transition: transform 0.45s ease-out;
-  width: calc(100% - 3rem);
-  height: 100%;
+  transition: transform var(--duration-medium) var(--ease-smooth-out);
   &.active {
-    transform: translate(-50%, 0);
     opacity: 1;
+    transform: translate(-50%, 0);
   }
   &.past {
-    transform: translate(-50%, 0);
-    transition: opacity 0.35s ease-out;
     opacity: 0;
+    transform: translate(-50%, 0);
+    transition: opacity var(--motion-exit);
   }
   img {
-    display: inline-block;
+    display: block;
     width: 100%;
-    object-fit: contain;
     height: 100%;
-    position: relative;
+    object-fit: contain;
   }
-}
-
-.carousel-right,
-.carousel-left {
-  opacity: 1;
-  @media (min-width: media.$bp-ms) {
-    opacity: 0.8;
-    &:hover {
-      opacity: 1;
-    }
-  }
-}
-
-.carousel-right {
-  right: 0;
-}
-
-.carousel-left {
-  left: 0;
 }
 
 .carousel-control {
   position: absolute;
   top: calc(50% - 2.5rem);
-  border: none;
-  outline: none;
   width: 3rem;
   height: 5rem;
-  background-color: rgba($white-color, 0.85);
+  border: none;
+  color: var(--palette-ink);
+  background-color: var(--color-control-surface);
   cursor: pointer;
-  transition: opacity 0.25s ease-out;
+  &.carousel-left {
+    left: 0;
+  }
+  &.carousel-right {
+    right: 0;
+  }
 }
 
 .carousel-indicators {
-  display: table;
-  padding: 1rem 0 0;
-  margin: 0 auto 0;
-  z-index: 1000;
-  li {
-    background-color: $white-color;
-    margin-left: 5px;
-    cursor: pointer;
-    list-style: none;
-    border-radius: 20px;
-    width: 0.75rem;
-    height: 0.75rem;
-    float: left;
-    border: solid $blue-color 1px;
-    &.active {
-      background-color: $blue-color;
-    }
+  display: flex;
+  justify-content: center;
+  gap: var(--space-1);
+  padding: var(--space-4) 0 0;
+}
+
+.indicator {
+  width: 0.75rem;
+  height: 0.75rem;
+  padding: 0;
+  border: var(--space-hairline) solid var(--color-accent);
+  border-radius: var(--radius-pill);
+  background-color: var(--palette-white);
+  cursor: pointer;
+  /* Visual dot stays small; the hit area grows to a comfortable target. */
+  position: relative;
+  &::after {
+    content: '';
+    position: absolute;
+    inset: -0.6rem;
+  }
+  &.active {
+    background-color: var(--color-accent);
   }
 }
 
 .carousel-caption {
-  font-family: Roboto, Helvetica, Arial, serif;
-  padding: 1rem;
-  letter-spacing: 1px;
-  color: $white-color;
-  font-weight: 400;
-  font-size: 1.3rem;
-}
-
-.link {
-  font-family: 'Montserrat', Helvetica, sans-serif;
-}
-
-.project h2 {
-  text-transform: capitalize;
-  font-weight: 400;
-  text-align: left;
-  position: absolute;
-  top: -9rem;
-}
-
-.fade-enter-active,
-.fade-leave-active {
-  transition: opacity 1s;
-}
-.fade-enter-from,
-.fade-leave-to {
-  opacity: 0;
-}
-.fade-enter-to,
-.fade-leave-from {
-  opacity: 1;
+  margin: 0;
+  padding: var(--space-4);
+  font-family: var(--font-body);
+  font-size: var(--text-lg);
+  font-weight: var(--weight-regular);
+  letter-spacing: var(--tracking-wide);
+  color: var(--color-on-media);
 }
 </style>
