@@ -1,0 +1,52 @@
+# Manual deploy to GitHub Pages. Requires Settings > Pages > Source: "GitHub Actions".
+# Pages is static, so the Express contact endpoint is not available there (the form shows its
+# mailto fallback). Use `base_path` = /leonardovelazquez.com/ when serving from
+# lvelazquez.github.io/leonardovelazquez.com, or / when a custom domain points at Pages.
+name: Deploy to GitHub Pages
+
+on:
+  workflow_dispatch:
+    inputs:
+      base_path:
+        description: Public base path of the site
+        default: /
+        required: true
+
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
+concurrency:
+  group: pages
+  cancel-in-progress: false
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: npm
+      - run: npm ci
+      - run: npm test
+      - run: npm run build
+        env:
+          BASE_PATH: ${{ inputs.base_path }}
+      # Deep links like /work/wgl have no file on Pages; serving the app from 404.html makes them load.
+      - run: cp dist/index.html dist/404.html
+      - uses: actions/upload-pages-artifact@v3
+        with:
+          path: dist
+
+  deploy:
+    needs: build
+    runs-on: ubuntu-latest
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    steps:
+      - id: deployment
+        uses: actions/deploy-pages@v4
