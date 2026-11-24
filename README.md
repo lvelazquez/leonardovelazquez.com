@@ -40,7 +40,7 @@ npm run dev:server   # optional: contact-form API on http://localhost:3001
 | `npm start`                           | Run the Express server (serves `dist/` + API)      |
 | `npm run deploy`                      | Publish `dist/` to the `gh-pages` branch           |
 
-CI (`.github/workflows/ci.yml`) runs lint, format check, typecheck, tests and build on every push and pull request.
+CI is provided as a template, `docs/workflows/ci.yml` (lint, format check, typecheck, tests, build on Node 22 and 24). It lives in `docs/` only because the token used to prepare this branch could not create files under `.github/workflows/`; to enable it run `mkdir -p .github/workflows && git mv docs/workflows/*.yml .github/workflows/`.
 
 ## The `server/` directory
 
@@ -67,7 +67,7 @@ npm start            # Express serves dist/ and the contact API; put it behind y
 ```
 
 Static hosting also works, but without the Express server the contact form falls back to the
-mailto link. `.github/workflows/deploy.yml` is a manual GitHub Pages deploy (set Pages source to
+mailto link. `docs/workflows/deploy.yml` is a manual GitHub Pages deploy (set Pages source to
 "GitHub Actions"); pass the public base path, `/` for a custom domain or `/leonardovelazquez.com/`
 for the default project URL. The router is base-path aware (`BASE_PATH` at build time).
 
