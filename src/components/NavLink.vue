@@ -1,48 +1,21 @@
 <template>
   <a
-    :href="`${to}`"
-    v-scroll-to="{ offset: navOffset, el: `#${this.sectionId}` }"
-    :data-id="`${this.sectionId}`"
-    @click="handleClick"
+    :href="href"
+    :aria-current="current ? 'location' : undefined"
+    @click.prevent="emit('navigate', sectionId)"
   >
-    <slot></slot>
+    <slot />
   </a>
 </template>
 
-<script>
-import { useScrollTo } from 'vue-scrollto'
-import EventBus from '../EventBus'
+<script setup lang="ts">
+import { computed } from 'vue'
+import type { SectionId } from '../lib/sections'
+import { buildPath } from '../lib/sections'
 
-export default {
-  name: 'NavLink',
-  props: {
-    to: String,
-    navOffset: {
-      default: -80,
-      type: Number,
-    },
-  },
-  data() {
-    return {
-      sectionId: '',
-    }
-  },
-  mounted() {
-    this.sectionId = this.to === '/' ? 'intro' : this.to.replace('/', '')
-  },
-  methods: {
-    handleClick(e) {
-      e.preventDefault()
-      if (this.to !== location.pathname) {
-        EventBus.emit('routechange')
-      }
-    },
-  },
-}
+const props = defineProps<{ to: SectionId; current?: boolean }>()
+const emit = defineEmits<{ navigate: [id: SectionId] }>()
+
+const sectionId = computed(() => props.to)
+const href = computed(() => buildPath(props.to, null, import.meta.env.BASE_URL))
 </script>
-
-<style>
-a {
-  cursor: pointer;
-}
-</style>

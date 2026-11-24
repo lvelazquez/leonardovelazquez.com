@@ -1,100 +1,91 @@
 <template>
-  <div :class="{ loaded: isLoaded }">
+  <div class="background" :class="{ loaded: isLoaded }" aria-hidden="true">
     <video
-      id="site-background"
-      v-once
-      :poster="`${cloudinaryUrl}video/upload/f_auto/lakehi.jpg`"
-      autoplay
+      ref="video"
+      :poster="`${config.cloudinaryUrl}video/upload/f_auto,q_auto/lakehi.jpg`"
       preload="auto"
       loop
       muted
       playsinline
+      tabindex="-1"
     >
-      <source v-once :src="`${cloudinaryUrl}video/upload/f_auto/lakehi.mp4`" type="video/mp4">
+      <source
+        :src="`${config.cloudinaryUrl}video/upload/f_auto,q_auto/lakehi.mp4`"
+        type="video/mp4"
+      />
     </video>
+    <div class="scrim"></div>
   </div>
 </template>
 
-<script>
-import config from "../config";
+<script setup lang="ts">
+import { ref, watch, onMounted, onBeforeUnmount } from 'vue'
+import config from '../config'
+import { prefersReducedMotion } from '../lib/motion'
 
-export default {
-  name: "Background",
-  props: {
-    isPlaying: {
-      type: Boolean,
-      default: false
-    },
-    onReady: Function,
-    cloudinaryUrl: {
-      type: String,
-      default: config.cloudinaryUrl
-    }
-  },
-  data() {
-    return {
-      isLoaded: false
-    };
-  },
-  mounted() {
-    this.video = document.getElementById("site-background");
-    this.handlePlay = this.handlePlay.bind(this);
-    if (this.video.readyState >= this.video.HAVE_FUTURE_DATA) {
-      setTimeout(this.handlePlay, 10);
-    } else {
-      this.video.addEventListener("canplay", this.handlePlay);
-    }
+const props = defineProps<{ isPlaying: boolean }>()
+const emit = defineEmits<{ 'is-ready': [] }>()
 
-    setTimeout(() => {
-      if (!this.isLoaded) {
-        this.handlePlay();
-      }
-    }, 4000);
-  },
-  watch: {
-    isPlaying(newVal) {
-      try {
-        if (newVal) {
-          this.video.play();
-        } else {
-          this.video.pause();
-        }
-      } catch (err) {
-        // console.error(
-        //   `error auto playing, good job if you have this blocked in your browser :P ${err}`
-        // );
-      }
-    }
-  },
-  destroyed() {
-    this.video.removeEventListener("canplay", this.handlePlay);
-  },
-  methods: {
-    handlePlay() {
-      this.video.removeEventListener("canplay", this.handlePlay);
-      this.isLoaded = true;
-      this.$emit("is-ready");
-    }
-  }
-};
-</script>
+const video = ref<HTMLVideoElement | null>(null)
+const isLoaded = ref(false)
+let fallbackTimer: ReturnType<typeof setTimeout> | undefined
 
-<!-- Add "scoped" attribute to limit CSS to this component only -->
-<style lang="scss" scoped>
-#site-background {
-  position: fixed;
-  overflow: hidden;
-  z-index: -1000;
-  min-width: 100%;
-  min-height: 100%;
-  opacity: 0;
-  margin: 0;
-  right: 0;
-  bottom: 0;
-  transition: opacity 1s ease-out;
+function ready() {
+  if (isLoaded.value) return
+  isLoaded.value = true
+  emit('is-ready')
 }
 
-.loaded video {
-  opacity: 1 !important;
+function setPlaying(playing: boolean) {
+  const el = video.value
+  if (!el) return
+  // Reduced motion: show the still poster frame and never start playback.
+  if (!playing || prefersReducedMotion()) el.pause()
+  else el.play().catch(() => {}) // autoplay can be blocked by the browser; the poster stays visible
+}
+
+watch(() => props.isPlaying, setPlaying)
+
+onMounted(() => {
+  const el = video.value
+  if (!el) return
+  if (el.readyState >= el.HAVE_FUTURE_DATA || prefersReducedMotion()) ready()
+  else el.addEventListener('canplay', ready, { once: true })
+  fallbackTimer = setTimeout(ready, 4000)
+})
+
+onBeforeUnmount(() => {
+  clearTimeout(fallbackTimer)
+  video.value?.removeEventListener('canplay', ready)
+})
+</script>
+
+<style scoped>
+.background {
+  position: fixed;
+  inset: 0;
+  z-index: -1;
+  overflow: hidden;
+  opacity: 0;
+  transition: opacity var(--duration-extra-slow) var(--ease-smooth-out);
+}
+
+.background.loaded {
+  opacity: 1;
+}
+
+video {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+/* Keeps light text readable over bright frames of the video (WCAG AA). */
+.scrim {
+  position: absolute;
+  inset: 0;
+  background: var(--color-scrim);
 }
 </style>

@@ -1,224 +1,134 @@
 <template>
-  <div id="app">
+  <a class="skip-link" href="#main" @click.prevent="skipToMain">Skip to main content</a>
+  <header>
     <main-nav
-      :resume-link="resumeLink"
+      :resume-link="RESUME_LINK"
       :current-section-id="currentSectionId"
-      :is-nav-hidden="`${isNavHidden}`"
-      :nav-offset="-navHeight"
+      :hidden="isNavHidden"
+      @navigate="goTo"
     />
-    <background :is-playing="isVideoPlaying" @is-ready="onReady" />
-    <intro :nav-offset="-navHeight" :is-loaded="isLoaded" />
+  </header>
+  <background :is-playing="isVideoPlaying" @is-ready="onReady" />
+  <main id="main" tabindex="-1">
+    <intro :is-loaded="isLoaded" @navigate="goTo" />
     <work
-      :is-active="currentSectionId === 'work'"
-      :is-loaded="isLoaded"
-      :isProjectModalOpen="isProjectModalOpen"
-      :currentProjectId="projectId"
+      :is-project-modal-open="isProjectModalOpen"
+      :current-project-id="projectId"
+      @select="selectProject"
+      @close="closeProject"
     />
-    <about :is-loaded="isLoaded" />
-    <contact :is-loaded="isLoaded" :render-map="true" />
-  </div>
+    <about />
+    <contact />
+  </main>
 </template>
 
-<script setup>
-import { ref, onMounted, onBeforeUnmount, nextTick, watch } from 'vue'
-import { throttle } from 'lodash'
+<script setup lang="ts">
+import { ref, onMounted, onBeforeUnmount } from 'vue'
 import { Intro, Work, About, Contact } from './pages/'
 import { MainNav, Background } from './components/'
 import projectData from './data'
-import EventBus from './EventBus'
-import { useRoute } from 'vue-router'
 import { useScrollToSection } from './composables/useScrollToSection'
+import { parsePath, buildPath, activeSection, type SectionId } from './lib/sections'
+import { throttle, scrollBehavior } from './lib/motion'
 
-const RESUME_LINK = `https://docs.google.com/document/d/1JaojBFdGMaM_Hm5qHArmPrXSBguRnJSmCM-q7t6ruBc/export?format=pdf`
+const RESUME_LINK =
+  'https://docs.google.com/document/d/1JaojBFdGMaM_Hm5qHArmPrXSBguRnJSmCM-q7t6ruBc/export?format=pdf'
+const BASE = import.meta.env.BASE_URL
+const MOBILE_MAX = 767
 
-const currentSectionId = ref(null)
+const currentSectionId = ref<SectionId>('intro')
 const isLoaded = ref(false)
 const isVideoPlaying = ref(false)
 const isNavHidden = ref(true)
-const navHeight = ref(null)
-const resumeLink = ref(RESUME_LINK)
-const projectId = ref(Object.keys(projectData)[0])
+const navHeight = ref<number | null>(null)
+const projectId = ref<string>(Object.keys(projectData)[0])
 const isProjectModalOpen = ref(false)
-const navItems = ref([])
-const sections = ref([])
-
-const route = useRoute()
 
 const { scrollToSection } = useScrollToSection(navHeight)
 
-watch(
-  () => route && (route.fullPath || route.path || '/'),
-  newPath => {
-    let sectionId = newPath === '/' ? 'intro' : newPath.replace('/', '')
-    scrollToSection(sectionId)
-  }
-)
-
-const handleRouteChange = sectionId => {
-  history.replaceState(null, null, sectionId)
-  const selector = `#${sectionId}`
-  if (sectionId && document.querySelector(selector)) {
-    const el = document.querySelector(selector)
-    if (el) {
-      el.scrollIntoView({ behavior: 'smooth', block: 'start' })
-      if (navHeight.value) {
-        window.scrollBy({ top: -navHeight.value, behavior: 'instant' })
-      }
-    }
-  }
+function skipToMain() {
+  const main = document.getElementById('main')
+  main?.focus({ preventScroll: true })
+  main?.scrollIntoView({ behavior: scrollBehavior() })
 }
 
-const handleResize = () => {
-  navHeight.value = document.querySelector('.navbar').offsetHeight
+function measureNav() {
+  navHeight.value = document.querySelector<HTMLElement>('.navbar')?.offsetHeight ?? null
+  if (navHeight.value)
+    document.documentElement.style.setProperty('--navbar-height', `${navHeight.value}px`)
 }
 
-const handleScroll = () => {
-  if (window.scrollY > 40) {
-    isVideoPlaying.value = false
-  } else {
-    isVideoPlaying.value = true
-  }
-  isNavHidden.value = window.scrollY === 0
-  const scrollY = window.scrollY + navHeight.value
-  updateSections(scrollY)
+function goTo(id: SectionId) {
+  isProjectModalOpen.value = false
+  scrollToSection(id)
 }
 
-const handlePopstate = e => {
-  e.preventDefault()
-
-  const keys = window.location.pathname.split('/')
-  const sectionId = keys[1]
-  if (window.innerWidth > 750) {
-    const el = document.querySelector(`#${sectionId}`)
-    if (el) {
-      el.scrollIntoView({ behavior: 'smooth', block: 'start' })
-    }
-  }
-  if (sectionId === 'work' && keys.length > 2) {
-    projectId.value = keys[2]
-    isProjectModalOpen.value = true
-  } else {
-    isProjectModalOpen.value = false
-  }
-}
-
-const updateRoute = id => {
-  if (id !== currentSectionId.value) {
-    currentSectionId.value = id
-    if (id === 'work' && projectId.value) {
-      id = `work/${projectId.value}`
-      isProjectModalOpen.value = true
-    } else if (id === 'intro') {
-      id = ''
-    }
-    isProjectModalOpen.value = false
-    history.replaceState(null, null, `/${id}`)
-  }
-}
-
-const updateSections = scrollY => {
-  const currentRoute = window.location.pathname.split('/')[1]
-  sections.value = document.querySelectorAll('section')
-  sections.value.forEach(section => {
-    section.classList.remove('active')
-    const currentId = section.getAttribute('id')
-    if (scrollY >= section.offsetTop && scrollY < section.offsetTop + section.offsetHeight) {
-      if (currentId !== currentRoute) {
-        updateRoute(currentId)
-        updateNavItems(currentId)
-      }
-    }
-  })
-}
-
-const updateNavItems = currentRoute => {
-  if (!currentRoute) return
-  navItems.value.forEach(navItem => {
-    if (currentRoute === navItem.getAttribute('data-id')) {
-      navItem.classList.add('active')
-    } else {
-      navItem.classList.remove('active')
-    }
-  })
-}
-
-const onReady = () => {
-  isLoaded.value = true
-  isVideoPlaying.value = true
-  nextTick(() => {
-    const keys = window.location.pathname.split('/')
-    const sectionId = keys[1] === '' ? 'intro' : keys[1]
-    if (sectionId === 'work' && keys.length > 2) {
-      projectId.value = keys[2]
-    } else {
-      isProjectModalOpen.value = false
-    }
-    currentSectionId.value = sectionId
-    const selector = `#${sectionId}`
-    const el = document.querySelector(selector)
-    if (sectionId && el) {
-      el.scrollIntoView({ behavior: 'smooth', block: 'start' })
-      if (navHeight.value) {
-        window.scrollBy({ top: -navHeight.value, behavior: 'instant' })
-      }
-    }
-  })
-}
-
-const handleProjectClick = id => {
+function selectProject(id: string) {
+  if (!projectData[id]) return
   projectId.value = id
   isProjectModalOpen.value = true
+  history.pushState(null, '', buildPath('work', id, BASE))
 }
 
-onMounted(() => {
-  navHeight.value = document.querySelector('.navbar').offsetHeight + 5
-  navItems.value = document.querySelectorAll('.nav-list .nav-item')
+function closeProject() {
+  isProjectModalOpen.value = false
+  history.replaceState(null, '', buildPath('work', null, BASE))
+}
 
-  window.addEventListener('scroll', throttle(handleScroll, 100), {
-    passive: true,
-  })
+/** Apply the current URL to page state (used on load and on back/forward). */
+function applyLocation(scroll: boolean) {
+  const { section, projectId: pid } = parsePath(window.location.pathname, BASE)
+  currentSectionId.value = section
+  if (pid && projectData[pid]) {
+    projectId.value = pid
+    isProjectModalOpen.value = window.innerWidth <= MOBILE_MAX
+  } else {
+    isProjectModalOpen.value = false
+  }
+  if (scroll) scrollToSection(section)
+}
+
+const handleScroll = throttle(() => {
+  isVideoPlaying.value = window.scrollY <= 40
+  isNavHidden.value = window.scrollY === 0
+  const bands = Array.from(document.querySelectorAll<HTMLElement>('main > section')).map(s => ({
+    id: s.id,
+    top: s.offsetTop,
+    height: s.offsetHeight,
+  }))
+  // At the very bottom a short last section can never reach the top of the viewport.
+  const atBottom = window.innerHeight + window.scrollY >= document.documentElement.scrollHeight - 2
+  const id = (
+    atBottom && bands.length
+      ? bands[bands.length - 1].id
+      : activeSection(window.scrollY + (navHeight.value ?? 0) + 1, bands)
+  ) as SectionId | null
+  if (id && id !== currentSectionId.value) {
+    currentSectionId.value = id
+    history.replaceState(null, '', buildPath(id, id === 'work' ? projectId.value : null, BASE))
+  }
+}, 100)
+
+function onReady() {
+  if (isLoaded.value) return
+  isLoaded.value = true
+  isVideoPlaying.value = window.scrollY <= 40
+  measureNav()
+  applyLocation(window.location.pathname.replace(BASE, '') !== '')
+}
+
+const handlePopstate = () => applyLocation(window.innerWidth > MOBILE_MAX)
+
+onMounted(() => {
+  measureNav()
+  window.addEventListener('scroll', handleScroll, { passive: true })
   window.addEventListener('popstate', handlePopstate)
-  window.addEventListener('resize', handleResize)
-  EventBus.on('routechange', handleRouteChange)
-  EventBus.on('project.clicked', handleProjectClick)
+  window.addEventListener('resize', measureNav)
 })
 
 onBeforeUnmount(() => {
-  window.removeEventListener('resize', handleResize)
   window.removeEventListener('scroll', handleScroll)
   window.removeEventListener('popstate', handlePopstate)
-  EventBus.off('routechange', handleRouteChange)
-  EventBus.off('project.clicked', handleProjectClick)
+  window.removeEventListener('resize', measureNav)
 })
 </script>
-
-<style lang="scss">
-@import './styles/base.css';
-@import url('https://fonts.googleapis.com/css?family=Roboto:400,700&display=swap');
-
-a {
-  text-decoration: none;
-}
-
-body {
-  margin: 0;
-  font-family: 'Roboto', Arial, sans-serif;
-}
-
-h2 {
-  padding-top: 3rem;
-}
-
-.invisible {
-  display: none;
-}
-
-h1,
-h2,
-h3,
-h4,
-h5,
-h6 {
-  font-family: 'Roboto', Arial, sans-serif;
-}
-</style>

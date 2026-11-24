@@ -1,28 +1,25 @@
 <template>
-  <section id="intro" class="intro">
+  <section id="intro" class="intro" aria-label="Introduction">
     <div class="intro-container">
-      <BrandLogo :class="{ loader: !isLoaded }" type="intro" />
+      <BrandLogo :class="{ loader: !isLoaded }" type="intro" heading />
       <div class="intro-nav">
-        <ul role="navigation">
-          <li>
-            <nav-link :nav-offset="navOffset" to="/work" class="nav-item">Work</nav-link>
-          </li>
-          <li>
-            <nav-link :nav-offset="navOffset" to="/about" class="nav-item">About me</nav-link>
-          </li>
-          <li>
-            <nav-link :nav-offset="navOffset" to="/contact" class="nav-item">Contact</nav-link>
-          </li>
-        </ul>
+        <nav aria-label="Sections">
+          <ul>
+            <li v-for="item in items" :key="item.id">
+              <nav-link :to="item.id" @navigate="id => emit('navigate', id)">{{
+                item.label
+              }}</nav-link>
+            </li>
+          </ul>
+        </nav>
         <div class="page-scroll">
           <nav-link
-            aria-label="Go To Next Section"
-            :nav-offset="navOffset"
-            to="/work"
-            class="btn-lv nav-item"
-            data-target="#work"
+            to="work"
+            class="btn-lv"
+            aria-label="Go to next section"
+            @navigate="id => emit('navigate', id)"
           >
-            <i class="icon-down-open animated"></i>
+            <i class="icon-down-open" aria-hidden="true"></i>
           </nav-link>
         </div>
       </div>
@@ -30,34 +27,27 @@
   </section>
 </template>
 
-<script>
+<script setup lang="ts">
 import { BrandLogo, NavLink } from '../components/'
+import type { SectionId } from '../lib/sections'
 
-export default {
-  name: 'IntroView',
-  components: {
-    BrandLogo,
-    'nav-link': NavLink,
-  },
-  props: {
-    isLoaded: { type: Boolean, default: false },
-    navOffset: Number,
-  },
-}
+defineProps<{ isLoaded: boolean }>()
+const emit = defineEmits<{ navigate: [id: SectionId] }>()
+
+const items: { id: SectionId; label: string }[] = [
+  { id: 'work', label: 'Work' },
+  { id: 'about', label: 'About me' },
+  { id: 'contact', label: 'Contact' },
+]
 </script>
 
-<!-- Add "scoped" attribute to limit CSS to this component only -->
 <style lang="scss" scoped>
-@use '../styles/settings.scss' as *;
 @use '../styles/media-queries.scss' as media;
 
 .intro {
-  color: $white-color;
+  color: var(--color-on-media);
   height: 100vh;
-}
-
-#intro-logo {
-  opacity: 0;
+  height: 100svh;
 }
 
 .intro-container {
@@ -66,40 +56,34 @@ export default {
   transform: translate(-50%, -50%);
   top: 50%;
   left: 50%;
-  width: auto;
-  height: auto;
+  max-width: 100%;
   flex-direction: column;
-  font-size: 2.5rem;
+  font-size: var(--text-2xl);
 }
 
 .intro-nav {
   text-align: center;
-  display: block;
   ul {
-    padding: 0;
-    margin: 0;
-    width: 90%;
+    width: 100%;
     white-space: nowrap;
-    text-align: center;
     display: none;
     @media (min-width: media.$bp-ms) {
-      display: flex !important;
+      display: flex;
     }
     li {
-      display: inline-block;
       flex: 1;
     }
     a {
       display: inline-block;
-      padding: 1rem;
-      font-family: Roboto, Helvetica, Arial, sans-serif;
-      font-weight: 400;
-      color: $white-color;
-      height: 1.5rem;
-      line-height: 0.65;
-      transition: all 0.2s ease-in-out;
+      padding: var(--space-4);
+      font-family: var(--font-body);
+      font-weight: var(--weight-regular);
+      color: var(--color-on-media);
+      background: transparent;
+      transition: background-color var(--motion-exit);
       &:hover {
-        background: rgba($white-color, 0.15);
+        background: var(--color-hover-wash);
+        transition: background-color var(--motion-enter);
       }
     }
   }
@@ -107,27 +91,37 @@ export default {
 
 .page-scroll {
   clear: both;
-  > i.animated {
-    top: 8px;
-    transition: transform 1s ease-out;
-  }
-
-  &:hover > .animated {
-    animation-name: pulse;
-    animation-duration: 1.5s;
-    animation-iteration-count: infinite;
-    animation-timing-function: linear;
-  }
+  margin-top: var(--space-4);
 }
 
 .btn-lv {
+  display: inline-block;
   width: 70px;
   height: 70px;
-  margin-top: 15px;
-  padding: 7px 16px;
-  font-size: 40px;
-  color: #fff;
-  background: 0 0;
-  transition: background 0.3s ease-in-out;
+  padding: var(--space-2) var(--space-4);
+  font-size: 2.5rem;
+  color: var(--color-on-media);
+  background: transparent;
+  transition: background-color var(--motion-exit);
+  &:hover {
+    background: var(--color-hover-wash);
+    transition: background-color var(--motion-enter);
+  }
+  &:hover i {
+    animation: pulse var(--duration-loop) var(--ease-linear) infinite;
+  }
+  i {
+    display: inline-block;
+  }
+}
+
+@keyframes pulse {
+  0%,
+  100% {
+    transform: scale(1);
+  }
+  50% {
+    transform: scale(1.2);
+  }
 }
 </style>

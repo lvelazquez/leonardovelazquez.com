@@ -1,132 +1,95 @@
 <template>
   <nav
-    @routechange="isMenuOpen = false"
     class="navbar"
-    role="navigation"
-    :class="{ 'navbar-hide': isNavHidden }"
+    aria-label="Primary"
+    :class="{ 'navbar-hide': hidden }"
+    @keydown.esc="closeMenu"
   >
     <div class="navbar-header">
-      <nav-link class="navbar-logo nav-item" to="/">
+      <nav-link class="navbar-logo nav-item" to="intro" @navigate="onNavigate">
         <BrandLogo type="header" color="black" />
       </nav-link>
-      <div :class="{ 'navbar-collapse': !isMenuOpen }" class="navbar-right">
+      <div id="primary-menu" class="navbar-right" :class="{ 'navbar-collapse': !isMenuOpen }">
         <ul class="nav-list">
-          <li class="nav-list-item">
+          <li v-for="item in items" :key="item.id" class="nav-list-item">
             <nav-link
-              :nav-offset="navOffset"
-              to="/work"
+              :to="item.id"
               class="nav-item"
-              :class="{ active: currentSectionId === 'work' }"
-              >Work</nav-link
-            >
-          </li>
-          <li class="nav-list-item">
-            <nav-link
-              :nav-offset="navOffset"
-              to="/about"
-              class="nav-item"
-              :class="{ active: currentSectionId === 'about' }"
-              >About me</nav-link
-            >
-          </li>
-          <li class="nav-list-item">
-            <nav-link
-              :nav-offset="navOffset"
-              to="/contact"
-              class="nav-item"
-              :class="{ active: currentSectionId === 'contact' }"
-              >Contact</nav-link
+              :class="{ active: currentSectionId === item.id }"
+              :current="currentSectionId === item.id"
+              @navigate="onNavigate"
+              >{{ item.label }}</nav-link
             >
           </li>
           <li class="nav-list-item">
             <a class="nav-item" :href="resumeLink" download="LeonardoVelazquezResume">
-              <i class="icon-download-alt"></i>
+              <i class="icon-download-alt" aria-hidden="true"></i>
               Resume
             </a>
           </li>
         </ul>
       </div>
       <button
-        role="button"
-        name="Nav Menu Toggle"
+        type="button"
         class="navbar-menu-btn"
+        aria-controls="primary-menu"
+        :aria-expanded="isMenuOpen"
+        aria-label="Menu"
         @click="isMenuOpen = !isMenuOpen"
       >
-        <i class="icon-menu"></i>
+        <i class="icon-menu" aria-hidden="true"></i>
       </button>
     </div>
   </nav>
 </template>
 
-<script>
+<script setup lang="ts">
+import { ref } from 'vue'
 import NavLink from './NavLink.vue'
 import BrandLogo from './BrandLogo.vue'
-import EventBus from '../EventBus'
+import type { SectionId } from '../lib/sections'
 
-export default {
-  name: 'MainNav',
-  components: {
-    BrandLogo,
-    'nav-link': NavLink,
-  },
-  props: {
-    resumeLink: String,
-    currentSectionId: String,
-    navOffset: Number,
-  },
-  data() {
-    return {
-      isMenuOpen: false,
-      isNavHidden: true,
-    }
-  },
-  mounted() {
-    EventBus.on('routechange', this.openMenu)
-    window.addEventListener('scroll', this.updateNav)
-  },
-  unmounted() {
-    window.removeEventListener('scroll', this.updateNav)
-    EventBus.off('routechange', this.openMenu)
-  },
-  updated() {},
-  methods: {
-    updateNav() {
-      this.isNavHidden = window.scrollY === 0
-    },
-    openMenu() {
-      this.isMenuOpen = false
-    },
-  },
+defineProps<{ resumeLink: string; currentSectionId: string; hidden: boolean }>()
+const emit = defineEmits<{ navigate: [id: SectionId] }>()
+
+const items: { id: SectionId; label: string }[] = [
+  { id: 'work', label: 'Work' },
+  { id: 'about', label: 'About me' },
+  { id: 'contact', label: 'Contact' },
+]
+
+const isMenuOpen = ref(false)
+
+function closeMenu() {
+  isMenuOpen.value = false
+}
+
+function onNavigate(id: SectionId) {
+  closeMenu()
+  emit('navigate', id)
 }
 </script>
 
-<!-- Add "scoped" attribute to limit CSS to this component only -->
 <style lang="scss" scoped>
-@use '../styles/settings.scss' as *;
 @use '../styles/media-queries.scss' as media;
 
 .navbar {
   position: fixed;
   top: 0;
   width: 100%;
-  font-family: Montserrat, 'Helvetica Neue', Helvetica, Arial, sans-serif;
-  margin-bottom: 0;
+  font-family: var(--font-display);
   text-transform: uppercase;
   z-index: 1000;
-  background-color: $white-color;
-  transition: all 0.25s ease-out;
-  .top-nav-container {
-    background-color: #fff;
-    height: 0;
-  }
+  color: var(--color-on-surface);
+  background-color: var(--color-surface);
+  transform: translateY(0);
+  transition: transform var(--motion-enter);
 }
 
-.brand-heading {
-  margin: 0;
-}
-
-.navbar-hide {
-  top: -80px;
+/* Off-screen at the top of the page, but revealed if a keyboard user tabs into it. */
+.navbar-hide:not(:focus-within) {
+  transform: translateY(-100%);
+  transition: transform var(--motion-exit);
 }
 
 .navbar-collapse {
@@ -137,59 +100,40 @@ export default {
   padding: 0;
   margin: 0;
   display: flex;
-  transition: background-color 0.15s ease-out;
+  background-color: transparent;
+  transition: background-color var(--motion-exit);
+
   .nav-item {
-    cursor: pointer;
-    font-weight: 500;
+    display: flex;
+    gap: var(--space-2);
     align-items: center;
     width: 100%;
-    padding: 1rem;
+    padding: var(--space-4);
+    font-weight: var(--weight-medium);
     &.active {
-      color: $white-color;
-      background-color: $black-color;
+      color: var(--color-on-surface-inverse);
+      background-color: var(--color-surface-inverse);
     }
     @media (min-width: media.$bp-ms) {
-      padding: 1.7rem 1rem 1.7rem;
+      padding: 1.7rem var(--space-4);
     }
     @media (min-width: media.$bp-lg) {
-      padding: 2rem;
+      padding: var(--space-6);
     }
   }
 
   &:hover {
-    background-color: $gray-color;
+    color: var(--color-on-hover-surface);
+    background-color: var(--color-hover-surface);
+    transition: background-color var(--motion-enter);
   }
 }
 
 .nav-list {
   display: block;
-  padding: 0;
-  margin: 0;
   @media (min-width: media.$bp-ms) {
     display: flex;
   }
-}
-
-.nav-list li:hover,
-.nav-list a:hover {
-  color: $white-color;
-  .download-icon {
-    color: $white-color;
-  }
-}
-
-.download-icon {
-  background-image: url(data:image/svg+xml;utf8;base64,PD94bWwgdmVyc2lvbj0iMS4wIiBlbmNvZGluZz0iaXNvLTg4NTktMSI/Pgo8IS0tIEdlbmVyYXRvcjogQWRvYmUgSWxsdXN0cmF0b3IgMTYuMC4wLCBTVkcgRXhwb3J0IFBsdWctSW4gLiBTVkcgVmVyc2lvbjogNi4wMCBCdWlsZCAwKSAgLS0+CjwhRE9DVFlQRSBzdmcgUFVCTElDICItLy9XM0MvL0RURCBTVkcgMS4xLy9FTiIgImh0dHA6Ly93d3cudzMub3JnL0dyYXBoaWNzL1NWRy8xLjEvRFREL3N2ZzExLmR0ZCI+CjxzdmcgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIiB4bWxuczp4bGluaz0iaHR0cDovL3d3dy53My5vcmcvMTk5OS94bGluayIgdmVyc2lvbj0iMS4xIiBpZD0iQ2FwYV8xIiB4PSIwcHgiIHk9IjBweCIgd2lkdGg9IjUxMnB4IiBoZWlnaHQ9IjUxMnB4IiB2aWV3Qm94PSIwIDAgNDMzLjUgNDMzLjUiIHN0eWxlPSJlbmFibGUtYmFja2dyb3VuZDpuZXcgMCAwIDQzMy41IDQzMy41OyIgeG1sOnNwYWNlPSJwcmVzZXJ2ZSI+CjxnPgoJPGcgaWQ9ImZpbGUtZG93bmxvYWQiPgoJCTxwYXRoIGQ9Ik0zOTUuMjUsMTUzaC0xMDJWMGgtMTUzdjE1M2gtMTAybDE3OC41LDE3OC41TDM5NS4yNSwxNTN6IE0zOC4yNSwzODIuNXY1MWgzNTd2LTUxSDM4LjI1eiIgZmlsbD0iIzAwMDAwMCIvPgoJPC9nPgo8L2c+CjxnPgo8L2c+CjxnPgo8L2c+CjxnPgo8L2c+CjxnPgo8L2c+CjxnPgo8L2c+CjxnPgo8L2c+CjxnPgo8L2c+CjxnPgo8L2c+CjxnPgo8L2c+CjxnPgo8L2c+CjxnPgo8L2c+CjxnPgo8L2c+CjxnPgo8L2c+CjxnPgo8L2c+CjxnPgo8L2c+Cjwvc3ZnPgo=);
-  width: 20px;
-  height: 18px;
-  background-size: cover;
-  display: inline-block;
-  vertical-align: middle;
-}
-
-li:hover .download-icon {
-  background-size: cover;
-  background-image: url(data:image/svg+xml;utf8;base64,PD94bWwgdmVyc2lvbj0iMS4wIiBlbmNvZGluZz0iaXNvLTg4NTktMSI/Pgo8IS0tIEdlbmVyYXRvcjogQWRvYmUgSWxsdXN0cmF0b3IgMTYuMC4wLCBTVkcgRXhwb3J0IFBsdWctSW4gLiBTVkcgVmVyc2lvbjogNi4wMCBCdWlsZCAwKSAgLS0+CjwhRE9DVFlQRSBzdmcgUFVCTElDICItLy9XM0MvL0RURCBTVkcgMS4xLy9FTiIgImh0dHA6Ly93d3cudzMub3JnL0dyYXBoaWNzL1NWRy8xLjEvRFREL3N2ZzExLmR0ZCI+CjxzdmcgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIiB4bWxuczp4bGluaz0iaHR0cDovL3d3dy53My5vcmcvMTk5OS94bGluayIgdmVyc2lvbj0iMS4xIiBpZD0iQ2FwYV8xIiB4PSIwcHgiIHk9IjBweCIgd2lkdGg9IjUxMnB4IiBoZWlnaHQ9IjUxMnB4IiB2aWV3Qm94PSIwIDAgNDMzLjUgNDMzLjUiIHN0eWxlPSJlbmFibGUtYmFja2dyb3VuZDpuZXcgMCAwIDQzMy41IDQzMy41OyIgeG1sOnNwYWNlPSJwcmVzZXJ2ZSI+CjxnPgoJPGcgaWQ9ImZpbGUtZG93bmxvYWQiPgoJCTxwYXRoIGQ9Ik0zOTUuMjUsMTUzaC0xMDJWMGgtMTUzdjE1M2gtMTAybDE3OC41LDE3OC41TDM5NS4yNSwxNTN6IE0zOC4yNSwzODIuNXY1MWgzNTd2LTUxSDM4LjI1eiIgZmlsbD0iI0ZGRkZGRiIvPgoJPC9nPgo8L2c+CjxnPgo8L2c+CjxnPgo8L2c+CjxnPgo8L2c+CjxnPgo8L2c+CjxnPgo8L2c+CjxnPgo8L2c+CjxnPgo8L2c+CjxnPgo8L2c+CjxnPgo8L2c+Cjwvc3ZnPgo=);
 }
 
 .navbar-logo {
@@ -197,44 +141,26 @@ li:hover .download-icon {
   display: inline-flex;
   height: 100%;
   align-items: center;
-  padding: 0.75rem 0 0.75rem 0.75rem;
-  font-weight: 700;
-  .top-logo {
-    min-width: 35px;
-    position: relative;
-    float: left;
-    height: auto;
-    top: 0px;
-    left: 0px;
-  }
-
-  &:focus {
-    outline: 0;
-  }
+  padding: var(--space-3) 0 var(--space-3) var(--space-3);
+  font-weight: var(--weight-bold);
 }
 
 .navbar-menu-btn {
   position: absolute;
-  right: 0;
-  border: none;
-  z-index: 1;
-  outline: none;
-  font-size: 1.5rem;
-  cursor: pointer;
-  background-color: $white-color;
-  padding: 3% 0.5rem;
   top: 0;
-  @media (min-width: media.$bp-sm) {
-    padding: 0.75rem;
-    height: 4rem;
-  }
+  right: 0;
+  z-index: 1;
+  min-width: var(--size-touch);
+  height: var(--size-navbar);
+  border: none;
+  font-size: var(--text-xl);
+  cursor: pointer;
+  background-color: var(--color-surface);
+  color: var(--color-on-surface);
+  padding: var(--space-3);
 }
 
 @media (min-width: media.$bp-ms) {
-  li {
-    display: inline-block;
-    font-weight: 500;
-  }
   .navbar-right {
     display: inline-flex;
     position: relative;
@@ -242,12 +168,16 @@ li:hover .download-icon {
     height: 100%;
     align-items: center;
     .nav-item {
-      font-size: 0.8rem;
+      font-size: var(--text-xs);
     }
   }
 
   .navbar-menu-btn {
     display: none;
+  }
+
+  .navbar-collapse {
+    display: inline-flex;
   }
 }
 </style>

@@ -1,0 +1,7 @@
+dist
+package-lock.json
+public
+src/assets
+
+*.md
+docs/workflows
